@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives: 2009 | 夜半微凉的博客</title>
+  <title>Category: android | 夜半微凉的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description">
 <meta property="og:type" content="website">
 <meta property="og:title" content="夜半微凉的博客">
-<meta property="og:url" content="https://evlinlee.github.io/archives/2009/">
+<meta property="og:url" content="https://evlinlee.github.io/categories/android/">
 <meta property="og:site_name" content="夜半微凉的博客">
 <meta property="og:description">
 <meta name="twitter:card" content="summary">
@@ -63,12 +63,16 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-androidbarsherlock-study" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2009/11/13/hello-world/" class="article-date">
-  <time datetime="2009-11-12T16:00:00.000Z" itemprop="datePublished">Nov 13 2009</time>
+    <a href="/2014/08/02/androidbarsherlock-study/" class="article-date">
+  <time datetime="2014-08-02T03:41:35.000Z" itemprop="datePublished">Aug 2 2014</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -77,7 +81,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2009/11/13/hello-world/">Hello World! I&#39;m Octopress!</a>
+      <a class="article-title" href="/2014/08/02/androidbarsherlock-study/">ActionBarSherlock使用</a>
     </h1>
   
 
@@ -85,17 +89,69 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>Octopress is a blogging framework designed for hackers</strong>, based on <a href="http://github.com/mojombo/jekyll" target="_blank" rel="external">Jekyll</a> the blog aware static site generator powering <a href="http://pages.github.com/" target="_blank" rel="external">Github pages</a>.<br>If you don’t know what Jekyll is, <a href="http://metajack.im/2009/01/23/blogging-with-git-emacs-and-jekyll/" target="_blank" rel="external">Jack Moffitt</a> wrote a good summary:</p>
-<blockquote>
-<p>Jekyll is a static blog generator; it transforms a directory of input files into another directory of files suitable for a blog. The management of the blog is handled by standard, familiar tools like creating and renaming files, the text editor of your choice, and version control.<br><cite><strong>Jack Moffitt</strong> <a href="http://metajack.im/2009/01/23/blogging-with-git-emacs-and-jekyll/" target="_blank" rel="external">Blogging with Git Emacs and Jekyll</a></cite></p>
-</blockquote>
-<p>There’s no database to set up, and you get to use tools like Emacs, vim, or TextMate to write your posts, not some lame in-browser text editor. Just write, generate, deploy, using the same tools and patters you already use for your daily work.</p>
-<p><a href="http://wiki.github.com/imathis/octopress/" target="_blank" rel="external">Read the wiki to learn more</a></p>
+        <h3 id="ActionBarSherlock小记">ActionBarSherlock小记</h3>
+<p>Q:ActionBarSherlock和ActionBarCompat的区别</p>
+<p>A:如下图<br><img src="./abs_vs_abc.png" alt="Alt text"></p>
+<p>根据以上图片，如果客户端在之前的版本只支持API11以上的，根据相应的属性修改即可。</p>
+<p>Q1:Use of view.setX() and setY in api 8</p>
+<p>A1:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//WRAP_CONTENT param can be FILL_PARENT</span></div><div class="line">RelativeLayout.LayoutParams params = <span class="keyword">new</span> RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT); </div><div class="line">params.leftMargin = <span class="number">206</span>; <span class="comment">//XCOORD</span></div><div class="line">params.topMargin = <span class="number">206</span>; <span class="comment">//YCOORD</span></div><div class="line">childView.setLayoutParams(params);</div></pre></td></tr></table></figure>
 
+<p>
+        
+          <p class="article-more-link">
+            <a href="/2014/08/02/androidbarsherlock-study/#more">Read More</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://evlinlee.github.io/2009/11/13/hello-world/" data-id="fdn7lsugu8lqrmfx" class="article-share-link">Share</a>
+      <a data-url="https://evlinlee.github.io/2014/08/02/androidbarsherlock-study/" data-id="bc0tb6ls4xh1zlgx" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-about-android-decompile" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/06/22/about-android-decompile/" class="article-date">
+  <time datetime="2014-06-22T07:42:36.000Z" itemprop="datePublished">Jun 22 2014</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/06/22/about-android-decompile/">关于android反编译</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>网上关于android反编译有很多文章了，这里大概说下我自己反编译的目的不是为了盗取其他开发者的成果然后上传到市场上，主要是为了学习他人的设计。<br>这里介绍一款比较好用的反编译工具，是国人开发的，叫apk改之理，不过只有windows版本。<br>
+        
+          <p class="article-more-link">
+            <a href="/2014/06/22/about-android-decompile/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://evlinlee.github.io/2014/06/22/about-android-decompile/" data-id="nkedrs18na3bwwm0" class="article-share-link">Share</a>
       
       
     </footer>

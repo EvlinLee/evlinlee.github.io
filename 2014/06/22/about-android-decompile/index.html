@@ -3,20 +3,19 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Hello World | 夜半微凉的博客</title>
+  <title>关于android反编译 | 夜半微凉的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in trobuleshooting or you can ask me on GitHub.
-Quick">
+  <meta name="description" content="网上关于android反编译有很多文章了，这里大概说下我自己反编译的目的不是为了盗取其他开发者的成果然后上传到市场上，主要是为了学习他人的设计。这里介绍一款比较好用的反编译工具，是国人开发的，叫apk改之理，不过只有windows版本。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="https://evlinlee.github.io/2014/12/19/hello-world/">
+<meta property="og:title" content="关于android反编译">
+<meta property="og:url" content="https://evlinlee.github.io/2014/06/22/about-android-decompile/">
 <meta property="og:site_name" content="夜半微凉的博客">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in trobuleshooting or you can ask me on GitHub.
-Quick">
+<meta property="og:description" content="网上关于android反编译有很多文章了，这里大概说下我自己反编译的目的不是为了盗取其他开发者的成果然后上传到市场上，主要是为了学习他人的设计。这里介绍一款比较好用的反编译工具，是国人开发的，叫apk改之理，不过只有windows版本。">
+<meta property="og:image" content="/images/apk_modifier1.png">
+<meta property="og:image" content="/images/apkmodifier2.png">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in trobuleshooting or you can ask me on GitHub.
-Quick">
+<meta name="twitter:title" content="关于android反编译">
+<meta name="twitter:description" content="网上关于android反编译有很多文章了，这里大概说下我自己反编译的目的不是为了盗取其他开发者的成果然后上传到市场上，主要是为了学习他人的设计。这里介绍一款比较好用的反编译工具，是国人开发的，叫apk改之理，不过只有windows版本。">
 
   
     <link rel="alternative" href="/atom.xml" title="夜半微凉的博客" type="application/atom+xml">
@@ -64,12 +63,16 @@ Quick">
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-about-android-decompile" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2014/12/19/hello-world/" class="article-date">
-  <time datetime="2014-12-18T16:46:46.000Z" itemprop="datePublished">Dec 19 2014</time>
+    <a href="/2014/06/22/about-android-decompile/" class="article-date">
+  <time datetime="2014-06-22T07:42:36.000Z" itemprop="datePublished">Jun 22 2014</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -78,7 +81,7 @@ Quick">
         
   
     <h1 class="article-title" itemprop="name">
-      Hello World
+      关于android反编译
     </h1>
   
 
@@ -86,29 +89,42 @@ Quick">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">trobuleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2>
-<h3 id="Create_a_new_post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+        <p>网上关于android反编译有很多文章了，这里大概说下我自己反编译的目的不是为了盗取其他开发者的成果然后上传到市场上，主要是为了学习他人的设计。<br>这里介绍一款比较好用的反编译工具，是国人开发的，叫apk改之理，不过只有windows版本。<br><a id="more"></a></p>
+<h4 id="APK改之理详细介绍">APK改之理详细介绍</h4>
+<ol>
+<li>可视化操作，全自动的反编译、编译、签名Apk。</li>
+<li>以树目录管理全部反编译得到的Apk资源文件，方便操作。</li>
+<li>内置代码编辑器，支持语法高亮显示，根据文件格式自动匹配相应语法；支持多文档同时编辑；也支持使用系统编辑器来编辑代码文件。</li>
+<li>内置基于文件内容的关键字或多行代码段的搜索、替换引擎，一键搜索替换，搜索结果以标签的形式分门别类；允许在指定搜索范围（整个工程或选中的文件或文件夹内搜索），支持正则表达式搜索和替换。搜索功能是Apk修改的一个重要工具，从此你不必借助其它第三方搜索工具。</li>
+<li>内置Google在线翻译引擎，支持实时翻译，支持所有Google支持的几十国语言对译，汉化更轻松。</li>
+<li>支持使用自己的keystore文件签名。</li>
+<li>自动识别图像资源，并提供该类资源的快捷替换功能，方便修改这类图片资源。</li>
+<li>内嵌Unicode、AscII互转工具，以方便硬编码的文字（如汉字）的搜索和汉化类修改。</li>
+<li>内置类似于系统cmd.exe的命令窗口，高手也可以手动直接输入各种命令来手动操作。</li>
+<li>所有操作步骤、操作结果都以良好的阅读格式输出在日志窗口，方便查看修改的历史记录。</li>
+<li>内置adb功能，包括使用adb向设备（或模拟器）安装、卸载修改后的apk进行测试，并嵌入adb log、ddms等功能监测修改apk的运行状况，以便于分析和查找错误。</li>
+<li>支持多国语言界面，支持界面换肤。</li>
+</ol>
+<img src="/images/apk_modifier1.png"> 
 
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+<img src="/images/apkmodifier2.png">
 
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+<p>官网地址：<a href="http://www.xiaomiren.net/apkmodifier/" target="_blank" rel="external">小迷人APK改之理</a></p>
+<p>整个界面跟eclipse差不多，更多功能可以看官网教程。</p>
+<p>另外一套是大家都熟悉的跨平台反编译工具，dex2jar、JD-GUI、apktool。</p>
+<p>dex2jar：将apk中的classes.dex转化成Jar文件。</p>
+<p>JD-GUI：反编译工具，可以直接查看Jar包的源代码。</p>
+<p>apktool：反编译工具，通过反编译APK中XML文件，直接可以查看。</p>
+<p>网上有很多教程，这里就不做介绍了。</p>
+<h4 id="关于破解">关于破解</h4>
+<p>android反编译后的目录有smail目录。Smali，Baksmali分别是指安卓系统里的Java虚拟机（Dalvik）所使用的一种.dex格式文件的汇编器，反汇编器。其语法是一种宽松式的Jasmin/dedexer语法，而且它实现了.dex格式所有功能（注解，调试信息，线路信息等）。smail文件其实对应着相应文件的java代码。这里有篇smail语法介绍：<a href="http://blog.csdn.net/singwhatiwanna/article/details/19019547" target="_blank" rel="external">smail语法介绍</a>,学完后大家可不要干坏事哦。</p>
+<h4 id="总结">总结</h4>
+<p>现在很多开发者把反编译当作是赚钱的工具，将其他开发者的应用或游戏修改，然后加广告或破解游戏，这种行为是可耻的，想想如果是你自己的应用和游戏被人反编译上传到市场后，自己会是怎样的心情。我希望大家用反编译是为了学习别人的设计，比如当看到某个布局效果觉得很酷的话，在没有实现思路的情况下，可以反编译apk文件来看看是怎么实现的。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://evlinlee.github.io/2014/12/19/hello-world/" data-id="m5ds52ijn2bkj4o1" class="article-share-link">Share</a>
+      <a data-url="https://evlinlee.github.io/2014/06/22/about-android-decompile/" data-id="nkedrs18na3bwwm0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -117,10 +133,19 @@ Quick">
     
 <nav id="article-nav">
   
+    <a href="/2014/08/02/androidbarsherlock-study/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          ActionBarSherlock使用
+        
+      </div>
+    </a>
   
-    <a href="/2014/11/05/android-asyntask-summary/" id="article-nav-older" class="article-nav-link-wrap">
+  
+    <a href="/2014/06/18/git-base-command/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">AsyncTask相关总结</div>
+      <div class="article-nav-title">Git入门</div>
     </a>
   
 </nav>

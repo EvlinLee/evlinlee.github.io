@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives: 2009 | 夜半微凉的博客</title>
+  <title>Archives: 2014/5 | 夜半微凉的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description">
 <meta property="og:type" content="website">
 <meta property="og:title" content="夜半微凉的博客">
-<meta property="og:url" content="https://evlinlee.github.io/archives/2009/">
+<meta property="og:url" content="https://evlinlee.github.io/archives/2014/05/">
 <meta property="og:site_name" content="夜半微凉的博客">
 <meta property="og:description">
 <meta name="twitter:card" content="summary">
@@ -63,10 +63,153 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-viewholder-reuse" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2009/11/13/hello-world/" class="article-date">
-  <time datetime="2009-11-12T16:00:00.000Z" itemprop="datePublished">Nov 13 2009</time>
+    <a href="/2014/05/22/viewholder-reuse/" class="article-date">
+  <time datetime="2014-05-21T16:58:45.000Z" itemprop="datePublished">May 22 2014</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/android基础/">android基础</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/05/22/viewholder-reuse/">ViewHolder的复用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>平时有多个自定义的adapter时，总是要为每个adapter写一个viewholder，从软件的设计角度来讲，这样的方式是不可取的，重复的代码最好复用，偶然间在github上看到一个项目，就是关于自定义adapter的，其中viewholder部分写的挺好的，自己也把这段代码放到自己的开发framework中。<br>
+        
+          <p class="article-more-link">
+            <a href="/2014/05/22/viewholder-reuse/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://evlinlee.github.io/2014/05/22/viewholder-reuse/" data-id="jbvxqcme1xbnbk98" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-understanding-ioc-and-di" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/05/17/understanding-ioc-and-di/" class="article-date">
+  <time datetime="2014-05-16T16:37:10.000Z" itemprop="datePublished">May 17 2014</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/java/">java</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/05/17/understanding-ioc-and-di/">理解控制反转和依赖注入</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在《研磨设计模式》这本书看到的，描述的比较通俗易懂，在这mark下。<br>要理解IOC和DI两个概念，就必须搞清楚如下的问题：</p>
+<ul>
+<li>参与者都有谁？</li>
+<li>依赖：谁依赖于谁？为什么需要依赖？</li>
+<li>注入：谁注入于谁？到底注入什么？</li>
+<li>控制反转：谁控制谁？控制什么？为何叫反转（有反转就应该有正转了）？</li>
+<li>依赖注入和控制反转是同一个概念吗？</li>
+</ul>
+
+        
+          <p class="article-more-link">
+            <a href="/2014/05/17/understanding-ioc-and-di/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://evlinlee.github.io/2014/05/17/understanding-ioc-and-di/" data-id="mljggxcil981x5fl" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-highlight-listview-items" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/05/12/highlight-listview-items/" class="article-date">
+  <time datetime="2014-05-12T14:45:42.000Z" itemprop="datePublished">May 12 2014</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/android基础/">android基础</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/05/12/highlight-listview-items/">ListView item高亮</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>记录下之前做过的，实现listview item选中高亮效果。<br>如果有更好的实现方式，记得留言发链接给我参考参考。<br>
+        
+          <p class="article-more-link">
+            <a href="/2014/05/12/highlight-listview-items/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://evlinlee.github.io/2014/05/12/highlight-listview-items/" data-id="zd4dzp0voc0qpd51" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-mac-for-github-octopress" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/05/07/mac-for-github-octopress/" class="article-date">
+  <time datetime="2014-05-06T16:13:02.000Z" itemprop="datePublished">May 7 2014</time>
 </a>
     
   </div>
@@ -77,7 +220,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2009/11/13/hello-world/">Hello World! I&#39;m Octopress!</a>
+      <a class="article-title" href="/2014/05/07/mac-for-github-octopress/">mac10.9.2 搭建基于github的octopress博客</a>
     </h1>
   
 
@@ -85,17 +228,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>Octopress is a blogging framework designed for hackers</strong>, based on <a href="http://github.com/mojombo/jekyll" target="_blank" rel="external">Jekyll</a> the blog aware static site generator powering <a href="http://pages.github.com/" target="_blank" rel="external">Github pages</a>.<br>If you don’t know what Jekyll is, <a href="http://metajack.im/2009/01/23/blogging-with-git-emacs-and-jekyll/" target="_blank" rel="external">Jack Moffitt</a> wrote a good summary:</p>
-<blockquote>
-<p>Jekyll is a static blog generator; it transforms a directory of input files into another directory of files suitable for a blog. The management of the blog is handled by standard, familiar tools like creating and renaming files, the text editor of your choice, and version control.<br><cite><strong>Jack Moffitt</strong> <a href="http://metajack.im/2009/01/23/blogging-with-git-emacs-and-jekyll/" target="_blank" rel="external">Blogging with Git Emacs and Jekyll</a></cite></p>
-</blockquote>
-<p>There’s no database to set up, and you get to use tools like Emacs, vim, or TextMate to write your posts, not some lame in-browser text editor. Just write, generate, deploy, using the same tools and patters you already use for your daily work.</p>
-<p><a href="http://wiki.github.com/imathis/octopress/" target="_blank" rel="external">Read the wiki to learn more</a></p>
-
+        <p>在mac os 10.9.2系统搭建基于github的octopress博客的过程中出了不少问题，在这里记录下。<br>
+        
+          <p class="article-more-link">
+            <a href="/2014/05/07/mac-for-github-octopress/#more">Read More</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://evlinlee.github.io/2009/11/13/hello-world/" data-id="fdn7lsugu8lqrmfx" class="article-share-link">Share</a>
+      <a data-url="https://evlinlee.github.io/2014/05/07/mac-for-github-octopress/" data-id="ra2kq1mpmfi4tsbm" class="article-share-link">Share</a>
       
       
     </footer>

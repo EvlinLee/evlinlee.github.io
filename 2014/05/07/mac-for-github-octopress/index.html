@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>mac10.9.2 搭建基于github的octopress博客 | 夜半微凉的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在mac os 10.9.2系统搭建基于github的octopress博客的过程中出了不少问题，在这里记录下。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mac10.9.2 搭建基于github的octopress博客">
+<meta property="og:url" content="https://evlinlee.github.io/2014/05/07/mac-for-github-octopress/">
+<meta property="og:site_name" content="夜半微凉的博客">
+<meta property="og:description" content="在mac os 10.9.2系统搭建基于github的octopress博客的过程中出了不少问题，在这里记录下。">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mac10.9.2 搭建基于github的octopress博客">
+<meta name="twitter:description" content="在mac os 10.9.2系统搭建基于github的octopress博客的过程中出了不少问题，在这里记录下。">
+
+  
+    <link rel="alternative" href="/atom.xml" title="夜半微凉的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">夜半微凉的博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:https://evlinlee.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-mac-for-github-octopress" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/05/07/mac-for-github-octopress/" class="article-date">
+  <time datetime="2014-05-06T16:13:02.000Z" itemprop="datePublished">May 7 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      mac10.9.2 搭建基于github的octopress博客
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在mac os 10.9.2系统搭建基于github的octopress博客的过程中出了不少问题，在这里记录下。<br><a id="more"></a></p>
+<h2 id="安装">安装</h2>
+<p>按照octopress官方doc安装git和ruby，官网地址：<a href="http://octopress.org/docs/setup/" target="_blank" rel="external">http://octopress.org/docs/setup/</a></p>
+<p>接下来安装octopress</p>
+<pre><code>git clone gi<span class="variable">t:</span>//github.<span class="keyword">com</span>/imathis/octopress.git octopress
+<span class="keyword">cd</span> octopress
+</code></pre><p>按照官方教程接下来安装bundle</p>
+<pre><code>mbp:octopress$ bundle install
+Fetching gem metadata <span class="keyword">from</span> https:<span class="comment">//rubygems.org/.......</span>
+Fetching additional metadata <span class="keyword">from</span> https:<span class="comment">//rubygems.org/..</span>
+
+Errno::EACCES: Permission denied - <span class="regexp">/Library/</span>Ruby<span class="regexp">/Gems/</span><span class="number">2.0</span>.<span class="number">0</span><span class="regexp">/build_info/</span>rake-<span class="number">0.9</span>.<span class="number">2.2</span>.info
+An error occurred <span class="keyword">while</span> installing rake (<span class="number">0.9</span>.<span class="number">2.2</span>), and Bundler cannot <span class="keyword">continue</span>.
+Make sure that `gem install rake -v <span class="string">'0.9.2.2'</span>` succeeds before bundling.
+</code></pre><p>没权限，这个容易弄</p>
+<pre><code>mbp:octopress$ sudo gem <span class="operator"><span class="keyword">install</span> bundler
+<span class="keyword">Password</span>:
+Fetching: bundler-<span class="number">1.5</span><span class="number">.3</span>.gem (<span class="number">100</span>%)
+Successfully installed bundler-<span class="number">1.5</span><span class="number">.3</span>
+Parsing documentation <span class="keyword">for</span> bundler-<span class="number">1.5</span><span class="number">.3</span>
+Installing ri documentation <span class="keyword">for</span> bundler-<span class="number">1.5</span><span class="number">.3</span>
+<span class="number">1</span> gem installed</span>
+</code></pre><p>ok，搞定了。接下来继续安装bundle，</p>
+<pre><code>mbp:octopress$ bundle install
+<span class="type">Fetching</span> gem metadata <span class="keyword">from</span> https://rubygems.org/.......
+<span class="type">Fetching</span> additional metadata <span class="keyword">from</span> https://rubygems.org/..
+
+<span class="type">Errno</span>::<span class="type">EACCES</span>: <span class="type">Permission</span> denied - /<span class="type">Library</span>/<span class="type">Ruby</span>/<span class="type">Gems</span>/<span class="number">2</span>.<span class="number">0</span>.<span class="number">0</span>/build_info/rake-<span class="number">0</span>.<span class="number">9</span>.<span class="number">2</span>.<span class="number">2</span>.info
+<span class="type">An</span> error occurred <span class="keyword">while</span> installing rake (<span class="number">0</span>.<span class="number">9</span>.<span class="number">2</span>.<span class="number">2</span>), <span class="keyword">and</span> <span class="type">Bundler</span> cannot <span class="keyword">continue</span>.
+<span class="type">Make</span> sure that `gem install rake -v '<span class="number">0</span>.<span class="number">9</span>.<span class="number">2</span>.<span class="number">2</span>'` succeeds before bundling.
+mbp:octopress$ sudo gem install rake -v '<span class="number">0</span>.<span class="number">9</span>.<span class="number">2</span>.<span class="number">2</span>'
+rake's executable <span class="string">"rake"</span> conflicts <span class="keyword">with</span> /usr/bin/rake
+<span class="type">Overwrite</span> the executable? [yN]  N
+<span class="type">ERROR</span>:  <span class="type">Error</span> installing rake:
+ <span class="string">"rake"</span> <span class="keyword">from</span> rake conflicts <span class="keyword">with</span> /usr/bin/rake
+mbp:octopress$ rake -version
+rake aborted!
+undefined local variable <span class="keyword">or</span> <span class="keyword">method</span> `rsion' <span class="keyword">for</span> <span class="comment">#&lt;Rake::Application:0x007fc41c8782b8&gt;</span>
+
+(<span class="type">See</span> full trace by running task <span class="keyword">with</span> --trace)
+</code></pre><p>看来用sudo无法安装，只能把gem加到环境变量了</p>
+<pre><code><span class="symbol">mbp:</span>octopress<span class="variable">$ </span>export <span class="constant">GEM_HOME</span>=<span class="regexp">/Users/akshay</span><span class="regexp">/.gem/ruby</span><span class="regexp">/2.0.0/</span>
+<span class="symbol">mbp:</span>octopress<span class="variable">$ </span>echo <span class="variable">$GEM_HOME</span>
+/<span class="constant">Users</span>/elvinlee/.gem/ruby/<span class="number">2.0</span>.<span class="number">0</span>/
+</code></pre><p>这下应该可以了吧。</p>
+<pre><code>mbp:octopress$ bundle install
+Fetching gem metadata <span class="built_in">from</span> <span class="keyword">https</span>://rubygems.org/.......
+Fetching additional metadata <span class="built_in">from</span> <span class="keyword">https</span>://rubygems.org/..
+Installing rake (<span class="number">0.9</span><span class="number">.2</span><span class="number">.2</span>)
+
+Gem::Installer::ExtensionBuildError: ERROR: Failed <span class="built_in">to</span> build gem native extension.
+
+/System/Library/Frameworks/Ruby.framework/Versions/<span class="number">2.0</span>/usr/bin/ruby extconf.rb 
+checking <span class="keyword">for</span> main() <span class="operator">in</span> -lc... yes
+creating Makefile
+
+make <span class="string">"DESTDIR="</span>
+compiling redcloth_attributes.c
+compiling redcloth_inline.c
+compiling redcloth_scan.c
+linking shared-object redcloth_scan.bundle
+clang: error: unknown argument: <span class="string">'-multiply_definedsuppress'</span> [-Wunused-<span class="command"><span class="keyword">command</span>-line-argument-hard-error-in-future]</span>
+clang: note: this will be <span class="operator">a</span> hard error (cannot be downgraded <span class="built_in">to</span> <span class="operator">a</span> warning) <span class="operator">in</span> <span class="operator">the</span> future
+make: *** [redcloth_scan.bundle] Error <span class="number">1</span>
+
+
+Gem <span class="built_in">files</span> will remain installed <span class="operator">in</span> /Users/akshay/.gem/ruby/<span class="number">2.0</span><span class="number">.0</span>/gems/RedCloth-<span class="number">4.2</span><span class="number">.9</span> <span class="keyword">for</span> inspection.
+Results logged <span class="built_in">to</span> /Users/akshay/.gem/ruby/<span class="number">2.0</span><span class="number">.0</span>/gems/RedCloth-<span class="number">4.2</span><span class="number">.9</span>/ext/redcloth_scan/gem_make.out
+An error occurred <span class="keyword">while</span> installing RedCloth (<span class="number">4.2</span><span class="number">.9</span>), <span class="operator">and</span> Bundler cannot
+continue.
+Make sure that `gem install RedCloth -v <span class="string">'4.2.9'</span>` succeeds <span class="keyword">before</span> bundling.
+</code></pre><p>无语了，还是不行。sudo安装redcloth还是出了问题，幸好在stackoverflow上找到答案了，地址：<a href="http://stackoverflow.com/questions/22352838/ruby-gem-install-json-fails-on-mavericks-and-xcode-5-1-unknown-argument-mul" target="_blank" rel="external">http://stackoverflow.com/questions/22352838/ruby-gem-install-json-fails-on-mavericks-and-xcode-5-1-unknown-argument-mul</a></p>
+<pre><code>mbp:octopress$ export ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future gem <span class="operator"><span class="keyword">install</span> json
+mbp:octopress$ gem <span class="keyword">install</span> RedCloth -v <span class="string">'4.2.9'</span>
+
+mbp:octopress$ gem <span class="keyword">install</span> RedCloth -v <span class="string">'4.2.9'</span>
+Building native extensions.  This could take a while...
+Successfully installed RedCloth-<span class="number">4.2</span><span class="number">.9</span>
+Parsing documentation <span class="keyword">for</span> RedCloth-<span class="number">4.2</span><span class="number">.9</span>
+unable <span class="keyword">to</span> <span class="keyword">convert</span> <span class="string">"\xCF"</span> <span class="keyword">from</span> <span class="keyword">ASCII</span>-<span class="number">8</span><span class="built_in">BIT</span> <span class="keyword">to</span> UTF-<span class="number">8</span> <span class="keyword">for</span> ext/redcloth_scan/redcloth_attributes.o, skipping
+unable <span class="keyword">to</span> <span class="keyword">convert</span> <span class="string">"\xCF"</span> <span class="keyword">from</span> <span class="keyword">ASCII</span>-<span class="number">8</span><span class="built_in">BIT</span> <span class="keyword">to</span> UTF-<span class="number">8</span> <span class="keyword">for</span> ext/redcloth_scan/redcloth_inline.o, skipping
+unable <span class="keyword">to</span> <span class="keyword">convert</span> <span class="string">"\xCF"</span> <span class="keyword">from</span> <span class="keyword">ASCII</span>-<span class="number">8</span><span class="built_in">BIT</span> <span class="keyword">to</span> UTF-<span class="number">8</span> <span class="keyword">for</span> ext/redcloth_scan/redcloth_scan.bundle, skipping
+unable <span class="keyword">to</span> <span class="keyword">convert</span> <span class="string">"\xCF"</span> <span class="keyword">from</span> <span class="keyword">ASCII</span>-<span class="number">8</span><span class="built_in">BIT</span> <span class="keyword">to</span> UTF-<span class="number">8</span> <span class="keyword">for</span> ext/redcloth_scan/redcloth_scan.o, skipping
+unable <span class="keyword">to</span> <span class="keyword">convert</span> <span class="string">"\xCF"</span> <span class="keyword">from</span> <span class="keyword">ASCII</span>-<span class="number">8</span><span class="built_in">BIT</span> <span class="keyword">to</span> UTF-<span class="number">8</span> <span class="keyword">for</span> lib/redcloth_scan.bundle, skipping
+Installing ri documentation <span class="keyword">for</span> RedCloth-<span class="number">4.2</span><span class="number">.9</span>
+<span class="number">1</span> gem installed</span>
+</code></pre><p>终于搞定了，弄了一整天了。现在再试试安装bundle：</p>
+<pre><code>mbp:octopress$ bundle <span class="operator"><span class="keyword">install</span>
+Fetching gem metadata <span class="keyword">from</span> https://rubygems.org/.......
+Fetching additional metadata <span class="keyword">from</span> https://rubygems.org/..
+<span class="keyword">Using</span> rake (<span class="number">0.9</span><span class="number">.2</span><span class="number">.2</span>)
+<span class="keyword">Using</span> RedCloth (<span class="number">4.2</span><span class="number">.9</span>)
+Installing chunky_png (<span class="number">1.2</span><span class="number">.5</span>)
+Installing <span class="keyword">fast</span>-stemmer (<span class="number">1.0</span><span class="number">.1</span>)
+Installing classifier (<span class="number">1.3</span><span class="number">.3</span>)
+Installing fssm (<span class="number">0.2</span><span class="number">.9</span>)
+Installing sass (<span class="number">3.2</span><span class="number">.9</span>)
+Installing compass (<span class="number">0.12</span><span class="number">.2</span>)
+Installing directory_watcher (<span class="number">1.4</span><span class="number">.1</span>)
+Installing haml (<span class="number">3.1</span><span class="number">.7</span>)
+Installing kramdown (<span class="number">0.13</span><span class="number">.8</span>)
+Installing liquid (<span class="number">2.3</span><span class="number">.0</span>)
+Installing syntax (<span class="number">1.0</span><span class="number">.0</span>)
+Installing maruku (<span class="number">0.6</span><span class="number">.1</span>)
+Installing posix-spawn (<span class="number">0.3</span><span class="number">.6</span>)
+Installing yajl-ruby (<span class="number">1.1</span><span class="number">.0</span>)
+Installing pygments.rb (<span class="number">0.3</span><span class="number">.4</span>)
+Installing jekyll (<span class="number">0.12</span><span class="number">.0</span>)
+Installing rack (<span class="number">1.5</span><span class="number">.2</span>)
+Installing rack-protection (<span class="number">1.5</span><span class="number">.0</span>)
+Installing rb-fsevent (<span class="number">0.9</span><span class="number">.1</span>)
+Installing rdiscount (<span class="number">2.0</span><span class="number">.7</span><span class="number">.3</span>)
+Installing rubypants (<span class="number">0.2</span><span class="number">.0</span>)
+Installing sass-globbing (<span class="number">1.0</span><span class="number">.0</span>)
+Installing tilt (<span class="number">1.3</span><span class="number">.7</span>)
+Installing sinatra (<span class="number">1.4</span><span class="number">.2</span>)
+Installing stringex (<span class="number">1.4</span><span class="number">.0</span>)
+<span class="keyword">Using</span> bundler (<span class="number">1.5</span><span class="number">.3</span>)
+Your bundle <span class="keyword">is</span> complete!
+<span class="keyword">Use</span> <span class="string">`bundle show [gemname]`</span> <span class="keyword">to</span> see <span class="keyword">where</span> a bundled gem <span class="keyword">is</span> installed.</span>
+</code></pre><p>完全没问题，接下来安装rake：</p>
+<pre><code>mbp:octopress$ rake install
+<span class="comment">## Copying classic theme into ./source and ./sass</span>
+mkdir -p <span class="built_in">source</span>
+cp -r .themes/classic/<span class="built_in">source</span>/. <span class="built_in">source</span>
+mkdir -p sass
+cp -r .themes/classic/sass/. sass
+mkdir -p <span class="built_in">source</span>/_posts
+mkdir -p public
+</code></pre><p>忙活了一天总算搞定了。</p>
+<h2 id="配置">配置</h2>
+<p>接下来配置博客，首先在github创建一个仓库，名字必须跟github的用户名一样。建好后就开始部署github page：</p>
+<pre><code>mbp:octopress$ rake setup_github_pages
+Enter the <span class="keyword">read</span>/<span class="keyword">write</span> url <span class="keyword">for</span> your repository
+(<span class="keyword">For</span> example, <span class="string">'git@github.com:your_username/your_username.github.io.git)
+       or '</span>https:<span class="comment">//github.com/your_username/your_username.github.io')</span>
+Repository url: https:<span class="comment">//github.com/evlinlee/evlinlee.github.io.git</span>
+Added remote https:<span class="comment">//github.com/evlinlee/evlinlee.github.io.git as origin</span>
+<span class="keyword">Set</span> origin <span class="keyword">as</span> <span class="keyword">default</span> remote
+Master branch renamed <span class="keyword">to</span> <span class="string">'source'</span> <span class="keyword">for</span> committing your blog source files
+rm -rf _deploy
+mkdir _deploy
+cd _deploy
+Initialized <span class="keyword">empty</span> Git repository <span class="keyword">in</span> /Users/akshay/Dev/Octopress/octopress/_deploy/.git/
+[master (root-commit) e8d4b07] Octopress init
+ <span class="number">1</span> file changed, <span class="number">1</span> insertion(+)
+ <span class="keyword">create</span> mode <span class="number">100644</span> <span class="keyword">index</span>.html
+cd -
+
+---
+</code></pre><p>ok,接下来配置下octopress的一些配置文件，_config.yml是博客重要的一个配置文件，在_config.yml文件中有三大配置项：Main Configs、Jekyll &amp; Plugins和3rd Party Settings。<br>一般，该文件中其中url是必须要填写的，这里的url是在github上创建的一个仓库地址，具体请看第四步中创建的地址。另外再修改一下title、subtitle和author，根据需求，在开启一些第三方组件服务。<br>关于_config.yml文件中的更多内容，请看这里的内容：Configuring Octopress</p>
+<blockquote>
+<p>建议：最好把里面的twitter相关的信息全部删掉，否则由于GFW的原因，将会造成页面load很慢。同理，修改定制文件/source/_includes/custom/head.html 把google的自定义字体去掉。</p>
+</blockquote>
+<p>这里是我的配置文件：</p>
+<pre><code><span class="preprocessor"># ----------------------- #</span>
+<span class="preprocessor">#      Main Configs       #</span>
+<span class="preprocessor"># ----------------------- #</span>
+<span class="label">url:</span> http://evlinlee.github.io
+<span class="label">title:</span> 李绪敏的博客
+<span class="label">subtitle:</span> Notes on Coding <span class="keyword">and</span> Life.
+<span class="label">author:</span> ElvinLee
+<span class="label">simple_search:</span> https://www.google.com/search
+<span class="label">description:</span>
+</code></pre><p>接下来就把博客部署到github上：</p>
+<pre><code>mbp:octopress$ rake generate
+## Generating Site with Jekyll
+directory source/stylesheets/ 
+   <span class="operator"><span class="keyword">create</span> source/stylesheets/screen.css 
+Configuration <span class="keyword">from</span> /Users/elvinlee/Dev/Octopress/octopress/_config.yml
+Building site: source -&gt; <span class="keyword">public</span>
+Successfully generated site: source -&gt; <span class="keyword">public</span>
+mbp:octopress$ rake deploy
+## Deploying branch <span class="keyword">to</span> Github Pages 
+## Pulling <span class="keyword">any</span> updates <span class="keyword">from</span> Github Pages 
+cd _deploy
+There <span class="keyword">is</span> <span class="keyword">no</span> tracking information <span class="keyword">for</span> the <span class="keyword">current</span> branch.
+Please specify which branch you want <span class="keyword">to</span> <span class="keyword">merge</span> <span class="keyword">with</span>.
+See git-pull(<span class="number">1</span>) <span class="keyword">for</span> details
+
+    git pull &lt;remote&gt; &lt;branch&gt;
+
+<span class="keyword">If</span> you wish <span class="keyword">to</span> <span class="keyword">set</span> tracking information <span class="keyword">for</span> this branch you can <span class="keyword">do</span> so <span class="keyword">with</span>:
+
+    git branch <span class="comment">--set-upstream-to=origin/&lt;branch&gt; master</span>
+
+cd -
+rm -rf _deploy/<span class="keyword">index</span>.html
+
+## Copying <span class="keyword">public</span> <span class="keyword">to</span> _deploy
+cp -r <span class="keyword">public</span>/. _deploy
+cd _deploy
+
+## Committing: Site updated <span class="keyword">at</span> <span class="number">2014</span>-<span class="number">03</span>-<span class="number">13</span> <span class="number">12</span>:<span class="number">04</span>:<span class="number">21</span> UTC
+[<span class="keyword">master</span> a87f356] Site updated <span class="keyword">at</span> <span class="number">2014</span>-<span class="number">03</span>-<span class="number">13</span> <span class="number">12</span>:<span class="number">04</span>:<span class="number">21</span> UTC
+ <span class="number">61</span> files <span class="keyword">changed</span>, <span class="number">1118</span> insertions(+), <span class="number">1</span> deletion(-)
+ &lt;<span class="keyword">LINES</span> REMOVED&gt;
+## Pushing generated _deploy website
+Counting objects: <span class="number">79</span>, done.
+Delta compression <span class="keyword">using</span> up <span class="keyword">to</span> <span class="number">8</span> threads.
+Compressing objects: <span class="number">100</span>% (<span class="number">72</span>/<span class="number">72</span>), done.
+Writing objects: <span class="number">100</span>% (<span class="number">79</span>/<span class="number">79</span>), <span class="number">186.51</span> KiB | <span class="number">0</span> bytes/s, done.
+Total <span class="number">79</span> (delta <span class="number">1</span>), reused <span class="number">0</span> (delta <span class="number">0</span>)
+<span class="keyword">To</span> https://github.com/evlinlee/evlinlee.github.io.git
+ * [new branch]      <span class="keyword">master</span> -&gt; <span class="keyword">master</span>
+
+## Github Pages deploy complete
+cd -</span>
+</code></pre><p>最后提交到github的仓库上：</p>
+<pre><code>mbp:octopress$ git status
+On branch source
+Your branch is based on 'origin/master', but the upstream is gone.
+  (<span class="operator"><span class="keyword">use</span> <span class="string">"git branch --unset-upstream"</span> <span class="keyword">to</span> fixup)
+
+Changes <span class="keyword">not</span> staged <span class="keyword">for</span> <span class="keyword">commit</span>:
+  (<span class="keyword">use</span> <span class="string">"git add &lt;file&gt;..."</span> <span class="keyword">to</span> <span class="keyword">update</span> what will be committed)
+  (<span class="keyword">use</span> <span class="string">"git checkout -- &lt;file&gt;..."</span> <span class="keyword">to</span> discard changes <span class="keyword">in</span> working directory)
+
+ modified:   Rakefile
+ modified:   _config.yml
+
+Untracked files:
+  (<span class="keyword">use</span> <span class="string">"git add &lt;file&gt;..."</span> <span class="keyword">to</span> include <span class="keyword">in</span> what will be committed)
+
+ sass/
+ source/
+
+<span class="keyword">no</span> changes added <span class="keyword">to</span> <span class="keyword">commit</span> (<span class="keyword">use</span> <span class="string">"git add"</span> <span class="keyword">and</span>/<span class="keyword">or</span> <span class="string">"git commit -a"</span>)
+mbp:octopress$ git <span class="keyword">add</span> .
+mbp:octopress$ git <span class="keyword">commit</span> -m <span class="string">'First commit'</span>
+[source <span class="number">13</span>f9d4a] <span class="keyword">First</span> <span class="keyword">commit</span>
+ <span class="number">119</span> files <span class="keyword">changed</span>, <span class="number">2784</span> insertions(+), <span class="number">3</span> deletions(-)
+ &lt;太长了，省略君出现了&gt;
+mbp:octopress$ git push origin source
+Counting objects: <span class="number">4771</span>, done.
+Delta compression <span class="keyword">using</span> up <span class="keyword">to</span> <span class="number">8</span> threads.
+Compressing objects: <span class="number">100</span>% (<span class="number">2124</span>/<span class="number">2124</span>), done.
+Writing objects: <span class="number">100</span>% (<span class="number">4771</span>/<span class="number">4771</span>), <span class="number">1.30</span> MiB | <span class="number">136.00</span> KiB/s, done.
+Total <span class="number">4771</span> (delta <span class="number">2296</span>), reused <span class="number">4742</span> (delta <span class="number">2270</span>)
+<span class="keyword">To</span> https://github.com/evlinlee/evlinlee.github.io.git
+ * [new branch]      source -&gt; source
+mbp:octopress$</span>
+</code></pre><p>终于弄好了，可以发布文章了。</p>
+<pre><code>mbp:octopress$ rake new_post[<span class="string">"Setting up Octopress"</span>]
+mkdir -p <span class="built_in">source</span>/_posts
+Creating new post: <span class="built_in">source</span>/_posts/<span class="number">2014</span>-<span class="number">04</span>-<span class="number">28</span>-setting-up-octopress.markdown
+</code></pre><p>文章都是基于markdown语法写的，在mac下推荐MOU。用mou打开2014-04-28-setting-up-octopress.markdown，随便写点东西。然后提交到github上。</p>
+<pre><code>rake generate
+<span class="label">mbp:</span>octopress$ git <span class="keyword">add</span> .
+<span class="label">mbp:</span>octopress$ git commit -am <span class="string">"Some comment here."</span> 
+<span class="label">mbp:</span>octopress$ git <span class="keyword">push</span> origin source
+<span class="label">mbp:</span>octopress$ rake deploy
+</code></pre><p>打开evlinlee.github.io，哈哈，终于搞定了。<br>写的不够详细，以后继续补充，接下来打算买个域名。最后mark下markdown语法的学习教程：<br><a href="http://wowubuntu.com/markdown/" target="_blank" rel="external">http://wowubuntu.com/markdown/</a></p>
+<h2 id="添加域名">添加域名</h2>
+<ol>
+<li>添加自己的域名，建议去<a href="http://www.godaddy.com/" target="_blank" rel="external">Goddy</a>买。考虑到有时候国外连通线路不稳定，建议通过国内第三方dns，我经常用的是<a href="http://www.dnspod.cn/" target="_blank" rel="external">dnspod</a>。绑定域名可以参考官方文档，<a href="https://help.github.com/articles/setting-up-a-custom-domain-with-github-pages" target="_blank" rel="external">Setting up a custom domain with Pages</a>.在godday设置要nameserver为dnspod，然后再dnspod添加相应的域名，在域名的解析界面添加CNAME类型的记录，如下：<br>www        CNAME    evlin.github.io    600</li>
+<li>在source目录下添加CNAME文件，文件的内容是自己注册的域名。</li>
+</ol>
+<h2 id="问题">问题</h2>
+<p>如果遇到一下关于rake版本的问题的话，</p>
+<pre><code>You have already activated rake <span class="number">0.9</span><span class="number">.6</span>, but your Gemfile requires rake <span class="number">0.9</span><span class="number">.2</span><span class="number">.2</span>. Prepending `bundle exec` <span class="built_in">to</span> your <span class="command"><span class="keyword">command</span> <span class="title">may</span> <span class="title">solve</span> <span class="title">this</span>.</span>
+</code></pre><p>直接更新rake的版本即可。</p>
+<pre><code>bundle <span class="keyword">update</span> rake
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://evlinlee.github.io/2014/05/07/mac-for-github-octopress/" data-id="ra2kq1mpmfi4tsbm" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/05/12/highlight-listview-items/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          ListView item高亮
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2009/11/13/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hello World! I&#39;m Octopress!</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android-AsyncTask/">Android AsyncTask</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/android/">android</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/android基础/">android基础</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/android拓展/">android拓展</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/android问题/">android问题</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/git入门/">git入门</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/">其他</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">September 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">November 2009</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2014/12/19/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2014/11/05/android-asyntask-summary/">AsyncTask相关总结</a>
+          </li>
+        
+          <li>
+            <a href="/2014/09/08/androidstudio-keyboard-shortkey/">Android Studio快捷键</a>
+          </li>
+        
+          <li>
+            <a href="/2014/08/02/androidbarsherlock-study/">ActionBarSherlock使用</a>
+          </li>
+        
+          <li>
+            <a href="/2014/06/22/about-android-decompile/">关于android反编译</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2014 lixumin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+
+  </div>
+</body>
+</html>

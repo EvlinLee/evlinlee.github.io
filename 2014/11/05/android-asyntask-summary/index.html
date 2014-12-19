@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>AsyncTask相关总结 | 夜半微凉的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="AsyncTask介绍
+Android的AsyncTask比Handler更轻量级一些，适用于简单的异步处理。首先明确Android之所以有Handler和AsyncTask，都是为了不阻塞主线程（UI线程），且UI的更新只能在主线程中完成，因此异步处理是不可避免的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AsyncTask相关总结">
+<meta property="og:url" content="https://evlinlee.github.io/2014/11/05/android-asyntask-summary/">
+<meta property="og:site_name" content="夜半微凉的博客">
+<meta property="og:description" content="AsyncTask介绍
+Android的AsyncTask比Handler更轻量级一些，适用于简单的异步处理。首先明确Android之所以有Handler和AsyncTask，都是为了不阻塞主线程（UI线程），且UI的更新只能在主线程中完成，因此异步处理是不可避免的。">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AsyncTask相关总结">
+<meta name="twitter:description" content="AsyncTask介绍
+Android的AsyncTask比Handler更轻量级一些，适用于简单的异步处理。首先明确Android之所以有Handler和AsyncTask，都是为了不阻塞主线程（UI线程），且UI的更新只能在主线程中完成，因此异步处理是不可避免的。">
+
+  
+    <link rel="alternative" href="/atom.xml" title="夜半微凉的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">夜半微凉的博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:https://evlinlee.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-android-asyntask-summary" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/11/05/android-asyntask-summary/" class="article-date">
+  <time datetime="2014-11-04T17:17:51.000Z" itemprop="datePublished">Nov 5 2014</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Android-AsyncTask/">Android AsyncTask</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      AsyncTask相关总结
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="AsyncTask介绍">AsyncTask介绍</h4>
+<p>Android的AsyncTask比Handler更轻量级一些，适用于简单的异步处理。<br>首先明确Android之所以有Handler和AsyncTask，都是为了不阻塞主线程（UI线程），且UI的更新只能在主线程中完成，因此异步处理是不可避免的。</p>
+<a id="more"></a>
+
+<p>Android为了降低这个开发难度，提供了AsyncTask。AsyncTask就是一个封装过的后台任务类，顾名思义就是异步任务。<br>AsyncTask直接继承于Object类，位置为android.os.AsyncTask。要使用AsyncTask工作我们要提供三个泛型参数，并重载几个方法(至少重载一个)。</p>
+<p>AsyncTask定义了三种泛型类型 Params，Progress和Result。</p>
+<p>Params 启动任务执行的输入参数，比如HTTP请求的URL。</p>
+<p>Progress 后台任务执行的百分比。</p>
+<p>Result 后台执行任务最终返回的结果，比如String。</p>
+<p>使用过AsyncTask 的同学都知道一个异步加载数据最少要重写以下这两个方法：</p>
+<p>doInBackground(Params…) 后台执行，比较耗时的操作都可以放在这里。注意这里不能直接操作UI。此方法在后台线程执行，完成任务的主要工作，通常需要较长的时间。在执行过程中可以调用publicProgress(Progress…)来更新任务的进度。</p>
+<p>onPostExecute(Result)    相当于Handler 处理UI的方式，在这里面可以使用在doInBackground 得到的结果处理操作UI。 此方法在主线程执行，任务执行的结果作为此方法的参数返回<br>有必要的话你还得重写以下这三个方法，但不是必须的。</p>
+<p>onProgressUpdate(Progress…)    可以使用进度条增加用户体验度。 此方法在主线程执行，用于显示任务执行的进度。</p>
+<p>onPreExecute()    这里是最终用户调用Excute时的接口，当任务执行之前开始调用此方法，可以在这里显示进度对话框。<br>onCancelled()    用户调用取消时，要做的操作</p>
+<p>使用AsyncTask类，以下是几条必须遵守的准则：</p>
+<p>Task的实例必须在UI thread中创建；</p>
+<p>execute方法必须在UI thread中调用；</p>
+<p>不要手动的调用onPreExecute(), onPostExecute(Result)，doInBackground(Params…), onProgressUpdate(Progress…)这几个方法；</p>
+<p>该task只能被执行一次，否则多次调用时将会出现异常；</p>
+<h4 id="异步任务AsyncTask在不同Android版本的差异">异步任务AsyncTask在不同Android版本的差异</h4>
+<p>该差异主要是Android2.3和Android3.0及其之后的差异,差异内容如下：<br>在Android2.3中AsyncTask的调用可以并发执行.</p>
+<p>因为它在一个线程池中被调用.该线程池有5个核心线程,且最大线程数为128个. </p>
+<p>比如:同时启动10个任务,有5个任务能够立刻执行,另外5个任务则需等待;当有一个任务执行完毕后,第6个任务才会启动,以此类推. </p>
+<p>因为线程池中最大能存放的线程数是128个,当我们尝试去添加第129个任务时,程序会崩溃.</p>
+<p>在Android3.0及其以后AsyncTask的调用在默认情况同时只能有1个任务在执行. </p>
+<p>在AsyncTask中采用了SerialExecutor,它很类似于SingleThreadExecutor,即线程池中只有一个线程的线程池. </p>
+<p>所以在2.3之后调用asyncTask.execute(params)方法,同时只能有1个任务在执行.待该任务执行完成后再执行下一个任务. </p>
+<p>那么可以修改该默认设置么？当然是可以的. </p>
+<p>可以调用方法asyncTask.executeOnExecutor(executor, params); </p>
+<p>第一个参数executor就设置为一个自己配置的线城池。</p>
+<h4 id="AsyncTask和Thread的使用场景的区别">AsyncTask和Thread的使用场景的区别</h4>
+<p>AsyncTask简单灵活,不用考虑UI更新.但是要注意AsyncTask版本差异带来的问题,请参考上面的总结.<br> 当有大量的瞬时任务出现时应该考虑使用线程池,可以节省线程的创建和销毁的消耗。</p>
+<h4 id="Asynctask和handler的优缺点">Asynctask和handler的优缺点</h4>
+<ul>
+<li><h5 id="AsyncTask实现的原理,和适用的优缺点">AsyncTask实现的原理,和适用的优缺点</h5>
+<blockquote>
+<p>AsyncTask,是android提供的轻量级的异步类,可以直接继承AsyncTask,在类中实现异步操作,并提供接口反馈当前异步执行的程度(可以通过接口实现UI进度更新),最后反馈执行的结果给UI主线程.</p>
+<p>使用的优点:简单,快捷、过程可控</p>
+<p>使用的缺点:在使用多个异步操作和并需要进行Ui变更时,就变得复杂起来。最大并发数不超过5。</p>
+</blockquote>
+</li>
+<li><h5 id="Handler异步实现的原理和适用的优缺点">Handler异步实现的原理和适用的优缺点</h5>
+<blockquote>
+<p>在Handler 异步实现时,涉及到 Handler, Looper, Message,Thread四个对象，实现异步的流程是主线程启动Thread（子线程）àthread(子线程)运行并生成Message-àLooper获取Message并传递给HandleràHandler逐个获取Looper中的Message，并进行UI变更。</p>
+<p>使用的优点：结构清晰，功能定义明确；对于多个后台任务时，简单，清晰。   </p>
+<p>使用的缺点： 在单个后台异步处理时，显得代码过多，结构过于复杂（相对性）</p>
+</blockquote>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://evlinlee.github.io/2014/11/05/android-asyntask-summary/" data-id="uczeevt83e3aa7uh" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/12/19/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Hello World
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/09/08/androidstudio-keyboard-shortkey/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Android Studio快捷键</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android-AsyncTask/">Android AsyncTask</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/android/">android</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/android基础/">android基础</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/android拓展/">android拓展</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/android问题/">android问题</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/git入门/">git入门</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/">其他</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">September 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">November 2009</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2014/12/19/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2014/11/05/android-asyntask-summary/">AsyncTask相关总结</a>
+          </li>
+        
+          <li>
+            <a href="/2014/09/08/androidstudio-keyboard-shortkey/">Android Studio快捷键</a>
+          </li>
+        
+          <li>
+            <a href="/2014/08/02/androidbarsherlock-study/">ActionBarSherlock使用</a>
+          </li>
+        
+          <li>
+            <a href="/2014/06/22/about-android-decompile/">关于android反编译</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2014 lixumin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+
+  </div>
+</body>
+</html>

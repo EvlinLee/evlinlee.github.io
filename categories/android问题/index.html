@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives: 2009 | 夜半微凉的博客</title>
+  <title>Category: android问题 | 夜半微凉的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description">
 <meta property="og:type" content="website">
 <meta property="og:title" content="夜半微凉的博客">
-<meta property="og:url" content="https://evlinlee.github.io/archives/2009/">
+<meta property="og:url" content="https://evlinlee.github.io/categories/android问题/">
 <meta property="og:site_name" content="夜半微凉的博客">
 <meta property="og:description">
 <meta name="twitter:card" content="summary">
@@ -63,12 +63,16 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-android-volley-issue" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2009/11/13/hello-world/" class="article-date">
-  <time datetime="2009-11-12T16:00:00.000Z" itemprop="datePublished">Nov 13 2009</time>
+    <a href="/2014/06/17/android-volley-issue/" class="article-date">
+  <time datetime="2014-06-17T13:48:53.000Z" itemprop="datePublished">Jun 17 2014</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/android问题/">android问题</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -77,7 +81,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2009/11/13/hello-world/">Hello World! I&#39;m Octopress!</a>
+      <a class="article-title" href="/2014/06/17/android-volley-issue/">android volley 带参数的Post方式</a>
     </h1>
   
 
@@ -85,17 +89,17 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>Octopress is a blogging framework designed for hackers</strong>, based on <a href="http://github.com/mojombo/jekyll" target="_blank" rel="external">Jekyll</a> the blog aware static site generator powering <a href="http://pages.github.com/" target="_blank" rel="external">Github pages</a>.<br>If you don’t know what Jekyll is, <a href="http://metajack.im/2009/01/23/blogging-with-git-emacs-and-jekyll/" target="_blank" rel="external">Jack Moffitt</a> wrote a good summary:</p>
-<blockquote>
-<p>Jekyll is a static blog generator; it transforms a directory of input files into another directory of files suitable for a blog. The management of the blog is handled by standard, familiar tools like creating and renaming files, the text editor of your choice, and version control.<br><cite><strong>Jack Moffitt</strong> <a href="http://metajack.im/2009/01/23/blogging-with-git-emacs-and-jekyll/" target="_blank" rel="external">Blogging with Git Emacs and Jekyll</a></cite></p>
-</blockquote>
-<p>There’s no database to set up, and you get to use tools like Emacs, vim, or TextMate to write your posts, not some lame in-browser text editor. Just write, generate, deploy, using the same tools and patters you already use for your daily work.</p>
-<p><a href="http://wiki.github.com/imathis/octopress/" target="_blank" rel="external">Read the wiki to learn more</a></p>
-
+        <p>在使用Volley过程中，出现过这样的问题，用Post方式带参数获取json数据时报错，获取的时html文件格式，而不是json数据，看了下volley的源代码，原来getParam函数参数返回的是空。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">protected</span> Map&lt;String, String&gt; <span class="title">getParams</span>() <span class="keyword">throws</span> AuthFailureError {</div><div class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">}</div></pre></td></tr></table></figure><br>
+        
+          <p class="article-more-link">
+            <a href="/2014/06/17/android-volley-issue/#more">Read More</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://evlinlee.github.io/2009/11/13/hello-world/" data-id="fdn7lsugu8lqrmfx" class="article-share-link">Share</a>
+      <a data-url="https://evlinlee.github.io/2014/06/17/android-volley-issue/" data-id="san9nxbsdcv3r1d3" class="article-share-link">Share</a>
       
       
     </footer>

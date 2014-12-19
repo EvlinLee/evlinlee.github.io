@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Android开发利器：RoboGuice | 夜半微凉的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="现在有很多第三方的开源库和框架可以用，我们不知道或者我们没有使用过或者我们定义了自己的库或我们还没有考虑使用这样的库由于N种原因。如果我们在开发中使用部分这些库的话，我们能完成像提供兼容性、cool的UI、简洁的代码等等，因此，我将探索更多关于这样的库可以帮助新手和有经验的开发者。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android开发利器：RoboGuice">
+<meta property="og:url" content="https://evlinlee.github.io/2014/06/09/android-cool-tools-1/">
+<meta property="og:site_name" content="夜半微凉的博客">
+<meta property="og:description" content="现在有很多第三方的开源库和框架可以用，我们不知道或者我们没有使用过或者我们定义了自己的库或我们还没有考虑使用这样的库由于N种原因。如果我们在开发中使用部分这些库的话，我们能完成像提供兼容性、cool的UI、简洁的代码等等，因此，我将探索更多关于这样的库可以帮助新手和有经验的开发者。">
+<meta property="og:image" content="/images/android-injection-library.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android开发利器：RoboGuice">
+<meta name="twitter:description" content="现在有很多第三方的开源库和框架可以用，我们不知道或者我们没有使用过或者我们定义了自己的库或我们还没有考虑使用这样的库由于N种原因。如果我们在开发中使用部分这些库的话，我们能完成像提供兼容性、cool的UI、简洁的代码等等，因此，我将探索更多关于这样的库可以帮助新手和有经验的开发者。">
+
+  
+    <link rel="alternative" href="/atom.xml" title="夜半微凉的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">夜半微凉的博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:https://evlinlee.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-android-cool-tools-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/06/09/android-cool-tools-1/" class="article-date">
+  <time datetime="2014-06-09T07:49:13.000Z" itemprop="datePublished">Jun 9 2014</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/android拓展/">android拓展</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android开发利器：RoboGuice
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>现在有很多第三方的开源库和框架可以用，我们不知道或者我们没有使用过或者我们定义了自己的库或我们还没有考虑使用这样的库由于N种原因。如果我们在开发中使用部分这些库的话，我们能完成像提供兼容性、cool的UI、简洁的代码等等，因此，我将探索更多关于这样的库可以帮助新手和有经验的开发者。<br><a id="more"></a><br>今天先想谈下依赖注入的库。</p>
+<h4 id="什么是依赖注入？">什么是依赖注入？</h4>
+<p>依赖注入是一种软件设计模式，无论是在运行时还是编译时，允许删除硬编码，可以改变它们的依赖关系。<br>[原文: <a href="http://en.wikipedia.org/wiki/Dependency_injection" title="Wikipedia" target="_blank" rel="external">Wikipedia</a>]</p>
+<p>android现在有一些流行并广泛使用的依赖注入库，有如下这一些：</p>
+<img src="/images/android-injection-library.png">
+
+<h4 id="RoboGuice:">RoboGuice:</h4>
+<p>github地址：<a href="https://github.com/roboguice/roboguice" target="_blank" rel="external">https://github.com/roboguice/roboguice</a><br>RoboGuice使用谷歌自己的Guice库,给Android带来了简单和易用的依赖注入。<br>使用RoboGuice，你能注入View, Resource, System Service或者其他的对象。RoboGuice能帮你把代码“减肥”，更少的代码意味着减少代码的问题/bug。</p>
+<p>接下来看看RoboGuice的用法：</p>
+<h4 id="RoboGuice的用法：">RoboGuice的用法：</h4>
+<ul>
+<li><em>Views Injection:</em>  初始化Views，使用@InjectViews，举个例子：@InjectView(R.id.textView1) TextView textView1;</li>
+<li><em>Resources Injection:</em>  初始化并获得resources，使用@InjectResources，举个例子：@InjectResource(R.string.app_name) String name;</li>
+<li><em>System services Injection:</em>  初始化并访问系统服务，使用@Inject，举个例子：@Inject LayoutInflater inflater;</li>
+<li><em>POJO object Injection:</em>  注入并初始化POJO对象，使用@Inject，举个例子：@Inject Foo foo;</li>
+</ul>
+<h4 id="配置">配置</h4>
+<p>为了使用RoboGuice，你需要下载以下的JAR文件并加入到classpath中：</p>
+<blockquote>
+<p><a href="http://repo1.maven.org/maven2/org/roboguice/roboguice/2.0/roboguice-2.0.jar" target="_blank" rel="external">http://repo1.maven.org/maven2/org/roboguice/roboguice/2.0/roboguice-2.0.jar</a><br><a href="http://repo1.maven.org/maven2/com/google/inject/guice/3.0/guice-3.0-no_aop.jar" target="_blank" rel="external">http://repo1.maven.org/maven2/com/google/inject/guice/3.0/guice-3.0-no_aop.jar</a><br><a href="http://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar" target="_blank" rel="external">http://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar</a></p>
+</blockquote>
+<p>让我们看下普通的activity的代码例子：</p>
+<h4 id="Example">Example</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span></span>{</div><div class="line"> </div><div class="line">    TextView textView1;</div><div class="line">    TextView textView2;</div><div class="line">    ImageView imageView1;</div><div class="line">    String name;</div><div class="line">    Drawable icLauncher;</div><div class="line">    LocationManager locManager;</div><div class="line">    LayoutInflater inflater;</div><div class="line">    NotificationManager notifyManager;</div><div class="line"> </div><div class="line">    <span class="annotation">@Override</span></div><div class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span>(Bundle savedInstanceState) {</div><div class="line">        <span class="comment">// TODO Auto-generated method stub</span></div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.layout_test);</div><div class="line"> </div><div class="line">        textView1 = (TextView) findViewById(R.id.textView1);</div><div class="line">        textView2 = (TextView) findViewById(R.id.textView2);</div><div class="line">        imageView1 = (ImageView) findViewById(R.id.imageView1);</div><div class="line">        name = getString(R.string.app_name);</div><div class="line">        icLauncher = getResources().getDrawable(R.id.ic_launcher);</div><div class="line">        locManager = (LocationManager) getSystemService(Activity.LOCATION_SERVICE);</div><div class="line">        inflater = (LayoutInflater) getSystemService(Activity.LAYOUT_INFLATER_SERVICE);</div><div class="line">        notifyManager = (NotificationManager) getSystemService(Activity.NOTIFICATION_SERVICE);</div><div class="line"> </div><div class="line">        textView1.setText(<span class="string">"Hello World! RoboGuice demo"</span>);</div><div class="line"> </div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>接下来是使用RoboGuice来实现上面的代码。</p>
+<h4 id="使用RoboGuice">使用RoboGuice</h4>
+<blockquote>
+<p>注意：为了使用RoboGuice，你的Activity或Fragment必须继承RoboActivity或者RoboFragment。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestActivity</span> <span class="keyword">extends</span> <span class="title">RoboActivity</span></span>{</div><div class="line"> </div><div class="line">    <span class="annotation">@InjectView</span>(R.id.textView1) TextView textView1;</div><div class="line">    <span class="annotation">@InjectView</span>(R.id.textView2) TextView textView2;</div><div class="line">    <span class="annotation">@InjectView</span>(R.id.imageView1) ImageView imageView1;</div><div class="line">    <span class="annotation">@InjectResource</span>(R.string.app_name) String name;</div><div class="line">    <span class="annotation">@InjectResource</span>(R.drawable.ic_launcher) Drawable icLauncher;</div><div class="line">    <span class="annotation">@Inject</span> LocationManager locManager;</div><div class="line">    <span class="annotation">@Inject</span> LayoutInflater inflater;</div><div class="line">    <span class="annotation">@Inject</span> NotificationManager notifyManager;</div><div class="line"> </div><div class="line">    <span class="annotation">@Override</span></div><div class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span>(Bundle savedInstanceState) {</div><div class="line">        <span class="comment">// TODO Auto-generated method stub</span></div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.layout_test);</div><div class="line"> </div><div class="line">        textView1.setText(name);</div><div class="line"> </div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>现在你体会到RoboGuice的优点了吧，接下来说下RoboGuice的优点：</p>
+<ul>
+<li>使用@InjectViews，不需要初始化views.</li>
+<li>使用@Inject，不需要初始化System service.</li>
+<li>使用@InjectResource，不需要初始化图片资源, 字符串 和其他资源文件.</li>
+<li>上面三点能够帮你的代码“减肥”.</li>
+<li>更少的代码意味着更少的问题和bug.</li>
+<li>更少的代码意味着android开发者能提高编码效率和集中精力在android app的业务逻辑上。</li>
+</ul>
+<h4 id="RoboGuice_and_ActionBarSherlock">RoboGuice and ActionBarSherlock</h4>
+<p>上面说到使用RoboGuice必须继承RoboActivity或者RoboFragment，但如果在你的工程中使用ActionBarSherlock呢？我们知道使用ActionBarSherlock时必须继承自SherlockActivity或者 SherlockFragmentActivity，那出现这种情况的话，就不能使用RoboGuice？<br>其实有一个方法，就是为同时使用RoboGuice和ActionBarSherlock自己定义一个基类（base class）。<br>你可以从github上下载这个代码:<a href="https://github.com/rtyley/roboguice-sherlock" target="_blank" rel="external">https://github.com/rtyley/roboguice-sherlock</a><br>或者从这个网址下载jar文件：<a href="http://search.maven.org/#artifactdetails%7Ccom.github.rtyley%7Croboguice-sherlock%7C1.3%7Cjar" target="_blank" rel="external">RoboGuice+Sherlock.jar</a> 。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://evlinlee.github.io/2014/06/09/android-cool-tools-1/" data-id="7fw6dxw59hxt3tet" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/06/10/android-cool-tools-2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Android开发利器：Genymotion
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/05/22/viewholder-reuse/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">ViewHolder的复用</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android-AsyncTask/">Android AsyncTask</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/android/">android</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/android基础/">android基础</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/android拓展/">android拓展</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/android问题/">android问题</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/git入门/">git入门</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/其他/">其他</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">September 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11/">November 2009</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2014/12/19/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2014/11/05/android-asyntask-summary/">AsyncTask相关总结</a>
+          </li>
+        
+          <li>
+            <a href="/2014/09/08/androidstudio-keyboard-shortkey/">Android Studio快捷键</a>
+          </li>
+        
+          <li>
+            <a href="/2014/08/02/androidbarsherlock-study/">ActionBarSherlock使用</a>
+          </li>
+        
+          <li>
+            <a href="/2014/06/22/about-android-decompile/">关于android反编译</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2014 lixumin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+
+  </div>
+</body>
+</html>
