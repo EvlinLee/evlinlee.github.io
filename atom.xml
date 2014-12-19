@@ -1,0 +1,958 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title><![CDATA[夜半微凉的博客]]></title>
+  
+  <link href="/atom.xml" rel="self"/>
+  <link href="https://evlinlee.github.io/"/>
+  <updated>2014-12-19T02:35:45.048Z</updated>
+  <id>https://evlinlee.github.io/</id>
+  
+  <author>
+    <name><![CDATA[lixumin]]></name>
+    <email><![CDATA[dev@lixumin.com]]></email>
+  </author>
+  
+  <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Hello World]]></title>
+    <link href="https://evlinlee.github.io/2014/12/19/hello-world/"/>
+    <id>https://evlinlee.github.io/2014/12/19/hello-world/</id>
+    <published>2014-12-18T16:46:46.000Z</published>
+    <updated>2014-12-18T16:46:46.000Z</updated>
+    <content type="html"><![CDATA[<p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">trobuleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick_Start">Quick Start</h2>
+<h3 id="Create_a_new_post">Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+
+<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run_server">Run server</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+
+<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate_static_files">Generate static files</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+
+<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+
+<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[AsyncTask相关总结]]></title>
+    <link href="https://evlinlee.github.io/2014/11/05/android-asyntask-summary/"/>
+    <id>https://evlinlee.github.io/2014/11/05/android-asyntask-summary/</id>
+    <published>2014-11-04T17:17:51.000Z</published>
+    <updated>2014-11-07T11:41:24.000Z</updated>
+    <content type="html"><![CDATA[<h4 id="AsyncTask介绍">AsyncTask介绍</h4>
+<p>Android的AsyncTask比Handler更轻量级一些，适用于简单的异步处理。<br>首先明确Android之所以有Handler和AsyncTask，都是为了不阻塞主线程（UI线程），且UI的更新只能在主线程中完成，因此异步处理是不可避免的。</p>
+<a id="more"></a>
+
+<p>Android为了降低这个开发难度，提供了AsyncTask。AsyncTask就是一个封装过的后台任务类，顾名思义就是异步任务。<br>AsyncTask直接继承于Object类，位置为android.os.AsyncTask。要使用AsyncTask工作我们要提供三个泛型参数，并重载几个方法(至少重载一个)。</p>
+<p>AsyncTask定义了三种泛型类型 Params，Progress和Result。</p>
+<p>Params 启动任务执行的输入参数，比如HTTP请求的URL。</p>
+<p>Progress 后台任务执行的百分比。</p>
+<p>Result 后台执行任务最终返回的结果，比如String。</p>
+<p>使用过AsyncTask 的同学都知道一个异步加载数据最少要重写以下这两个方法：</p>
+<p>doInBackground(Params…) 后台执行，比较耗时的操作都可以放在这里。注意这里不能直接操作UI。此方法在后台线程执行，完成任务的主要工作，通常需要较长的时间。在执行过程中可以调用publicProgress(Progress…)来更新任务的进度。</p>
+<p>onPostExecute(Result)    相当于Handler 处理UI的方式，在这里面可以使用在doInBackground 得到的结果处理操作UI。 此方法在主线程执行，任务执行的结果作为此方法的参数返回<br>有必要的话你还得重写以下这三个方法，但不是必须的。</p>
+<p>onProgressUpdate(Progress…)    可以使用进度条增加用户体验度。 此方法在主线程执行，用于显示任务执行的进度。</p>
+<p>onPreExecute()    这里是最终用户调用Excute时的接口，当任务执行之前开始调用此方法，可以在这里显示进度对话框。<br>onCancelled()    用户调用取消时，要做的操作</p>
+<p>使用AsyncTask类，以下是几条必须遵守的准则：</p>
+<p>Task的实例必须在UI thread中创建；</p>
+<p>execute方法必须在UI thread中调用；</p>
+<p>不要手动的调用onPreExecute(), onPostExecute(Result)，doInBackground(Params…), onProgressUpdate(Progress…)这几个方法；</p>
+<p>该task只能被执行一次，否则多次调用时将会出现异常；</p>
+<h4 id="异步任务AsyncTask在不同Android版本的差异">异步任务AsyncTask在不同Android版本的差异</h4>
+<p>该差异主要是Android2.3和Android3.0及其之后的差异,差异内容如下：<br>在Android2.3中AsyncTask的调用可以并发执行.</p>
+<p>因为它在一个线程池中被调用.该线程池有5个核心线程,且最大线程数为128个. </p>
+<p>比如:同时启动10个任务,有5个任务能够立刻执行,另外5个任务则需等待;当有一个任务执行完毕后,第6个任务才会启动,以此类推. </p>
+<p>因为线程池中最大能存放的线程数是128个,当我们尝试去添加第129个任务时,程序会崩溃.</p>
+<p>在Android3.0及其以后AsyncTask的调用在默认情况同时只能有1个任务在执行. </p>
+<p>在AsyncTask中采用了SerialExecutor,它很类似于SingleThreadExecutor,即线程池中只有一个线程的线程池. </p>
+<p>所以在2.3之后调用asyncTask.execute(params)方法,同时只能有1个任务在执行.待该任务执行完成后再执行下一个任务. </p>
+<p>那么可以修改该默认设置么？当然是可以的. </p>
+<p>可以调用方法asyncTask.executeOnExecutor(executor, params); </p>
+<p>第一个参数executor就设置为一个自己配置的线城池。</p>
+<h4 id="AsyncTask和Thread的使用场景的区别">AsyncTask和Thread的使用场景的区别</h4>
+<p>AsyncTask简单灵活,不用考虑UI更新.但是要注意AsyncTask版本差异带来的问题,请参考上面的总结.<br> 当有大量的瞬时任务出现时应该考虑使用线程池,可以节省线程的创建和销毁的消耗。</p>
+<h4 id="Asynctask和handler的优缺点">Asynctask和handler的优缺点</h4>
+<ul>
+<li><h5 id="AsyncTask实现的原理,和适用的优缺点">AsyncTask实现的原理,和适用的优缺点</h5>
+<blockquote>
+<p>AsyncTask,是android提供的轻量级的异步类,可以直接继承AsyncTask,在类中实现异步操作,并提供接口反馈当前异步执行的程度(可以通过接口实现UI进度更新),最后反馈执行的结果给UI主线程.</p>
+<p>使用的优点:简单,快捷、过程可控</p>
+<p>使用的缺点:在使用多个异步操作和并需要进行Ui变更时,就变得复杂起来。最大并发数不超过5。</p>
+</blockquote>
+</li>
+<li><h5 id="Handler异步实现的原理和适用的优缺点">Handler异步实现的原理和适用的优缺点</h5>
+<blockquote>
+<p>在Handler 异步实现时,涉及到 Handler, Looper, Message,Thread四个对象，实现异步的流程是主线程启动Thread（子线程）àthread(子线程)运行并生成Message-àLooper获取Message并传递给HandleràHandler逐个获取Looper中的Message，并进行UI变更。</p>
+<p>使用的优点：结构清晰，功能定义明确；对于多个后台任务时，简单，清晰。   </p>
+<p>使用的缺点： 在单个后台异步处理时，显得代码过多，结构过于复杂（相对性）</p>
+</blockquote>
+</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h4 id="AsyncTask介绍">AsyncTask介绍</h4>
+<p>Android的AsyncTask比Handler更轻量级一些，适用于简单的异步处理。<br>首先明确Android之所以有Handler和AsyncTask，都是为了不阻塞主线程（UI线程），且UI的更新只能在主线程中完成，因此异步处理是不可避免的。</p>
+]]>
+    
+    </summary>
+    
+      <category term="Android AsyncTask" scheme="https://evlinlee.github.io/categories/Android-AsyncTask/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Android Studio快捷键]]></title>
+    <link href="https://evlinlee.github.io/2014/09/08/androidstudio-keyboard-shortkey/"/>
+    <id>https://evlinlee.github.io/2014/09/08/androidstudio-keyboard-shortkey/</id>
+    <published>2014-09-08T13:51:46.000Z</published>
+    <updated>2014-11-07T11:41:24.000Z</updated>
+    <content type="html"><![CDATA[<p>android studio快要出1.0正式版了，之前一直用惯了eclipse，最近在用android studio，发现真的比eclipse好用多了，确实是android开发首选之一。唯一一点熟悉了eclipse的快捷键后，总是不自觉在android studio上用eclipse的快捷键。看来又得熟悉下android studio的快捷键了，从网上摘抄了一些，记录下，以后不用每次都Google了。</p>
+<p>&lt;!— more — &gt;</p>
+<h3 id="在eclipse常用快捷键">在eclipse常用快捷键</h3>
+<p>Alt+回车 导入包,自动修正 </p>
+<p>Ctrl+N   查找类 </p>
+<p>Ctrl+Shift+N 查找文件 </p>
+<p>Ctrl+Alt+L  格式化代码 </p>
+<p>Ctrl+Alt+O 优化导入的类和包 </p>
+<p>Alt+Insert 生成代码(如get,set方法,构造函数等) </p>
+<p>Ctrl+E或者Alt+Shift+C  最近更改的代码</p>
+<p>Ctrl+R 替换文本 </p>
+<p>Ctrl+F 查找文本 </p>
+<p>Ctrl+Shift+Space 自动补全代码 </p>
+<p>Ctrl+空格 代码提示</p>
+<p>Ctrl+Alt+Space 类名或接口名提示 </p>
+<p>Ctrl+P 方法参数提示 </p>
+<p>Ctrl+Shift+Alt+N 查找类中的方法或变量 </p>
+<p>Alt+Shift+C 对比最近修改的代码  </p>
+<p>Shift+F6  重构-重命名 </p>
+<p>Ctrl+Shift+先上键 </p>
+<p>Ctrl+X 删除行 </p>
+<p>Ctrl+D 复制行<br><a id="more"></a><br>Ctrl+/ 或 Ctrl+Shift+/  注释（// 或者 ） </p>
+<p>Ctrl+J  自动代码 </p>
+<p>Ctrl+E 最近打开的文件 </p>
+<p>Ctrl+H 显示类结构图 </p>
+<p>Ctrl+Q 显示注释文档 </p>
+<p>Alt+F1 查找代码所在位置 </p>
+<p>Alt+1 快速打开或隐藏工程面板<br>Ctrl+Alt+ left/right 返回至上次浏览的位置 </p>
+<p>Alt+ left/right 切换代码视图<br>Alt+ Up/Down 在方法间快速移动定位 </p>
+<p>Ctrl+Shift+Up/Down 代码向上/下移动。 </p>
+<p>F2 或Shift+F2 高亮错误或警告快速定位   </p>
+<p>代码标签输入完成后，按Tab，生成代码。 </p>
+<p>选中文本，按Ctrl+Shift+F7 ，高亮显示所有该文本，按Esc高亮消失。 </p>
+<p>Ctrl+W 选中代码，连续按会有其他效果 </p>
+<p>选中文本，按Alt+F3 ，逐个往下查找相同文本，并高亮显示。 </p>
+<p>Ctrl+Up/Down 光标跳转到第一行或最后一行下 </p>
+<p>Ctrl+B 快速打开光标处的类或方法  </p>
+<h3 id="号称最常用快捷键">号称最常用快捷键</h3>
+<p>1.Ctrl＋E，可以显示最近编辑的文件列表 </p>
+<p>2.Shift＋Click可以关闭文件 </p>
+<p>3.Ctrl＋[或]可以跳到大括号的开头结尾 </p>
+<p>4.Ctrl＋Shift＋Backspace可以跳转到上次编辑的地方 </p>
+<p>5.Ctrl＋F12，可以显示当前文件的结构</p>
+<p>6.Ctrl＋F7可以查询当前元素在当前文件中的引用，然后按F3可以选择 </p>
+<p>7.Ctrl＋N，可以快速打开类 </p>
+<p>8.Ctrl＋Shift＋N，可以快速打开文件 </p>
+<p>9.Alt＋Q可以看到当前方法的声明 </p>
+<p>10.Ctrl＋W可以选择单词继而语句继而行继而函数 </p>
+<p>11.Alt＋F1可以将正在编辑的元素在各个面板中定位 </p>
+<p>12.Ctrl＋P，可以显示参数信息<br>13.Ctrl＋Shift＋Insert可以选择剪贴板内容并插入 </p>
+<p>14.Alt＋Insert可以生成构造器/Getter/Setter等 </p>
+<p>15.Ctrl＋Alt＋V 可以引入变量。例如把括号内的SQL赋成一个变量 </p>
+<p>16.Ctrl＋Alt＋T可以把代码包在一块内，例如try/catch </p>
+<p>17.Alt＋Up and Alt＋Down可在方法间快速移动 </p>
+<p>18.在一些地方按Alt＋Enter可以得到一些Intention Action，例如将”==”改为”equals()” </p>
+<p>19.Ctrl＋Shift＋Alt＋N可以快速打开符号 </p>
+<p>20.Ctrl＋Shift＋Space在很多时候都能够给出Smart提示 </p>
+<p>21.Alt＋F3可以快速寻找 </p>
+<p>22.Ctrl＋/和Ctrl＋Shift＋/可以注释代码 </p>
+<p>23.Ctrl＋Alt＋B可以跳转到抽象方法的实现 </p>
+<p>24.Ctrl＋O可以选择父类的方法进行重写 </p>
+<p>25.Ctrl＋Q可以看JavaDoc </p>
+<p>26.Ctrl＋Alt＋Space是类名自动完成 </p>
+<p>27.快速打开类/文件/符号时，可以使用通配符，也可以使用缩写 </p>
+<p>28.Live Templates! Ctrl＋J </p>
+<p>29.Ctrl＋Shift＋F7可以高亮当前元素在当前文件中的使用</p>
+<p>30.Ctrl＋Alt＋Up /Ctrl＋Alt＋Down可以快速跳转搜索结果 </p>
+<p>31.Ctrl＋Shift＋J可以整合两行</p>
+<p>32.Alt＋F8是计算变量值</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>android studio快要出1.0正式版了，之前一直用惯了eclipse，最近在用android studio，发现真的比eclipse好用多了，确实是android开发首选之一。唯一一点熟悉了eclipse的快捷键后，总是不自觉在android studio上用eclipse的快捷键。看来又得熟悉下android studio的快捷键了，从网上摘抄了一些，记录下，以后不用每次都Google了。</p>
+<p>&lt;!— more — &gt;</p>
+<h3 id="在eclipse常用快捷键">在eclipse常用快捷键</h3>
+<p>Alt+回车 导入包,自动修正 </p>
+<p>Ctrl+N   查找类 </p>
+<p>Ctrl+Shift+N 查找文件 </p>
+<p>Ctrl+Alt+L  格式化代码 </p>
+<p>Ctrl+Alt+O 优化导入的类和包 </p>
+<p>Alt+Insert 生成代码(如get,set方法,构造函数等) </p>
+<p>Ctrl+E或者Alt+Shift+C  最近更改的代码</p>
+<p>Ctrl+R 替换文本 </p>
+<p>Ctrl+F 查找文本 </p>
+<p>Ctrl+Shift+Space 自动补全代码 </p>
+<p>Ctrl+空格 代码提示</p>
+<p>Ctrl+Alt+Space 类名或接口名提示 </p>
+<p>Ctrl+P 方法参数提示 </p>
+<p>Ctrl+Shift+Alt+N 查找类中的方法或变量 </p>
+<p>Alt+Shift+C 对比最近修改的代码  </p>
+<p>Shift+F6  重构-重命名 </p>
+<p>Ctrl+Shift+先上键 </p>
+<p>Ctrl+X 删除行 </p>
+<p>Ctrl+D 复制行<br>]]>
+    
+    </summary>
+    
+      <category term="其他" scheme="https://evlinlee.github.io/categories/%E5%85%B6%E4%BB%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[ActionBarSherlock使用]]></title>
+    <link href="https://evlinlee.github.io/2014/08/02/androidbarsherlock-study/"/>
+    <id>https://evlinlee.github.io/2014/08/02/androidbarsherlock-study/</id>
+    <published>2014-08-02T03:41:35.000Z</published>
+    <updated>2014-11-07T11:41:24.000Z</updated>
+    <content type="html"><![CDATA[<h3 id="ActionBarSherlock小记">ActionBarSherlock小记</h3>
+<p>Q:ActionBarSherlock和ActionBarCompat的区别</p>
+<p>A:如下图<br><img src="./abs_vs_abc.png" alt="Alt text"></p>
+<p>根据以上图片，如果客户端在之前的版本只支持API11以上的，根据相应的属性修改即可。</p>
+<p>Q1:Use of view.setX() and setY in api 8</p>
+<p>A1:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//WRAP_CONTENT param can be FILL_PARENT</span></div><div class="line">RelativeLayout.LayoutParams params = <span class="keyword">new</span> RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT); </div><div class="line">params.leftMargin = <span class="number">206</span>; <span class="comment">//XCOORD</span></div><div class="line">params.topMargin = <span class="number">206</span>; <span class="comment">//YCOORD</span></div><div class="line">childView.setLayoutParams(params);</div></pre></td></tr></table></figure>
+
+<p><a id="more"></a></p>
+<h3 id="ActionBarSherlock错误记录">ActionBarSherlock错误记录</h3>
+<p>Q:</p>
+<blockquote>
+<p>java.lang.IllegalStateException: You must use Theme.Sherlock, Theme.Sherlock.Light, Theme.Sherlock.Light.DarkActionBar, or a derivative.</p>
+</blockquote>
+<p>A:如果有用BaseActivity且没添加到AndroidManifest.xml的时候，会出现上面的错误，只需要在该Activity的oncreate方法调用setTheme函数.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span>(Bundle bundle) {</div><div class="line">		setTheme(R.style.AppTheme);</div><div class="line">		<span class="keyword">super</span>.onCreate(bundle);</div><div class="line">}</div></pre></td></tr></table></figure><br>Q:定制主题<br>A:低于API11的，分别在values、values-11中设置属性<br><strong>values<br>———styles.xml</strong><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="title">style</span> <span class="attribute">name</span>=<span class="value">"AppTheme"</span> <span class="attribute">parent</span>=<span class="value">"Theme.Sherlock.Light"</span>&gt;</span><span class="css"></span></div><div class="line"></div><div class="line">      &lt;!<span class="tag">--</span> <span class="tag">All</span> <span class="tag">customizations</span> <span class="tag">that</span> <span class="tag">are</span> <span class="tag">NOT</span> <span class="tag">specific</span> <span class="tag">to</span> <span class="tag">a</span> <span class="tag">particular</span> <span class="tag">API-level</span> <span class="tag">can</span> <span class="tag">go</span> <span class="tag">here</span>. <span class="tag">--</span>&gt;</div><div class="line">      &lt;<span class="tag">item</span> <span class="tag">name</span>="<span class="tag">actionBarStyle</span>"&gt;<span class="at_rule">@<span class="keyword">style/MyActionBar&lt;/item&gt;</span></span></div><div class="line">      &lt;item name=<span class="string">"homeAsUpIndicator"</span>&gt;@drawable/title_return_selector&lt;/item&gt;</div><div class="line">      &lt;item name=<span class="string">"actionMenuTextColor"</span>&gt;@color/white&lt;/item&gt;</div><div class="line">      &lt;item name=<span class="string">"actionMenuTextAppearance"</span>&gt;@style/MenuTextStyle&lt;/item&gt;</div><div class="line">       &lt;item name=<span class="string">"vpiTabPageIndicatorStyle"</span>&gt;@style/CustomTabPageIndicator&lt;/item&gt;</div><div class="line">  <span class="tag">&lt;/<span class="title">style</span>&gt;</span></div></pre></td></tr></table></figure><br><strong>values-v11<br>———styles.xml</strong><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="title">style</span> <span class="attribute">name</span>=<span class="value">"AppTheme"</span> <span class="attribute">parent</span>=<span class="value">"Theme.Sherlock.Light"</span>&gt;</span><span class="css"></span></div><div class="line"></div><div class="line">       &lt;!<span class="tag">--</span> <span class="tag">All</span> <span class="tag">customizations</span> <span class="tag">that</span> <span class="tag">are</span> <span class="tag">NOT</span> <span class="tag">specific</span> <span class="tag">to</span> <span class="tag">a</span> <span class="tag">particular</span> <span class="tag">API-level</span> <span class="tag">can</span> <span class="tag">go</span> <span class="tag">here</span>. <span class="tag">--</span>&gt;</div><div class="line">       &lt;<span class="tag">item</span> <span class="tag">name</span>="<span class="tag">android</span><span class="pseudo">:actionBarStyle"</span>&gt;<span class="at_rule">@<span class="keyword">style/MyActionBar&lt;/item&gt;</span></span></div><div class="line">       &lt;item name=<span class="string">"android:homeAsUpIndicator"</span>&gt;@drawable/title_return_selector&lt;/item&gt;</div><div class="line">       &lt;item name=<span class="string">"android:actionMenuTextColor"</span>&gt;@color/white&lt;/item&gt;</div><div class="line">       &lt;item name=<span class="string">"android:actionMenuTextAppearance"</span>&gt;@style/MenuTextStyle&lt;/item&gt;</div><div class="line">        &lt;item name=<span class="string">"vpiTabPageIndicatorStyle"</span>&gt;@style/CustomTabPageIndicator&lt;/item&gt;</div><div class="line">   <span class="tag">&lt;/<span class="title">style</span>&gt;</span></div></pre></td></tr></table></figure>
+
+]]></content>
+    <summary type="html">
+    <![CDATA[<h3 id="ActionBarSherlock小记">ActionBarSherlock小记</h3>
+<p>Q:ActionBarSherlock和ActionBarCompat的区别</p>
+<p>A:如下图<br><img src="./abs_vs_abc.png" alt="Alt text"></p>
+<p>根据以上图片，如果客户端在之前的版本只支持API11以上的，根据相应的属性修改即可。</p>
+<p>Q1:Use of view.setX() and setY in api 8</p>
+<p>A1:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//WRAP_CONTENT param can be FILL_PARENT</span></div><div class="line">RelativeLayout.LayoutParams params = <span class="keyword">new</span> RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT); </div><div class="line">params.leftMargin = <span class="number">206</span>; <span class="comment">//XCOORD</span></div><div class="line">params.topMargin = <span class="number">206</span>; <span class="comment">//YCOORD</span></div><div class="line">childView.setLayoutParams(params);</div></pre></td></tr></table></figure>
+
+<p>]]>
+    
+    </summary>
+    
+      <category term="android" scheme="https://evlinlee.github.io/categories/android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[关于android反编译]]></title>
+    <link href="https://evlinlee.github.io/2014/06/22/about-android-decompile/"/>
+    <id>https://evlinlee.github.io/2014/06/22/about-android-decompile/</id>
+    <published>2014-06-22T07:42:36.000Z</published>
+    <updated>2014-11-07T11:41:24.000Z</updated>
+    <content type="html"><![CDATA[<p>网上关于android反编译有很多文章了，这里大概说下我自己反编译的目的不是为了盗取其他开发者的成果然后上传到市场上，主要是为了学习他人的设计。<br>这里介绍一款比较好用的反编译工具，是国人开发的，叫apk改之理，不过只有windows版本。<br><a id="more"></a></p>
+<h4 id="APK改之理详细介绍">APK改之理详细介绍</h4>
+<ol>
+<li>可视化操作，全自动的反编译、编译、签名Apk。</li>
+<li>以树目录管理全部反编译得到的Apk资源文件，方便操作。</li>
+<li>内置代码编辑器，支持语法高亮显示，根据文件格式自动匹配相应语法；支持多文档同时编辑；也支持使用系统编辑器来编辑代码文件。</li>
+<li>内置基于文件内容的关键字或多行代码段的搜索、替换引擎，一键搜索替换，搜索结果以标签的形式分门别类；允许在指定搜索范围（整个工程或选中的文件或文件夹内搜索），支持正则表达式搜索和替换。搜索功能是Apk修改的一个重要工具，从此你不必借助其它第三方搜索工具。</li>
+<li>内置Google在线翻译引擎，支持实时翻译，支持所有Google支持的几十国语言对译，汉化更轻松。</li>
+<li>支持使用自己的keystore文件签名。</li>
+<li>自动识别图像资源，并提供该类资源的快捷替换功能，方便修改这类图片资源。</li>
+<li>内嵌Unicode、AscII互转工具，以方便硬编码的文字（如汉字）的搜索和汉化类修改。</li>
+<li>内置类似于系统cmd.exe的命令窗口，高手也可以手动直接输入各种命令来手动操作。</li>
+<li>所有操作步骤、操作结果都以良好的阅读格式输出在日志窗口，方便查看修改的历史记录。</li>
+<li>内置adb功能，包括使用adb向设备（或模拟器）安装、卸载修改后的apk进行测试，并嵌入adb log、ddms等功能监测修改apk的运行状况，以便于分析和查找错误。</li>
+<li>支持多国语言界面，支持界面换肤。</li>
+</ol>
+<img src="/images/apk_modifier1.png"> 
+
+<img src="/images/apkmodifier2.png">
+
+<p>官网地址：<a href="http://www.xiaomiren.net/apkmodifier/" target="_blank" rel="external">小迷人APK改之理</a></p>
+<p>整个界面跟eclipse差不多，更多功能可以看官网教程。</p>
+<p>另外一套是大家都熟悉的跨平台反编译工具，dex2jar、JD-GUI、apktool。</p>
+<p>dex2jar：将apk中的classes.dex转化成Jar文件。</p>
+<p>JD-GUI：反编译工具，可以直接查看Jar包的源代码。</p>
+<p>apktool：反编译工具，通过反编译APK中XML文件，直接可以查看。</p>
+<p>网上有很多教程，这里就不做介绍了。</p>
+<h4 id="关于破解">关于破解</h4>
+<p>android反编译后的目录有smail目录。Smali，Baksmali分别是指安卓系统里的Java虚拟机（Dalvik）所使用的一种.dex格式文件的汇编器，反汇编器。其语法是一种宽松式的Jasmin/dedexer语法，而且它实现了.dex格式所有功能（注解，调试信息，线路信息等）。smail文件其实对应着相应文件的java代码。这里有篇smail语法介绍：<a href="http://blog.csdn.net/singwhatiwanna/article/details/19019547" target="_blank" rel="external">smail语法介绍</a>,学完后大家可不要干坏事哦。</p>
+<h4 id="总结">总结</h4>
+<p>现在很多开发者把反编译当作是赚钱的工具，将其他开发者的应用或游戏修改，然后加广告或破解游戏，这种行为是可耻的，想想如果是你自己的应用和游戏被人反编译上传到市场后，自己会是怎样的心情。我希望大家用反编译是为了学习别人的设计，比如当看到某个布局效果觉得很酷的话，在没有实现思路的情况下，可以反编译apk文件来看看是怎么实现的。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>网上关于android反编译有很多文章了，这里大概说下我自己反编译的目的不是为了盗取其他开发者的成果然后上传到市场上，主要是为了学习他人的设计。<br>这里介绍一款比较好用的反编译工具，是国人开发的，叫apk改之理，不过只有windows版本。<br>]]>
+    
+    </summary>
+    
+      <category term="android" scheme="https://evlinlee.github.io/categories/android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Git入门]]></title>
+    <link href="https://evlinlee.github.io/2014/06/18/git-base-command/"/>
+    <id>https://evlinlee.github.io/2014/06/18/git-base-command/</id>
+    <published>2014-06-18T08:05:52.000Z</published>
+    <updated>2014-11-07T11:41:24.000Z</updated>
+    <content type="html"><![CDATA[<p>最近看了Git Pro前面几章内容，大概记录下一些基本概念和命令。</p>
+<h4 id="git的优势：">git的优势：</h4>
+<p>直接记录快照，而非文件差异</p>
+<p>大部分的操作都是在本地进行的</p>
+<p>时刻保持文件完整性<br><a id="more"></a></p>
+<h4 id="文件的三种状态：">文件的三种状态：</h4>
+<p>已提交：对应的工作区域是本地仓库，表示该文件已经被安全保存到本地仓库中 </p>
+<p>已修改 ：对应的工作区域是工作目录，表示修改了某个文件但还没有提交</p>
+<p>已暂存：对应的工作区域是暂存区域，表示把已修改的文件放到下次提交时要保存的清单中。</p>
+<h4 id="git的配置">git的配置</h4>
+<p>命令git config<br>/etc/gitconfig文件：系统中对所有用户都普遍适用的配置。若使用 git config 时用 —system 选项，读写的就是这个文件。</p>
+<p>~/.gitconfig：用户目录下的配置文件只适用于该用户。若使用 git config 时用 —global 选项，读写的就是这个文件。</p>
+<p>当前项目的 git 目录中的配置文件（也就是工作目录中的 .git/config 文件）：这里的配置仅仅针对当前项目有效。每一个级别的配置都会覆盖上层的相同配置，所以 .git/config 里的配置会覆盖 /etc/gitconfig 中的同名变量。</p>
+<p>git status有两种状态，已跟踪和未跟踪。<br>Changes to be committed：已暂存<br>add的潜台词就是将目标文件放到暂存区域，即将未跟踪的文件标记为已跟踪。<br>Changes not staged for commit：已修改</p>
+<p>git四种主要的协议来传输数据：本地传输，SSH 协议，Git 协议和 HTTP 协议。</p>
+<h4 id="git基本命令">git基本命令</h4>
+<p>初始化仓库：git init</p>
+<p>克隆远程仓库：git clone 地址</p>
+<p>检测当前状态：git status</p>
+<p>添加文件:git add 文件名</p>
+<p>删除文件:git rm 文件名</p>
+<p>修改文件：git mv 原文件 目标文件</p>
+<p>提交更新：git commit</p>
+<p>查看历史记录：git log</p>
+<p>修改最后一次提交：git commit -amend</p>
+<p>从远程仓库抓取数据到本地（不合并）：git fetch [remote name]</p>
+<p>推送数据到远程仓库:git push origin master</p>
+<p>查看远程仓库信息:git remote show [remote-name]</p>
+<p>列显已有的标签:git tag</p>
+<p>创建分支：git branch [branch-name]</p>
+<p>切换分支：git checkout [branch-name]</p>
+<p>合并分支：git merge [branch-name]</p>
+<p>删除分支：git branch -d 分支名</p>
+<p>推送本地分支：git push origin 分支名</p>
+<p>删除远程分支:git push origin:分支名</p>
+<p>详细了解可以看git pro这本书：<a href="http://git.oschina.net/progit/index.html" target="_blank" rel="external">Pro Git（中文版）</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>最近看了Git Pro前面几章内容，大概记录下一些基本概念和命令。</p>
+<h4 id="git的优势：">git的优势：</h4>
+<p>直接记录快照，而非文件差异</p>
+<p>大部分的操作都是在本地进行的</p>
+<p>时刻保持文件完整性<br>]]>
+    
+    </summary>
+    
+      <category term="git入门" scheme="https://evlinlee.github.io/categories/git%E5%85%A5%E9%97%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[android volley 带参数的Post方式]]></title>
+    <link href="https://evlinlee.github.io/2014/06/17/android-volley-issue/"/>
+    <id>https://evlinlee.github.io/2014/06/17/android-volley-issue/</id>
+    <published>2014-06-17T13:48:53.000Z</published>
+    <updated>2014-11-07T11:41:24.000Z</updated>
+    <content type="html"><![CDATA[<p>在使用Volley过程中，出现过这样的问题，用Post方式带参数获取json数据时报错，获取的时html文件格式，而不是json数据，看了下volley的源代码，原来getParam函数参数返回的是空。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">protected</span> Map&lt;String, String&gt; <span class="title">getParams</span>() <span class="keyword">throws</span> AuthFailureError {</div><div class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">}</div></pre></td></tr></table></figure><br><a id="more"></a><br><br>自己写了一个类处理这样的问题。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span>  <span class="class"><span class="keyword">class</span> <span class="title">JsonObjectPostRequest</span> <span class="keyword">extends</span> <span class="title">Request</span>&lt;<span class="title">JSONObject</span>&gt;</span>{  </div><div class="line">    <span class="keyword">private</span> Map&lt;String,String&gt; mParam;  </div><div class="line">    <span class="keyword">private</span> Listener&lt;JSONObject&gt;  mListener;  </div><div class="line">  </div><div class="line">  </div><div class="line">    <span class="keyword">public</span> <span class="title">JsonObjectPostRequest</span>(String url,Listener&lt;JSONObject&gt; listener, ErrorListener errorListener,Map param) {  </div><div class="line">        <span class="keyword">super</span>(Request.Method.POST, url, errorListener);  </div><div class="line">        mListener=listener;  </div><div class="line">        mParam=param;  </div><div class="line">          </div><div class="line">    }  </div><div class="line">    <span class="annotation">@Override</span>  </div><div class="line">    <span class="keyword">protected</span> Map&lt;String, String&gt; <span class="title">getParams</span>() <span class="keyword">throws</span> AuthFailureError {  </div><div class="line">        <span class="keyword">return</span> mParam;  </div><div class="line">    }  </div><div class="line">  </div><div class="line">       <span class="annotation">@Override</span>  </div><div class="line">        <span class="keyword">protected</span> Response&lt;JSONObject&gt; <span class="title">parseNetworkResponse</span>(NetworkResponse response) {  </div><div class="line">            <span class="keyword">try</span> {  </div><div class="line">                String jsonString =  </div><div class="line">                    <span class="keyword">new</span> String(response.data, HttpHeaderParser.parseCharset(response.headers));  </div><div class="line">                <span class="keyword">return</span> Response.success(<span class="keyword">new</span> JSONObject(jsonString),  </div><div class="line">                        HttpHeaderParser.parseCacheHeaders(response));  </div><div class="line">            } <span class="keyword">catch</span> (UnsupportedEncodingException e) {  </div><div class="line">                <span class="keyword">return</span> Response.error(<span class="keyword">new</span> ParseError(e));  </div><div class="line">            } <span class="keyword">catch</span> (JSONException je) {  </div><div class="line">                <span class="keyword">return</span> Response.error(<span class="keyword">new</span> ParseError(je));  </div><div class="line">            }  </div><div class="line">        }  </div><div class="line">  </div><div class="line">    <span class="annotation">@Override</span>  </div><div class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">deliverResponse</span>(JSONObject response) {  </div><div class="line">        mListener.onResponse(response);  </div><div class="line">          </div><div class="line">    }  </div><div class="line">  </div><div class="line">} </div></pre></td></tr></table></figure>
+
+<p>处理JsonArray的话，也可以根据上述类重写一个。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>在使用Volley过程中，出现过这样的问题，用Post方式带参数获取json数据时报错，获取的时html文件格式，而不是json数据，看了下volley的源代码，原来getParam函数参数返回的是空。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">protected</span> Map&lt;String, String&gt; <span class="title">getParams</span>() <span class="keyword">throws</span> AuthFailureError {</div><div class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">}</div></pre></td></tr></table></figure><br>]]>
+    
+    </summary>
+    
+      <category term="android问题" scheme="https://evlinlee.github.io/categories/android%E9%97%AE%E9%A2%98/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Apple Swift教程和学习资料]]></title>
+    <link href="https://evlinlee.github.io/2014/06/10/swift-tutorial/"/>
+    <id>https://evlinlee.github.io/2014/06/10/swift-tutorial/</id>
+    <published>2014-06-10T08:12:26.000Z</published>
+    <updated>2014-11-07T11:41:24.000Z</updated>
+    <content type="html"><![CDATA[<h3 id="教程">教程</h3>
+<ol>
+<li><p><a href="https://itunes.apple.com/gb/book/swift-programming-language/id881256329?mt=11" target="_blank" rel="external">《The Swift Programming Language》</a>：这是苹果官方出版的Swift学习教材，可以免费下载到iBooks中阅读。其中文版翻译项目也在 Github 上火热进行中，地址在<a href="https://github.com/numbbbbb/the-swift-programming-language-in-chinese" target="_blank" rel="external">这里</a>,现在也有独立网站了:<a href="http://www.swiftguide.cn/" target="_blank" rel="external">The Swift Programming Language 中文版</a></p>
+</li>
+<li><p><a href="http://www.raywenderlich.com/73967/swift-cheat-sheet-and-quick-reference" target="_blank" rel="external">《Swift Cheat Sheet and Quick Reference》</a>：出自raywenderlich的一份Swift快速参考手册，现在还比较简单，但它正快速更新中。</p>
+</li>
+<li><p><a href="http://www.raywenderlich.com/73997/swift-language-highlights" target="_blank" rel="external">《Swift Language Highlights: An Objective-C Developer’s Perspective》</a>：文章比较了Swift和Objective-C语言的差异性。</p>
+</li>
+<li><p><a href="http://blog.txx.im/blog/2014/06/07/wwdc14-session-402/" target="_blank" rel="external">《WWDC14 Session 402 》学习笔记</a>：<a href="http://weibo.com/rpplusplus" target="_blank" rel="external">@糖炒小虾_txx</a>完成了三篇关于Swift的学习笔记，主要内容均来自WWDC14 Session 402的视频。</p>
+</li>
+<li><p><a href="http://www.splasmata.com/?p=2798" target="_blank" rel="external">《Swift 和Objective-C性能测试》</a>：苹果在WWDC视频中只是简单提到Swift在排序和加密算法上比Objective-C快。本文对两者的性能进行了更复杂的测试，文章中做的测试结果如下：循环100万次，Objective-C比Swift快 29倍；变量增加1， Objective-C比Swift快 46倍。还有一些其它比较，大家可以自己看原文，所以真相是：Swift其实不一定比OC快。</p>
+</li>
+<li><p><a href="http://onevcat.com/2014/06/walk-in-swift/" target="_blank" rel="external">《行走于 Swift 的世界中》</a>：笔者和周围朋友讨论swift的技术细节，大家都觉得swift比想像中要复杂，onevcat的本文讲述了不少swift的细节。从中你会看到，swift真的不简单。</p>
+</li>
+<li><p><a href="http://code.csdn.net/news/2820075" target="_blank" rel="external">《Swift编程语言资料大合集》</a>：来自CSDN整理的Swift学习合集资料。</p>
+</li>
+<li><p><a href="http://weekly.manong.io/issues/33?ref=swift" target="_blank" rel="external">《Swift 特刊》</a>：来自码农周刊的Swift学习合集资料。</p>
+</li>
+<li><a href="http://yuedu.baidu.com/ebook/6f6c3b1ef01dc281e43af000" target="_blank" rel="external">《Swift编程入门》</a>:来自百度阅读的学习资料。</li>
+</ol>
+<h3 id="工具">工具</h3>
+<p><a href="http://www.iwangke.me/2014/06/07/wwdc-2014-download-script/" target="_blank" rel="external">下载脚本</a>：该脚本是WWDC 2014 PDF 及session 视频下载脚本。</p>
+<h3 id="开源项目">开源项目</h3>
+<ol>
+<li><p><a href="https://developer.apple.com/wwdc/resources/sample-code/" target="_blank" rel="external">WWDC的示例代码</a>：比起GitHub上的开源项目，官方的代码更有参考价值。比如Session 406的代码Lister就用一个Swift实现的包含OSX和iOS的Productivity App，还演示了各种Cocoa新功能。</p>
+</li>
+<li><p><a href="https://github.com/fullstackio/FlappySwift" target="_blank" rel="external">FlappySwift</a>：FlappySwift用swift重写的一个开源Flappy Bird游戏。</p>
+</li>
+<li><p><a href="https://github.com/YANGReal/JokeClient-Swift" target="_blank" rel="external">JokeClient-Swift</a>：JokeClient-Swift是<a href="http://weibo.com/208083608" target="_blank" rel="external">@YANGReal</a>用swift写了一个开源的糗事百科的客户端，主要涉及网络请求，图片加载、缓存、自定义UITableViewCell、delegate以及closure，内容接口基于糗事百科API。</p>
+</li>
+<li><p><a href="https://github.com/austinzheng/swift-2048" target="_blank" rel="external">swift-2048</a>：一个用Swift实现的2048游戏。</p>
+</li>
+<li><p><a href="https://github.com/croath/UIImageView-BetterFace-Swift" target="_blank" rel="external">UIImageView-BetterFace-Swift</a>：UIImageView-BetterFace-Swift是一个根据目标图象中头像的位置进行智能图片裁剪的开源库，该地址是其更新的Swift版本。</p>
+</li>
+<li><p><a href="https://github.com/onevcat/Easy-Cal-Swift" target="_blank" rel="external">Easy-Cal-Swift</a>：swift是类型安全（type safe) 的语言。但是，由于它有类型推断（type inference）能力，所以当能推断出类型时，你不必非要写对应的类型。对于 字面量（literal value），整数会被推断成Int，浮点数会被推断成Double类型。但是，它并没有定义整数和浮点之间的加法，本项目实现了一个常用的运算符重载，这样就可以支持整数和浮点数做加法了。</p>
+</li>
+<li><p><a href="https://github.com/amitburst/HackerNews" target="_blank" rel="external">HackerNews</a>：用Swift实现的HackerNews客户端。</p>
+</li>
+</ol>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h3 id="教程">教程</h3>
+<ol>
+<li><p><a href="https://itunes.apple.com/gb/book/swift-programming-language/id881256329?mt=11" target="_blank" rel=]]>
+    </summary>
+    
+      <category term="Swift" scheme="https://evlinlee.github.io/categories/Swift/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Android开发利器：Genymotion]]></title>
+    <link href="https://evlinlee.github.io/2014/06/10/android-cool-tools-2/"/>
+    <id>https://evlinlee.github.io/2014/06/10/android-cool-tools-2/</id>
+    <published>2014-06-10T07:25:59.000Z</published>
+    <updated>2014-11-07T11:41:24.000Z</updated>
+    <content type="html"><![CDATA[<p>当我们在用android模拟器来运行android程序的时候，你是不是也跟我一样很恼火，每次启动android模拟器都需要很长的时间，这也是我们android开发者有时候会调侃的一件事，有的在这个时候去抽个烟，有的去上个洗手间，有的去泡杯茶或咖啡。最近在学ios，xcode自带的模拟器启动很快，android模拟器跟iPhone模拟器就好比兔子跟乌龟赛跑。那么有没有其他第三方的模拟器来解决这个问题呢？<br><a id="more"></a></p>
+<p>今天介绍下Genymotion，作为第三方的模拟器，启动速度真的快了很多，这无疑能够提高我们开发者的效率。Genymotion是一套完整的工具集，旨在为Android提供虚拟环境，支持绝大部分的模拟器功能与感应器，甚至支持语音、NFC、蓝牙等等… </p>
+<p>下面大概说下Genymotion值得称赞的几个地方：</p>
+<ol>
+<li>Genymotion提供免费版本，免费版本的功能就足以我们开发者够用的了，同时还开源，开源地址:<a href="http://androvm.org/blog/" target="_blank" rel="external">AndroidVM</a>。</li>
+<li><p>跨平台。Genymotion是基于VirtualBox，我们知道VirtualBox在Windows、Linux和Mac OS下都是可用的。</p>
+<img src="/images/Genymotion-platform-independence.png">
+</li>
+<li><p>传感器管理，如电池状态、GPS、Accelerator加速器，支持OpenGL加速，提供最好的3D性能体验</p>
+<img src="/images/Genymotion-GPS1.png"></li>
+<li>支持Google服务。</li>
+<li><p>完美支持IDE(android studio,eclipse)启动</p>
+<img src="/images/Genymotion-AVD-manager.png">
+
+
+</li>
+</ol>
+<p>Genymotion官网地址：<a href="http://www.genymotion.com/" target="_blank" rel="external">http://www.genymotion.com/</a></p>
+<p>使用指南：<a href="https://cloud.genymotion.com/page/doc/" target="_blank" rel="external">https://cloud.genymotion.com/page/doc/</a></p>
+<p>Genymotion中文网：<a href="http://www.genymotion.cn/" target="_blank" rel="external">http://www.genymotion.cn/</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>当我们在用android模拟器来运行android程序的时候，你是不是也跟我一样很恼火，每次启动android模拟器都需要很长的时间，这也是我们android开发者有时候会调侃的一件事，有的在这个时候去抽个烟，有的去上个洗手间，有的去泡杯茶或咖啡。最近在学ios，xcode自带的模拟器启动很快，android模拟器跟iPhone模拟器就好比兔子跟乌龟赛跑。那么有没有其他第三方的模拟器来解决这个问题呢？<br>]]>
+    
+    </summary>
+    
+      <category term="android拓展" scheme="https://evlinlee.github.io/categories/android%E6%8B%93%E5%B1%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Android开发利器：RoboGuice]]></title>
+    <link href="https://evlinlee.github.io/2014/06/09/android-cool-tools-1/"/>
+    <id>https://evlinlee.github.io/2014/06/09/android-cool-tools-1/</id>
+    <published>2014-06-09T07:49:13.000Z</published>
+    <updated>2014-11-07T11:41:24.000Z</updated>
+    <content type="html"><![CDATA[<p>现在有很多第三方的开源库和框架可以用，我们不知道或者我们没有使用过或者我们定义了自己的库或我们还没有考虑使用这样的库由于N种原因。如果我们在开发中使用部分这些库的话，我们能完成像提供兼容性、cool的UI、简洁的代码等等，因此，我将探索更多关于这样的库可以帮助新手和有经验的开发者。<br><a id="more"></a><br>今天先想谈下依赖注入的库。</p>
+<h4 id="什么是依赖注入？">什么是依赖注入？</h4>
+<p>依赖注入是一种软件设计模式，无论是在运行时还是编译时，允许删除硬编码，可以改变它们的依赖关系。<br>[原文: <a href="http://en.wikipedia.org/wiki/Dependency_injection" title="Wikipedia" target="_blank" rel="external">Wikipedia</a>]</p>
+<p>android现在有一些流行并广泛使用的依赖注入库，有如下这一些：</p>
+<img src="/images/android-injection-library.png">
+
+<h4 id="RoboGuice:">RoboGuice:</h4>
+<p>github地址：<a href="https://github.com/roboguice/roboguice" target="_blank" rel="external">https://github.com/roboguice/roboguice</a><br>RoboGuice使用谷歌自己的Guice库,给Android带来了简单和易用的依赖注入。<br>使用RoboGuice，你能注入View, Resource, System Service或者其他的对象。RoboGuice能帮你把代码“减肥”，更少的代码意味着减少代码的问题/bug。</p>
+<p>接下来看看RoboGuice的用法：</p>
+<h4 id="RoboGuice的用法：">RoboGuice的用法：</h4>
+<ul>
+<li><em>Views Injection:</em>  初始化Views，使用@InjectViews，举个例子：@InjectView(R.id.textView1) TextView textView1;</li>
+<li><em>Resources Injection:</em>  初始化并获得resources，使用@InjectResources，举个例子：@InjectResource(R.string.app_name) String name;</li>
+<li><em>System services Injection:</em>  初始化并访问系统服务，使用@Inject，举个例子：@Inject LayoutInflater inflater;</li>
+<li><em>POJO object Injection:</em>  注入并初始化POJO对象，使用@Inject，举个例子：@Inject Foo foo;</li>
+</ul>
+<h4 id="配置">配置</h4>
+<p>为了使用RoboGuice，你需要下载以下的JAR文件并加入到classpath中：</p>
+<blockquote>
+<p><a href="http://repo1.maven.org/maven2/org/roboguice/roboguice/2.0/roboguice-2.0.jar" target="_blank" rel="external">http://repo1.maven.org/maven2/org/roboguice/roboguice/2.0/roboguice-2.0.jar</a><br><a href="http://repo1.maven.org/maven2/com/google/inject/guice/3.0/guice-3.0-no_aop.jar" target="_blank" rel="external">http://repo1.maven.org/maven2/com/google/inject/guice/3.0/guice-3.0-no_aop.jar</a><br><a href="http://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar" target="_blank" rel="external">http://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar</a></p>
+</blockquote>
+<p>让我们看下普通的activity的代码例子：</p>
+<h4 id="Example">Example</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span></span>{</div><div class="line"> </div><div class="line">    TextView textView1;</div><div class="line">    TextView textView2;</div><div class="line">    ImageView imageView1;</div><div class="line">    String name;</div><div class="line">    Drawable icLauncher;</div><div class="line">    LocationManager locManager;</div><div class="line">    LayoutInflater inflater;</div><div class="line">    NotificationManager notifyManager;</div><div class="line"> </div><div class="line">    <span class="annotation">@Override</span></div><div class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span>(Bundle savedInstanceState) {</div><div class="line">        <span class="comment">// TODO Auto-generated method stub</span></div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.layout_test);</div><div class="line"> </div><div class="line">        textView1 = (TextView) findViewById(R.id.textView1);</div><div class="line">        textView2 = (TextView) findViewById(R.id.textView2);</div><div class="line">        imageView1 = (ImageView) findViewById(R.id.imageView1);</div><div class="line">        name = getString(R.string.app_name);</div><div class="line">        icLauncher = getResources().getDrawable(R.id.ic_launcher);</div><div class="line">        locManager = (LocationManager) getSystemService(Activity.LOCATION_SERVICE);</div><div class="line">        inflater = (LayoutInflater) getSystemService(Activity.LAYOUT_INFLATER_SERVICE);</div><div class="line">        notifyManager = (NotificationManager) getSystemService(Activity.NOTIFICATION_SERVICE);</div><div class="line"> </div><div class="line">        textView1.setText(<span class="string">"Hello World! RoboGuice demo"</span>);</div><div class="line"> </div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>接下来是使用RoboGuice来实现上面的代码。</p>
+<h4 id="使用RoboGuice">使用RoboGuice</h4>
+<blockquote>
+<p>注意：为了使用RoboGuice，你的Activity或Fragment必须继承RoboActivity或者RoboFragment。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestActivity</span> <span class="keyword">extends</span> <span class="title">RoboActivity</span></span>{</div><div class="line"> </div><div class="line">    <span class="annotation">@InjectView</span>(R.id.textView1) TextView textView1;</div><div class="line">    <span class="annotation">@InjectView</span>(R.id.textView2) TextView textView2;</div><div class="line">    <span class="annotation">@InjectView</span>(R.id.imageView1) ImageView imageView1;</div><div class="line">    <span class="annotation">@InjectResource</span>(R.string.app_name) String name;</div><div class="line">    <span class="annotation">@InjectResource</span>(R.drawable.ic_launcher) Drawable icLauncher;</div><div class="line">    <span class="annotation">@Inject</span> LocationManager locManager;</div><div class="line">    <span class="annotation">@Inject</span> LayoutInflater inflater;</div><div class="line">    <span class="annotation">@Inject</span> NotificationManager notifyManager;</div><div class="line"> </div><div class="line">    <span class="annotation">@Override</span></div><div class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span>(Bundle savedInstanceState) {</div><div class="line">        <span class="comment">// TODO Auto-generated method stub</span></div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.layout_test);</div><div class="line"> </div><div class="line">        textView1.setText(name);</div><div class="line"> </div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>现在你体会到RoboGuice的优点了吧，接下来说下RoboGuice的优点：</p>
+<ul>
+<li>使用@InjectViews，不需要初始化views.</li>
+<li>使用@Inject，不需要初始化System service.</li>
+<li>使用@InjectResource，不需要初始化图片资源, 字符串 和其他资源文件.</li>
+<li>上面三点能够帮你的代码“减肥”.</li>
+<li>更少的代码意味着更少的问题和bug.</li>
+<li>更少的代码意味着android开发者能提高编码效率和集中精力在android app的业务逻辑上。</li>
+</ul>
+<h4 id="RoboGuice_and_ActionBarSherlock">RoboGuice and ActionBarSherlock</h4>
+<p>上面说到使用RoboGuice必须继承RoboActivity或者RoboFragment，但如果在你的工程中使用ActionBarSherlock呢？我们知道使用ActionBarSherlock时必须继承自SherlockActivity或者 SherlockFragmentActivity，那出现这种情况的话，就不能使用RoboGuice？<br>其实有一个方法，就是为同时使用RoboGuice和ActionBarSherlock自己定义一个基类（base class）。<br>你可以从github上下载这个代码:<a href="https://github.com/rtyley/roboguice-sherlock" target="_blank" rel="external">https://github.com/rtyley/roboguice-sherlock</a><br>或者从这个网址下载jar文件：<a href="http://search.maven.org/#artifactdetails%7Ccom.github.rtyley%7Croboguice-sherlock%7C1.3%7Cjar" target="_blank" rel="external">RoboGuice+Sherlock.jar</a> 。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>现在有很多第三方的开源库和框架可以用，我们不知道或者我们没有使用过或者我们定义了自己的库或我们还没有考虑使用这样的库由于N种原因。如果我们在开发中使用部分这些库的话，我们能完成像提供兼容性、cool的UI、简洁的代码等等，因此，我将探索更多关于这样的库可以帮助新手和有经验的开发者。<br>]]>
+    
+    </summary>
+    
+      <category term="android拓展" scheme="https://evlinlee.github.io/categories/android%E6%8B%93%E5%B1%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[ViewHolder的复用]]></title>
+    <link href="https://evlinlee.github.io/2014/05/22/viewholder-reuse/"/>
+    <id>https://evlinlee.github.io/2014/05/22/viewholder-reuse/</id>
+    <published>2014-05-21T16:58:45.000Z</published>
+    <updated>2014-11-07T11:41:24.000Z</updated>
+    <content type="html"><![CDATA[<p>平时有多个自定义的adapter时，总是要为每个adapter写一个viewholder，从软件的设计角度来讲，这样的方式是不可取的，重复的代码最好复用，偶然间在github上看到一个项目，就是关于自定义adapter的，其中viewholder部分写的挺好的，自己也把这段代码放到自己的开发framework中。<br><a id="more"></a></p>
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ViewHolder</span> </span>{</div><div class="line">    <span class="comment">// I added a generic return type to reduce the casting noise in client code</span></div><div class="line">    <span class="annotation">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T extends View&gt; T <span class="title">get</span>(View view, <span class="keyword">int</span> id) {</div><div class="line">        SparseArray&lt;View&gt; viewHolder = (SparseArray&lt;View&gt;) view.getTag();</div><div class="line">        <span class="keyword">if</span> (viewHolder == <span class="keyword">null</span>) {</div><div class="line">            viewHolder = <span class="keyword">new</span> SparseArray&lt;View&gt;();</div><div class="line">            view.setTag(viewHolder);</div><div class="line">        }</div><div class="line">        View childView = viewHolder.get(id);</div><div class="line">        <span class="keyword">if</span> (childView == <span class="keyword">null</span>) {</div><div class="line">            childView = view.findViewById(id);</div><div class="line">            viewHolder.put(id, childView);</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> (T) childView;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>只提供一个静态方法，其实可以加一个私有构造函数防止外部实例化），代码很简单，看过就明白了.</p>
+<p>在getview中这么用的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="annotation">@Override</span></div><div class="line"><span class="keyword">public</span> View <span class="title">getView</span>(<span class="keyword">int</span> position, View convertView, ViewGroup parent) {</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (convertView == <span class="keyword">null</span>) {</div><div class="line">        convertView = LayoutInflater.from(context)</div><div class="line">          .inflate(R.layout.banana_phone, parent, <span class="keyword">false</span>);</div><div class="line">    }</div><div class="line"></div><div class="line">    ImageView bananaView = ViewHolder.get(convertView, R.id.banana);</div><div class="line">    TextView phoneView = ViewHolder.get(convertView, R.id.phone);</div><div class="line"></div><div class="line">    BananaPhone bananaPhone = getItem(position);</div><div class="line">    phoneView.setText(bananaPhone.getPhone());</div><div class="line">    bananaView.setImageResource(bananaPhone.getBanana());</div><div class="line"></div><div class="line">    <span class="keyword">return</span> convertView;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>还有一个写的挺好的一个开源小项目，用SparseArray存储id+view，但更巧妙的是使用Builder模式进一步封装了常用的控件方法，进一步简化了代码~<br>地址是  <a href="https://github.com/JoanZapata/base-adapter-helper" target="_blank" rel="external">https://github.com/JoanZapata/base-adapter-helper</a> </p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>平时有多个自定义的adapter时，总是要为每个adapter写一个viewholder，从软件的设计角度来讲，这样的方式是不可取的，重复的代码最好复用，偶然间在github上看到一个项目，就是关于自定义adapter的，其中viewholder部分写的挺好的，自己也把这段代码放到自己的开发framework中。<br>]]>
+    
+    </summary>
+    
+      <category term="android基础" scheme="https://evlinlee.github.io/categories/android%E5%9F%BA%E7%A1%80/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[理解控制反转和依赖注入]]></title>
+    <link href="https://evlinlee.github.io/2014/05/17/understanding-ioc-and-di/"/>
+    <id>https://evlinlee.github.io/2014/05/17/understanding-ioc-and-di/</id>
+    <published>2014-05-16T16:37:10.000Z</published>
+    <updated>2014-11-07T11:41:24.000Z</updated>
+    <content type="html"><![CDATA[<p>在《研磨设计模式》这本书看到的，描述的比较通俗易懂，在这mark下。<br>要理解IOC和DI两个概念，就必须搞清楚如下的问题：</p>
+<ul>
+<li>参与者都有谁？</li>
+<li>依赖：谁依赖于谁？为什么需要依赖？</li>
+<li>注入：谁注入于谁？到底注入什么？</li>
+<li>控制反转：谁控制谁？控制什么？为何叫反转（有反转就应该有正转了）？</li>
+<li>依赖注入和控制反转是同一个概念吗？</li>
+</ul>
+<a id="more"></a>
+
+<p>下面就简要的回答一下上述问题，把这些问题搞明白了，也就明白IoC/DI了。</p>
+<ol>
+<li>参与者都有谁：一般有三方参与者，一个是某个对象；另一个是IoC/DI的容器；还有一个是某个对象的外部资源。<blockquote>
+<p> 解释下名词，某个对象指的是任意的、普通的Java对象，IoC/DI的容器简单点说就是指用来实现IoC/DI功能的一个框架程序，对象的外部资源指的就是对象需要的，但是从对象外部获得的，都统称为资源，比如，对象需要的其他对象，或者是对象需要的文件资源等。</p>
+</blockquote>
+</li>
+</ol>
+<ol>
+<li>谁依赖于谁：当然是某个对象依赖于IoC/DI的容器。</li>
+<li>为什么需要依赖：对象需要IoC/DI的容器来提供对象需要的外部资源。</li>
+<li>谁注入于谁：很明显是IoC/DI的容器注入某个对象。</li>
+<li>到底注入什么：就是注入某个对象所需要的外部资源。</li>
+<li>谁控制谁：当然是IoC/DI的容器来控制对象了。</li>
+<li>控制什么：主要是控制对象实例的创建。</li>
+<li><p>为何叫反转：反转是相对于正向而言的，那么什么算是正向呢？考虑一下常规情况下得应用程序，如果要在A里面使用C，你会怎么做呢？当然是直接去创建C的对象，也就是说，在A类中主动去获取所需要的外部资源C，这种情况被称为正向的。那么什么是反向的呢？就是A类不再主动去获取C，而是被动等待，等待IoC/DI的容器获取一个C的实例，然后反向地注入到A类中。用图例来说明一下。先看没有IoC/DI的时候，常规的A类使用C的示意图：</p>
+<img src="/images/pic2.png">
+
+<p>当有了IoC/DI的容器后，A类不再主动去创建C了，如下图所示：</p>
+<img src="/images/pic3.png">
+
+<p>而是被动等待，等待IoC/DI的容器获取一个C的实例，然后反向地注入到A类中，如下图所示：</p>
+<img src="/images/pic4.png">
+</li>
+<li><p>依赖注入和控制反转是同一个概念吗：根据上面的讲述，应该能看出来，依赖注入和控制反转是对同一件事情的不同描述。从某个方面讲，就是它们描述的角度不同。依赖注入是从应用程序的角度描述，可以把依赖注入描述得完整点：<em>应用程序依赖容器创建并注入它所需要的外部资源；</em>而控制反转是从容器的角度去描述，描述得完整点就是：<em>容器控制应用程序，由容器反向地向应用程序注入其所需要的外部资源</em>。</p>
+</li>
+</ol>
+<h3 id="小结">小结</h3>
+<p>其实IoC/DI对编程带来的最大改变不是在代码上，而是在思想上，发生了“主从换位”的变化。应用程序原本是老大，要获取什么资源都是主动出击，但是在IoC/DI思想中，应用程序就变成被动了，被动地等待IoC/DI容器来创建并注入它所需要的资源了。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>在《研磨设计模式》这本书看到的，描述的比较通俗易懂，在这mark下。<br>要理解IOC和DI两个概念，就必须搞清楚如下的问题：</p>
+<ul>
+<li>参与者都有谁？</li>
+<li>依赖：谁依赖于谁？为什么需要依赖？</li>
+<li>注入：谁注入于谁？到底注入什么？</li>
+<li>控制反转：谁控制谁？控制什么？为何叫反转（有反转就应该有正转了）？</li>
+<li>依赖注入和控制反转是同一个概念吗？</li>
+</ul>
+]]>
+    
+    </summary>
+    
+      <category term="java" scheme="https://evlinlee.github.io/categories/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[ListView item高亮]]></title>
+    <link href="https://evlinlee.github.io/2014/05/12/highlight-listview-items/"/>
+    <id>https://evlinlee.github.io/2014/05/12/highlight-listview-items/</id>
+    <published>2014-05-12T14:45:42.000Z</published>
+    <updated>2014-11-07T11:41:24.000Z</updated>
+    <content type="html"><![CDATA[<p>记录下之前做过的，实现listview item选中高亮效果。<br>如果有更好的实现方式，记得留言发链接给我参考参考。<br><a id="more"></a><br>MainActivity.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.lixumin;</div><div class="line"></div><div class="line"><span class="keyword">import</span> android.content.Context;</div><div class="line"><span class="keyword">import</span> android.graphics.Color;</div><div class="line"><span class="keyword">import</span> android.os.Bundle;</div><div class="line"><span class="keyword">import</span> android.support.v7.app.ActionBarActivity;</div><div class="line"><span class="keyword">import</span> android.view.LayoutInflater;</div><div class="line"><span class="keyword">import</span> android.view.View;</div><div class="line"><span class="keyword">import</span> android.view.ViewGroup;</div><div class="line"><span class="keyword">import</span> android.widget.AdapterView;</div><div class="line"><span class="keyword">import</span> android.widget.BaseAdapter;</div><div class="line"><span class="keyword">import</span> android.widget.ImageView;</div><div class="line"><span class="keyword">import</span> android.widget.ListView;</div><div class="line"><span class="keyword">import</span> android.widget.TextView;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.lixumin.com.lixumin.model.Contact;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.ArrayList;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">ActionBarActivity</span> </span>{</div><div class="line">    <span class="keyword">private</span> ListView mListView;</div><div class="line">    <span class="keyword">private</span> List&lt;Contact&gt; contacts;</div><div class="line">    <span class="keyword">private</span> ContactAdapter contactAdapter;</div><div class="line"></div><div class="line">    <span class="annotation">@Override</span></div><div class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span>(Bundle savedInstanceState) {</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_main);</div><div class="line">        mListView = (ListView) findViewById(R.id.listView);</div><div class="line">        contacts = <span class="keyword">new</span> ArrayList&lt;Contact&gt;();</div><div class="line">        contacts.add(<span class="keyword">new</span> Contact(R.drawable.ic_launcher, <span class="string">"Elvin Lee"</span>));</div><div class="line">        contacts.add(<span class="keyword">new</span> Contact(R.drawable.ic_launcher, <span class="string">"Elvin Lee"</span>));</div><div class="line">        contacts.add(<span class="keyword">new</span> Contact(R.drawable.ic_launcher, <span class="string">"Elvin Lee"</span>));</div><div class="line">        contacts.add(<span class="keyword">new</span> Contact(R.drawable.ic_launcher, <span class="string">"Elvin Lee"</span>));</div><div class="line">        contacts.add(<span class="keyword">new</span> Contact(R.drawable.ic_launcher, <span class="string">"Elvin Lee"</span>));</div><div class="line">        contacts.add(<span class="keyword">new</span> Contact(R.drawable.ic_launcher, <span class="string">"Elvin Lee"</span>));</div><div class="line">        contacts.add(<span class="keyword">new</span> Contact(R.drawable.ic_launcher, <span class="string">"Elvin Lee"</span>));</div><div class="line">        contacts.add(<span class="keyword">new</span> Contact(R.drawable.ic_launcher, <span class="string">"Elvin Lee"</span>));</div><div class="line">        contactAdapter = <span class="keyword">new</span> ContactAdapter(<span class="keyword">this</span>, contacts);</div><div class="line">        mListView.setAdapter(contactAdapter);</div><div class="line">        mListView.setOnItemClickListener(<span class="keyword">new</span> AdapterView.OnItemClickListener() {</div><div class="line">            <span class="annotation">@Override</span></div><div class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onItemClick</span>(AdapterView&lt;?&gt; adapterView, View view, <span class="keyword">int</span> i, <span class="keyword">long</span> l) {</div><div class="line">                GlobalSingleTon.setPosition(i);</div><div class="line">                contactAdapter.notifyDataSetChanged();</div><div class="line">            }</div><div class="line">        });</div><div class="line"></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">ContactAdapter</span> <span class="keyword">extends</span> <span class="title">BaseAdapter</span> </span>{</div><div class="line">        <span class="keyword">private</span> Context mContext;</div><div class="line">        <span class="keyword">private</span> List&lt;Contact&gt; contacts;</div><div class="line"></div><div class="line">        <span class="keyword">private</span> <span class="title">ContactAdapter</span>(Context context, List&lt;Contact&gt; contacts) {</div><div class="line">            <span class="keyword">this</span>.mContext = context;</div><div class="line">            <span class="keyword">this</span>.contacts = contacts;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="annotation">@Override</span></div><div class="line">        <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span>() {</div><div class="line">            <span class="keyword">return</span> contacts.size();</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="annotation">@Override</span></div><div class="line">        <span class="keyword">public</span> Object <span class="title">getItem</span>(<span class="keyword">int</span> i) {</div><div class="line">            <span class="keyword">return</span> contacts.get(i);</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="annotation">@Override</span></div><div class="line">        <span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getItemId</span>(<span class="keyword">int</span> i) {</div><div class="line">            <span class="keyword">return</span> i;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="annotation">@Override</span></div><div class="line">        <span class="keyword">public</span> View <span class="title">getView</span>(<span class="keyword">int</span> i, View view, ViewGroup viewGroup) {</div><div class="line">            ViewHolder viewHolder;</div><div class="line">            <span class="keyword">if</span> (view == <span class="keyword">null</span>) {</div><div class="line">                viewHolder = <span class="keyword">new</span> ViewHolder();</div><div class="line">                view = LayoutInflater.from(mContext).inflate(R.layout.list_item,<span class="keyword">null</span>);</div><div class="line">                viewHolder.drawableId = (ImageView) view.findViewById(R.id.imageView1);</div><div class="line">                viewHolder.name = (TextView) view.findViewById(R.id.textView1);</div><div class="line">                view.setTag(viewHolder);</div><div class="line">            } <span class="keyword">else</span> {</div><div class="line">                viewHolder = (ViewHolder) view.getTag();</div><div class="line">            }</div><div class="line">            viewHolder.drawableId.setImageResource(contacts.get(i).getDrawableResId());</div><div class="line">            viewHolder.name.setText(contacts.get(i).getContactName());</div><div class="line">            <span class="keyword">if</span> (i == GlobalSingleTon.getPosition()) {</div><div class="line">                view.setBackgroundColor(Color.GREEN);</div><div class="line">            } <span class="keyword">else</span> {</div><div class="line">                view.setBackgroundColor(Color.WHITE);</div><div class="line">            }</div><div class="line">            <span class="keyword">return</span> view;</div><div class="line">        }</div><div class="line"></div><div class="line">        class ViewHolder {</div><div class="line">            ImageView drawableId;</div><div class="line">            TextView name;</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>Contact.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.lixumin.com.lixumin.model;</div><div class="line"></div><div class="line"><span class="javadoc">/**</span></div><div class="line"> * Created by elvinlee on 14-5-12.</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Contact</span> </span>{</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> drawableResId;</div><div class="line">    <span class="keyword">private</span> String contactName;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="title">Contact</span>(<span class="keyword">int</span> drawableResId, String contactName) {</div><div class="line">        <span class="keyword">this</span>.drawableResId = drawableResId;</div><div class="line">        <span class="keyword">this</span>.contactName = contactName;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getDrawableResId</span>() {</div><div class="line">        <span class="keyword">return</span> drawableResId;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDrawableResId</span>(<span class="keyword">int</span> drawableResId) {</div><div class="line">        <span class="keyword">this</span>.drawableResId = drawableResId;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">public</span> String <span class="title">getContactName</span>() {</div><div class="line">        <span class="keyword">return</span> contactName;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContactName</span>(String contactName) {</div><div class="line">        <span class="keyword">this</span>.contactName = contactName;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>这里用单例模式保存Position。</p>
+<p>GlobalSingleTon.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.lixumin;</div><div class="line"></div><div class="line"><span class="javadoc">/**</span></div><div class="line"> * Created by elvinlee on 14-5-12.</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GlobalSingleTon</span> </span>{</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> position = -<span class="number">1</span>;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="title">GlobalSingleTon</span>(){}</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> GlobalSingleTon <span class="title">getInstance</span>(){</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> GlobalSingleTon();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getPosition</span>(){</div><div class="line">        <span class="keyword">return</span> position;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setPosition</span>(<span class="keyword">int</span> position) {</div><div class="line">        GlobalSingleTon.position = position;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>布局文件:</p>
+<p>activity_main.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="title">RelativeLayout</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attribute">xmlns:tools</span>=<span class="value">"http://schemas.android.com/tools"</span></div><div class="line">    <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></div><div class="line">    <span class="attribute">android:layout_height</span>=<span class="value">"match_parent"</span></div><div class="line">    <span class="attribute">android:paddingLeft</span>=<span class="value">"@dimen/activity_horizontal_margin"</span></div><div class="line">    <span class="attribute">android:paddingRight</span>=<span class="value">"@dimen/activity_horizontal_margin"</span></div><div class="line">    <span class="attribute">android:paddingTop</span>=<span class="value">"@dimen/activity_vertical_margin"</span></div><div class="line">    <span class="attribute">android:paddingBottom</span>=<span class="value">"@dimen/activity_vertical_margin"</span></div><div class="line">    <span class="attribute">tools:context</span>=<span class="value">"com.lixumin.MainActivity"</span>&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="title">ListView</span></span></div><div class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"wrap_content"</span></div><div class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></div><div class="line">        <span class="attribute">android:id</span>=<span class="value">"@+id/listView"</span></div><div class="line">        <span class="attribute">android:layout_alignParentLeft</span>=<span class="value">"true"</span></div><div class="line">        <span class="attribute">android:layout_alignParentStart</span>=<span class="value">"true"</span></div><div class="line">        <span class="attribute">android:layout_alignParentTop</span>=<span class="value">"true"</span> /&gt;</div><div class="line"><span class="tag">&lt;/<span class="title">RelativeLayout</span>&gt;</span></div></pre></td></tr></table></figure>
+
+<p>list_item.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="title">RelativeLayout</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attribute">android:id</span>=<span class="value">"@+id/part_relative"</span></div><div class="line">    <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></div><div class="line">    <span class="attribute">android:layout_height</span>=<span class="value">"match_parent"</span>&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="title">ImageView</span></span></div><div class="line">        <span class="attribute">android:id</span>=<span class="value">"@+id/imageView1"</span></div><div class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"wrap_content"</span></div><div class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></div><div class="line">        <span class="attribute">android:layout_centerVertical</span>=<span class="value">"true"</span></div><div class="line">        <span class="attribute">android:layout_marginLeft</span>=<span class="value">"12dp"</span></div><div class="line">        <span class="attribute">android:src</span>=<span class="value">"@drawable/ic_launcher"</span> /&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="title">TextView</span></span></div><div class="line">        <span class="attribute">android:id</span>=<span class="value">"@+id/textView1"</span></div><div class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"wrap_content"</span></div><div class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></div><div class="line">        <span class="attribute">android:layout_toRightOf</span>=<span class="value">"@+id/imageView1"</span></div><div class="line">        <span class="attribute">android:text</span>=<span class="value">"Large Text"</span></div><div class="line">        <span class="attribute">android:layout_centerVertical</span>=<span class="value">"true"</span></div><div class="line">        <span class="attribute">android:textAppearance</span>=<span class="value">"?android:attr/textAppearanceLarge"</span> /&gt;</div><div class="line"><span class="tag">&lt;/<span class="title">RelativeLayout</span>&gt;</span></div></pre></td></tr></table></figure>
+
+<p>运行效果如下：</p>
+<img src="/images/pic1.png">  
+
+
+
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>记录下之前做过的，实现listview item选中高亮效果。<br>如果有更好的实现方式，记得留言发链接给我参考参考。<br>]]>
+    
+    </summary>
+    
+      <category term="android基础" scheme="https://evlinlee.github.io/categories/android%E5%9F%BA%E7%A1%80/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[mac10.9.2 搭建基于github的octopress博客]]></title>
+    <link href="https://evlinlee.github.io/2014/05/07/mac-for-github-octopress/"/>
+    <id>https://evlinlee.github.io/2014/05/07/mac-for-github-octopress/</id>
+    <published>2014-05-06T16:13:02.000Z</published>
+    <updated>2014-11-07T11:41:24.000Z</updated>
+    <content type="html"><![CDATA[<p>在mac os 10.9.2系统搭建基于github的octopress博客的过程中出了不少问题，在这里记录下。<br><a id="more"></a></p>
+<h2 id="安装">安装</h2>
+<p>按照octopress官方doc安装git和ruby，官网地址：<a href="http://octopress.org/docs/setup/" target="_blank" rel="external">http://octopress.org/docs/setup/</a></p>
+<p>接下来安装octopress</p>
+<pre><code>git clone gi<span class="variable">t:</span>//github.<span class="keyword">com</span>/imathis/octopress.git octopress
+<span class="keyword">cd</span> octopress
+</code></pre><p>按照官方教程接下来安装bundle</p>
+<pre><code>mbp:octopress$ bundle install
+Fetching gem metadata <span class="keyword">from</span> https:<span class="comment">//rubygems.org/.......</span>
+Fetching additional metadata <span class="keyword">from</span> https:<span class="comment">//rubygems.org/..</span>
+
+Errno::EACCES: Permission denied - <span class="regexp">/Library/</span>Ruby<span class="regexp">/Gems/</span><span class="number">2.0</span>.<span class="number">0</span><span class="regexp">/build_info/</span>rake-<span class="number">0.9</span>.<span class="number">2.2</span>.info
+An error occurred <span class="keyword">while</span> installing rake (<span class="number">0.9</span>.<span class="number">2.2</span>), and Bundler cannot <span class="keyword">continue</span>.
+Make sure that `gem install rake -v <span class="string">'0.9.2.2'</span>` succeeds before bundling.
+</code></pre><p>没权限，这个容易弄</p>
+<pre><code>mbp:octopress$ sudo gem <span class="operator"><span class="keyword">install</span> bundler
+<span class="keyword">Password</span>:
+Fetching: bundler-<span class="number">1.5</span><span class="number">.3</span>.gem (<span class="number">100</span>%)
+Successfully installed bundler-<span class="number">1.5</span><span class="number">.3</span>
+Parsing documentation <span class="keyword">for</span> bundler-<span class="number">1.5</span><span class="number">.3</span>
+Installing ri documentation <span class="keyword">for</span> bundler-<span class="number">1.5</span><span class="number">.3</span>
+<span class="number">1</span> gem installed</span>
+</code></pre><p>ok，搞定了。接下来继续安装bundle，</p>
+<pre><code>mbp:octopress$ bundle install
+<span class="type">Fetching</span> gem metadata <span class="keyword">from</span> https://rubygems.org/.......
+<span class="type">Fetching</span> additional metadata <span class="keyword">from</span> https://rubygems.org/..
+
+<span class="type">Errno</span>::<span class="type">EACCES</span>: <span class="type">Permission</span> denied - /<span class="type">Library</span>/<span class="type">Ruby</span>/<span class="type">Gems</span>/<span class="number">2</span>.<span class="number">0</span>.<span class="number">0</span>/build_info/rake-<span class="number">0</span>.<span class="number">9</span>.<span class="number">2</span>.<span class="number">2</span>.info
+<span class="type">An</span> error occurred <span class="keyword">while</span> installing rake (<span class="number">0</span>.<span class="number">9</span>.<span class="number">2</span>.<span class="number">2</span>), <span class="keyword">and</span> <span class="type">Bundler</span> cannot <span class="keyword">continue</span>.
+<span class="type">Make</span> sure that `gem install rake -v '<span class="number">0</span>.<span class="number">9</span>.<span class="number">2</span>.<span class="number">2</span>'` succeeds before bundling.
+mbp:octopress$ sudo gem install rake -v '<span class="number">0</span>.<span class="number">9</span>.<span class="number">2</span>.<span class="number">2</span>'
+rake's executable <span class="string">"rake"</span> conflicts <span class="keyword">with</span> /usr/bin/rake
+<span class="type">Overwrite</span> the executable? [yN]  N
+<span class="type">ERROR</span>:  <span class="type">Error</span> installing rake:
+ <span class="string">"rake"</span> <span class="keyword">from</span> rake conflicts <span class="keyword">with</span> /usr/bin/rake
+mbp:octopress$ rake -version
+rake aborted!
+undefined local variable <span class="keyword">or</span> <span class="keyword">method</span> `rsion' <span class="keyword">for</span> <span class="comment">#&lt;Rake::Application:0x007fc41c8782b8&gt;</span>
+
+(<span class="type">See</span> full trace by running task <span class="keyword">with</span> --trace)
+</code></pre><p>看来用sudo无法安装，只能把gem加到环境变量了</p>
+<pre><code><span class="symbol">mbp:</span>octopress<span class="variable">$ </span>export <span class="constant">GEM_HOME</span>=<span class="regexp">/Users/akshay</span><span class="regexp">/.gem/ruby</span><span class="regexp">/2.0.0/</span>
+<span class="symbol">mbp:</span>octopress<span class="variable">$ </span>echo <span class="variable">$GEM_HOME</span>
+/<span class="constant">Users</span>/elvinlee/.gem/ruby/<span class="number">2.0</span>.<span class="number">0</span>/
+</code></pre><p>这下应该可以了吧。</p>
+<pre><code>mbp:octopress$ bundle install
+Fetching gem metadata <span class="built_in">from</span> <span class="keyword">https</span>://rubygems.org/.......
+Fetching additional metadata <span class="built_in">from</span> <span class="keyword">https</span>://rubygems.org/..
+Installing rake (<span class="number">0.9</span><span class="number">.2</span><span class="number">.2</span>)
+
+Gem::Installer::ExtensionBuildError: ERROR: Failed <span class="built_in">to</span> build gem native extension.
+
+/System/Library/Frameworks/Ruby.framework/Versions/<span class="number">2.0</span>/usr/bin/ruby extconf.rb 
+checking <span class="keyword">for</span> main() <span class="operator">in</span> -lc... yes
+creating Makefile
+
+make <span class="string">"DESTDIR="</span>
+compiling redcloth_attributes.c
+compiling redcloth_inline.c
+compiling redcloth_scan.c
+linking shared-object redcloth_scan.bundle
+clang: error: unknown argument: <span class="string">'-multiply_definedsuppress'</span> [-Wunused-<span class="command"><span class="keyword">command</span>-line-argument-hard-error-in-future]</span>
+clang: note: this will be <span class="operator">a</span> hard error (cannot be downgraded <span class="built_in">to</span> <span class="operator">a</span> warning) <span class="operator">in</span> <span class="operator">the</span> future
+make: *** [redcloth_scan.bundle] Error <span class="number">1</span>
+
+
+Gem <span class="built_in">files</span> will remain installed <span class="operator">in</span> /Users/akshay/.gem/ruby/<span class="number">2.0</span><span class="number">.0</span>/gems/RedCloth-<span class="number">4.2</span><span class="number">.9</span> <span class="keyword">for</span> inspection.
+Results logged <span class="built_in">to</span> /Users/akshay/.gem/ruby/<span class="number">2.0</span><span class="number">.0</span>/gems/RedCloth-<span class="number">4.2</span><span class="number">.9</span>/ext/redcloth_scan/gem_make.out
+An error occurred <span class="keyword">while</span> installing RedCloth (<span class="number">4.2</span><span class="number">.9</span>), <span class="operator">and</span> Bundler cannot
+continue.
+Make sure that `gem install RedCloth -v <span class="string">'4.2.9'</span>` succeeds <span class="keyword">before</span> bundling.
+</code></pre><p>无语了，还是不行。sudo安装redcloth还是出了问题，幸好在stackoverflow上找到答案了，地址：<a href="http://stackoverflow.com/questions/22352838/ruby-gem-install-json-fails-on-mavericks-and-xcode-5-1-unknown-argument-mul" target="_blank" rel="external">http://stackoverflow.com/questions/22352838/ruby-gem-install-json-fails-on-mavericks-and-xcode-5-1-unknown-argument-mul</a></p>
+<pre><code>mbp:octopress$ export ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future gem <span class="operator"><span class="keyword">install</span> json
+mbp:octopress$ gem <span class="keyword">install</span> RedCloth -v <span class="string">'4.2.9'</span>
+
+mbp:octopress$ gem <span class="keyword">install</span> RedCloth -v <span class="string">'4.2.9'</span>
+Building native extensions.  This could take a while...
+Successfully installed RedCloth-<span class="number">4.2</span><span class="number">.9</span>
+Parsing documentation <span class="keyword">for</span> RedCloth-<span class="number">4.2</span><span class="number">.9</span>
+unable <span class="keyword">to</span> <span class="keyword">convert</span> <span class="string">"\xCF"</span> <span class="keyword">from</span> <span class="keyword">ASCII</span>-<span class="number">8</span><span class="built_in">BIT</span> <span class="keyword">to</span> UTF-<span class="number">8</span> <span class="keyword">for</span> ext/redcloth_scan/redcloth_attributes.o, skipping
+unable <span class="keyword">to</span> <span class="keyword">convert</span> <span class="string">"\xCF"</span> <span class="keyword">from</span> <span class="keyword">ASCII</span>-<span class="number">8</span><span class="built_in">BIT</span> <span class="keyword">to</span> UTF-<span class="number">8</span> <span class="keyword">for</span> ext/redcloth_scan/redcloth_inline.o, skipping
+unable <span class="keyword">to</span> <span class="keyword">convert</span> <span class="string">"\xCF"</span> <span class="keyword">from</span> <span class="keyword">ASCII</span>-<span class="number">8</span><span class="built_in">BIT</span> <span class="keyword">to</span> UTF-<span class="number">8</span> <span class="keyword">for</span> ext/redcloth_scan/redcloth_scan.bundle, skipping
+unable <span class="keyword">to</span> <span class="keyword">convert</span> <span class="string">"\xCF"</span> <span class="keyword">from</span> <span class="keyword">ASCII</span>-<span class="number">8</span><span class="built_in">BIT</span> <span class="keyword">to</span> UTF-<span class="number">8</span> <span class="keyword">for</span> ext/redcloth_scan/redcloth_scan.o, skipping
+unable <span class="keyword">to</span> <span class="keyword">convert</span> <span class="string">"\xCF"</span> <span class="keyword">from</span> <span class="keyword">ASCII</span>-<span class="number">8</span><span class="built_in">BIT</span> <span class="keyword">to</span> UTF-<span class="number">8</span> <span class="keyword">for</span> lib/redcloth_scan.bundle, skipping
+Installing ri documentation <span class="keyword">for</span> RedCloth-<span class="number">4.2</span><span class="number">.9</span>
+<span class="number">1</span> gem installed</span>
+</code></pre><p>终于搞定了，弄了一整天了。现在再试试安装bundle：</p>
+<pre><code>mbp:octopress$ bundle <span class="operator"><span class="keyword">install</span>
+Fetching gem metadata <span class="keyword">from</span> https://rubygems.org/.......
+Fetching additional metadata <span class="keyword">from</span> https://rubygems.org/..
+<span class="keyword">Using</span> rake (<span class="number">0.9</span><span class="number">.2</span><span class="number">.2</span>)
+<span class="keyword">Using</span> RedCloth (<span class="number">4.2</span><span class="number">.9</span>)
+Installing chunky_png (<span class="number">1.2</span><span class="number">.5</span>)
+Installing <span class="keyword">fast</span>-stemmer (<span class="number">1.0</span><span class="number">.1</span>)
+Installing classifier (<span class="number">1.3</span><span class="number">.3</span>)
+Installing fssm (<span class="number">0.2</span><span class="number">.9</span>)
+Installing sass (<span class="number">3.2</span><span class="number">.9</span>)
+Installing compass (<span class="number">0.12</span><span class="number">.2</span>)
+Installing directory_watcher (<span class="number">1.4</span><span class="number">.1</span>)
+Installing haml (<span class="number">3.1</span><span class="number">.7</span>)
+Installing kramdown (<span class="number">0.13</span><span class="number">.8</span>)
+Installing liquid (<span class="number">2.3</span><span class="number">.0</span>)
+Installing syntax (<span class="number">1.0</span><span class="number">.0</span>)
+Installing maruku (<span class="number">0.6</span><span class="number">.1</span>)
+Installing posix-spawn (<span class="number">0.3</span><span class="number">.6</span>)
+Installing yajl-ruby (<span class="number">1.1</span><span class="number">.0</span>)
+Installing pygments.rb (<span class="number">0.3</span><span class="number">.4</span>)
+Installing jekyll (<span class="number">0.12</span><span class="number">.0</span>)
+Installing rack (<span class="number">1.5</span><span class="number">.2</span>)
+Installing rack-protection (<span class="number">1.5</span><span class="number">.0</span>)
+Installing rb-fsevent (<span class="number">0.9</span><span class="number">.1</span>)
+Installing rdiscount (<span class="number">2.0</span><span class="number">.7</span><span class="number">.3</span>)
+Installing rubypants (<span class="number">0.2</span><span class="number">.0</span>)
+Installing sass-globbing (<span class="number">1.0</span><span class="number">.0</span>)
+Installing tilt (<span class="number">1.3</span><span class="number">.7</span>)
+Installing sinatra (<span class="number">1.4</span><span class="number">.2</span>)
+Installing stringex (<span class="number">1.4</span><span class="number">.0</span>)
+<span class="keyword">Using</span> bundler (<span class="number">1.5</span><span class="number">.3</span>)
+Your bundle <span class="keyword">is</span> complete!
+<span class="keyword">Use</span> <span class="string">`bundle show [gemname]`</span> <span class="keyword">to</span> see <span class="keyword">where</span> a bundled gem <span class="keyword">is</span> installed.</span>
+</code></pre><p>完全没问题，接下来安装rake：</p>
+<pre><code>mbp:octopress$ rake install
+<span class="comment">## Copying classic theme into ./source and ./sass</span>
+mkdir -p <span class="built_in">source</span>
+cp -r .themes/classic/<span class="built_in">source</span>/. <span class="built_in">source</span>
+mkdir -p sass
+cp -r .themes/classic/sass/. sass
+mkdir -p <span class="built_in">source</span>/_posts
+mkdir -p public
+</code></pre><p>忙活了一天总算搞定了。</p>
+<h2 id="配置">配置</h2>
+<p>接下来配置博客，首先在github创建一个仓库，名字必须跟github的用户名一样。建好后就开始部署github page：</p>
+<pre><code>mbp:octopress$ rake setup_github_pages
+Enter the <span class="keyword">read</span>/<span class="keyword">write</span> url <span class="keyword">for</span> your repository
+(<span class="keyword">For</span> example, <span class="string">'git@github.com:your_username/your_username.github.io.git)
+       or '</span>https:<span class="comment">//github.com/your_username/your_username.github.io')</span>
+Repository url: https:<span class="comment">//github.com/evlinlee/evlinlee.github.io.git</span>
+Added remote https:<span class="comment">//github.com/evlinlee/evlinlee.github.io.git as origin</span>
+<span class="keyword">Set</span> origin <span class="keyword">as</span> <span class="keyword">default</span> remote
+Master branch renamed <span class="keyword">to</span> <span class="string">'source'</span> <span class="keyword">for</span> committing your blog source files
+rm -rf _deploy
+mkdir _deploy
+cd _deploy
+Initialized <span class="keyword">empty</span> Git repository <span class="keyword">in</span> /Users/akshay/Dev/Octopress/octopress/_deploy/.git/
+[master (root-commit) e8d4b07] Octopress init
+ <span class="number">1</span> file changed, <span class="number">1</span> insertion(+)
+ <span class="keyword">create</span> mode <span class="number">100644</span> <span class="keyword">index</span>.html
+cd -
+
+---
+</code></pre><p>ok,接下来配置下octopress的一些配置文件，_config.yml是博客重要的一个配置文件，在_config.yml文件中有三大配置项：Main Configs、Jekyll &amp; Plugins和3rd Party Settings。<br>一般，该文件中其中url是必须要填写的，这里的url是在github上创建的一个仓库地址，具体请看第四步中创建的地址。另外再修改一下title、subtitle和author，根据需求，在开启一些第三方组件服务。<br>关于_config.yml文件中的更多内容，请看这里的内容：Configuring Octopress</p>
+<blockquote>
+<p>建议：最好把里面的twitter相关的信息全部删掉，否则由于GFW的原因，将会造成页面load很慢。同理，修改定制文件/source/_includes/custom/head.html 把google的自定义字体去掉。</p>
+</blockquote>
+<p>这里是我的配置文件：</p>
+<pre><code><span class="preprocessor"># ----------------------- #</span>
+<span class="preprocessor">#      Main Configs       #</span>
+<span class="preprocessor"># ----------------------- #</span>
+<span class="label">url:</span> http://evlinlee.github.io
+<span class="label">title:</span> 李绪敏的博客
+<span class="label">subtitle:</span> Notes on Coding <span class="keyword">and</span> Life.
+<span class="label">author:</span> ElvinLee
+<span class="label">simple_search:</span> https://www.google.com/search
+<span class="label">description:</span>
+</code></pre><p>接下来就把博客部署到github上：</p>
+<pre><code>mbp:octopress$ rake generate
+## Generating Site with Jekyll
+directory source/stylesheets/ 
+   <span class="operator"><span class="keyword">create</span> source/stylesheets/screen.css 
+Configuration <span class="keyword">from</span> /Users/elvinlee/Dev/Octopress/octopress/_config.yml
+Building site: source -&gt; <span class="keyword">public</span>
+Successfully generated site: source -&gt; <span class="keyword">public</span>
+mbp:octopress$ rake deploy
+## Deploying branch <span class="keyword">to</span> Github Pages 
+## Pulling <span class="keyword">any</span> updates <span class="keyword">from</span> Github Pages 
+cd _deploy
+There <span class="keyword">is</span> <span class="keyword">no</span> tracking information <span class="keyword">for</span> the <span class="keyword">current</span> branch.
+Please specify which branch you want <span class="keyword">to</span> <span class="keyword">merge</span> <span class="keyword">with</span>.
+See git-pull(<span class="number">1</span>) <span class="keyword">for</span> details
+
+    git pull &lt;remote&gt; &lt;branch&gt;
+
+<span class="keyword">If</span> you wish <span class="keyword">to</span> <span class="keyword">set</span> tracking information <span class="keyword">for</span> this branch you can <span class="keyword">do</span> so <span class="keyword">with</span>:
+
+    git branch <span class="comment">--set-upstream-to=origin/&lt;branch&gt; master</span>
+
+cd -
+rm -rf _deploy/<span class="keyword">index</span>.html
+
+## Copying <span class="keyword">public</span> <span class="keyword">to</span> _deploy
+cp -r <span class="keyword">public</span>/. _deploy
+cd _deploy
+
+## Committing: Site updated <span class="keyword">at</span> <span class="number">2014</span>-<span class="number">03</span>-<span class="number">13</span> <span class="number">12</span>:<span class="number">04</span>:<span class="number">21</span> UTC
+[<span class="keyword">master</span> a87f356] Site updated <span class="keyword">at</span> <span class="number">2014</span>-<span class="number">03</span>-<span class="number">13</span> <span class="number">12</span>:<span class="number">04</span>:<span class="number">21</span> UTC
+ <span class="number">61</span> files <span class="keyword">changed</span>, <span class="number">1118</span> insertions(+), <span class="number">1</span> deletion(-)
+ &lt;<span class="keyword">LINES</span> REMOVED&gt;
+## Pushing generated _deploy website
+Counting objects: <span class="number">79</span>, done.
+Delta compression <span class="keyword">using</span> up <span class="keyword">to</span> <span class="number">8</span> threads.
+Compressing objects: <span class="number">100</span>% (<span class="number">72</span>/<span class="number">72</span>), done.
+Writing objects: <span class="number">100</span>% (<span class="number">79</span>/<span class="number">79</span>), <span class="number">186.51</span> KiB | <span class="number">0</span> bytes/s, done.
+Total <span class="number">79</span> (delta <span class="number">1</span>), reused <span class="number">0</span> (delta <span class="number">0</span>)
+<span class="keyword">To</span> https://github.com/evlinlee/evlinlee.github.io.git
+ * [new branch]      <span class="keyword">master</span> -&gt; <span class="keyword">master</span>
+
+## Github Pages deploy complete
+cd -</span>
+</code></pre><p>最后提交到github的仓库上：</p>
+<pre><code>mbp:octopress$ git status
+On branch source
+Your branch is based on 'origin/master', but the upstream is gone.
+  (<span class="operator"><span class="keyword">use</span> <span class="string">"git branch --unset-upstream"</span> <span class="keyword">to</span> fixup)
+
+Changes <span class="keyword">not</span> staged <span class="keyword">for</span> <span class="keyword">commit</span>:
+  (<span class="keyword">use</span> <span class="string">"git add &lt;file&gt;..."</span> <span class="keyword">to</span> <span class="keyword">update</span> what will be committed)
+  (<span class="keyword">use</span> <span class="string">"git checkout -- &lt;file&gt;..."</span> <span class="keyword">to</span> discard changes <span class="keyword">in</span> working directory)
+
+ modified:   Rakefile
+ modified:   _config.yml
+
+Untracked files:
+  (<span class="keyword">use</span> <span class="string">"git add &lt;file&gt;..."</span> <span class="keyword">to</span> include <span class="keyword">in</span> what will be committed)
+
+ sass/
+ source/
+
+<span class="keyword">no</span> changes added <span class="keyword">to</span> <span class="keyword">commit</span> (<span class="keyword">use</span> <span class="string">"git add"</span> <span class="keyword">and</span>/<span class="keyword">or</span> <span class="string">"git commit -a"</span>)
+mbp:octopress$ git <span class="keyword">add</span> .
+mbp:octopress$ git <span class="keyword">commit</span> -m <span class="string">'First commit'</span>
+[source <span class="number">13</span>f9d4a] <span class="keyword">First</span> <span class="keyword">commit</span>
+ <span class="number">119</span> files <span class="keyword">changed</span>, <span class="number">2784</span> insertions(+), <span class="number">3</span> deletions(-)
+ &lt;太长了，省略君出现了&gt;
+mbp:octopress$ git push origin source
+Counting objects: <span class="number">4771</span>, done.
+Delta compression <span class="keyword">using</span> up <span class="keyword">to</span> <span class="number">8</span> threads.
+Compressing objects: <span class="number">100</span>% (<span class="number">2124</span>/<span class="number">2124</span>), done.
+Writing objects: <span class="number">100</span>% (<span class="number">4771</span>/<span class="number">4771</span>), <span class="number">1.30</span> MiB | <span class="number">136.00</span> KiB/s, done.
+Total <span class="number">4771</span> (delta <span class="number">2296</span>), reused <span class="number">4742</span> (delta <span class="number">2270</span>)
+<span class="keyword">To</span> https://github.com/evlinlee/evlinlee.github.io.git
+ * [new branch]      source -&gt; source
+mbp:octopress$</span>
+</code></pre><p>终于弄好了，可以发布文章了。</p>
+<pre><code>mbp:octopress$ rake new_post[<span class="string">"Setting up Octopress"</span>]
+mkdir -p <span class="built_in">source</span>/_posts
+Creating new post: <span class="built_in">source</span>/_posts/<span class="number">2014</span>-<span class="number">04</span>-<span class="number">28</span>-setting-up-octopress.markdown
+</code></pre><p>文章都是基于markdown语法写的，在mac下推荐MOU。用mou打开2014-04-28-setting-up-octopress.markdown，随便写点东西。然后提交到github上。</p>
+<pre><code>rake generate
+<span class="label">mbp:</span>octopress$ git <span class="keyword">add</span> .
+<span class="label">mbp:</span>octopress$ git commit -am <span class="string">"Some comment here."</span> 
+<span class="label">mbp:</span>octopress$ git <span class="keyword">push</span> origin source
+<span class="label">mbp:</span>octopress$ rake deploy
+</code></pre><p>打开evlinlee.github.io，哈哈，终于搞定了。<br>写的不够详细，以后继续补充，接下来打算买个域名。最后mark下markdown语法的学习教程：<br><a href="http://wowubuntu.com/markdown/" target="_blank" rel="external">http://wowubuntu.com/markdown/</a></p>
+<h2 id="添加域名">添加域名</h2>
+<ol>
+<li>添加自己的域名，建议去<a href="http://www.godaddy.com/" target="_blank" rel="external">Goddy</a>买。考虑到有时候国外连通线路不稳定，建议通过国内第三方dns，我经常用的是<a href="http://www.dnspod.cn/" target="_blank" rel="external">dnspod</a>。绑定域名可以参考官方文档，<a href="https://help.github.com/articles/setting-up-a-custom-domain-with-github-pages" target="_blank" rel="external">Setting up a custom domain with Pages</a>.在godday设置要nameserver为dnspod，然后再dnspod添加相应的域名，在域名的解析界面添加CNAME类型的记录，如下：<br>www        CNAME    evlin.github.io    600</li>
+<li>在source目录下添加CNAME文件，文件的内容是自己注册的域名。</li>
+</ol>
+<h2 id="问题">问题</h2>
+<p>如果遇到一下关于rake版本的问题的话，</p>
+<pre><code>You have already activated rake <span class="number">0.9</span><span class="number">.6</span>, but your Gemfile requires rake <span class="number">0.9</span><span class="number">.2</span><span class="number">.2</span>. Prepending `bundle exec` <span class="built_in">to</span> your <span class="command"><span class="keyword">command</span> <span class="title">may</span> <span class="title">solve</span> <span class="title">this</span>.</span>
+</code></pre><p>直接更新rake的版本即可。</p>
+<pre><code>bundle <span class="keyword">update</span> rake
+</code></pre>]]></content>
+    <summary type="html">
+    <![CDATA[<p>在mac os 10.9.2系统搭建基于github的octopress博客的过程中出了不少问题，在这里记录下。<br>]]>
+    
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Hello World! I'm Octopress!]]></title>
+    <link href="https://evlinlee.github.io/2009/11/13/hello-world/"/>
+    <id>https://evlinlee.github.io/2009/11/13/hello-world/</id>
+    <published>2009-11-12T16:00:00.000Z</published>
+    <updated>0010-08-09T16:00:00.000Z</updated>
+    <content type="html"><![CDATA[<p><strong>Octopress is a blogging framework designed for hackers</strong>, based on <a href="http://github.com/mojombo/jekyll" target="_blank" rel="external">Jekyll</a> the blog aware static site generator powering <a href="http://pages.github.com/" target="_blank" rel="external">Github pages</a>.<br>If you don’t know what Jekyll is, <a href="http://metajack.im/2009/01/23/blogging-with-git-emacs-and-jekyll/" target="_blank" rel="external">Jack Moffitt</a> wrote a good summary:</p>
+<blockquote>
+<p>Jekyll is a static blog generator; it transforms a directory of input files into another directory of files suitable for a blog. The management of the blog is handled by standard, familiar tools like creating and renaming files, the text editor of your choice, and version control.<br><cite><strong>Jack Moffitt</strong> <a href="http://metajack.im/2009/01/23/blogging-with-git-emacs-and-jekyll/" target="_blank" rel="external">Blogging with Git Emacs and Jekyll</a></cite></p>
+</blockquote>
+<p>There’s no database to set up, and you get to use tools like Emacs, vim, or TextMate to write your posts, not some lame in-browser text editor. Just write, generate, deploy, using the same tools and patters you already use for your daily work.</p>
+<p><a href="http://wiki.github.com/imathis/octopress/" target="_blank" rel="external">Read the wiki to learn more</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p><strong>Octopress is a blogging framework designed for hackers</strong>, based on <a href="http://github.com/mojombo/jekyll" target="_bla]]>
+    </summary>
+    
+  </entry>
+  
+</feed>
