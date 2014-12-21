@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title><![CDATA[夜半微凉]]></title>
-  
+  <subtitle><![CDATA[生命太短暂，不要去做一些根本没有人想要的东西。]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.lixumin.com/"/>
-  <updated>2014-12-21T06:53:29.440Z</updated>
+  <updated>2014-12-21T06:56:18.857Z</updated>
   <id>http://www.lixumin.com/</id>
   
   <author>
