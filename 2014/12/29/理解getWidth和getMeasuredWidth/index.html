@@ -9,31 +9,27 @@
     
     <meta name="author" content="EvlinLee">
     
-    <meta name="description" content="title: 理解getWidth和getMeasuredWidth
-date: 2014-12-29 22:23:42
+    <meta name="description" content="理解getWidth和getMeasuredWidth
 tags:深入学习Android
-一、也许很多童鞋对getWidth()和 getMeasuredWidth()的用法有很多的不解，这两者之间有什麼样的不同呢，网上也有各种不同的">
+一、也许很多童鞋对getWidth()和 getMeasuredWidth()的用法有很多的不解，这两者之间有什麼样的不同呢，网上也有各种不同的版本，但大多数都大同小异，从这个地方 Ctrl+C,到另一个地方C">
     
     
-    <meta name="description" content="title: 理解getWidth和getMeasuredWidth
-date: 2014-12-29 22:23:42
+    <meta name="description" content="理解getWidth和getMeasuredWidth
 tags:深入学习Android
-一、也许很多童鞋对getWidth()和 getMeasuredWidth()的用法有很多的不解，这两者之间有什麼样的不同呢，网上也有各种不同的版本，但大多数都大同小异，从这个地方 Ctrl+C,到另一个地方Ctrl+V,没有把问题说透，也有一">
+一、也许很多童鞋对getWidth()和 getMeasuredWidth()的用法有很多的不解，这两者之间有什麼样的不同呢，网上也有各种不同的版本，但大多数都大同小异，从这个地方 Ctrl+C,到另一个地方Ctrl+V,没有把问题说透，也有一部分文章误导了大家对这两个方法的认识，我也是深受其害。这裡先纠正下">
 <meta property="og:type" content="article">
 <meta property="og:title" content="夜半微凉">
 <meta property="og:url" content="http://www.lixumin.com/2014/12/29/理解getWidth和getMeasuredWidth/">
 <meta property="og:site_name" content="夜半微凉">
-<meta property="og:description" content="title: 理解getWidth和getMeasuredWidth
-date: 2014-12-29 22:23:42
+<meta property="og:description" content="理解getWidth和getMeasuredWidth
 tags:深入学习Android
-一、也许很多童鞋对getWidth()和 getMeasuredWidth()的用法有很多的不解，这两者之间有什麼样的不同呢，网上也有各种不同的版本，但大多数都大同小异，从这个地方 Ctrl+C,到另一个地方Ctrl+V,没有把问题说透，也有一">
+一、也许很多童鞋对getWidth()和 getMeasuredWidth()的用法有很多的不解，这两者之间有什麼样的不同呢，网上也有各种不同的版本，但大多数都大同小异，从这个地方 Ctrl+C,到另一个地方Ctrl+V,没有把问题说透，也有一部分文章误导了大家对这两个方法的认识，我也是深受其害。这裡先纠正下">
 <meta property="og:image" content="http://7teb8h.com1.z0.glb.clouddn.com/test.jpeg">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="夜半微凉">
-<meta name="twitter:description" content="title: 理解getWidth和getMeasuredWidth
-date: 2014-12-29 22:23:42
+<meta name="twitter:description" content="理解getWidth和getMeasuredWidth
 tags:深入学习Android
-一、也许很多童鞋对getWidth()和 getMeasuredWidth()的用法有很多的不解，这两者之间有什麼样的不同呢，网上也有各种不同的版本，但大多数都大同小异，从这个地方 Ctrl+C,到另一个地方Ctrl+V,没有把问题说透，也有一">
+一、也许很多童鞋对getWidth()和 getMeasuredWidth()的用法有很多的不解，这两者之间有什麼样的不同呢，网上也有各种不同的版本，但大多数都大同小异，从这个地方 Ctrl+C,到另一个地方Ctrl+V,没有把问题说透，也有一部分文章误导了大家对这两个方法的认识，我也是深受其害。这裡先纠正下">
 
 
     
@@ -104,12 +100,11 @@ tags:深入学习Android
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#tags:深入学习Android"><span class="toc-number">1.</span> <span class="toc-text">tags:深入学习Android</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#理解getWidth和getMeasuredWidth"><span class="toc-number">1.</span> <span class="toc-text">理解getWidth和getMeasuredWidth</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#tags:深入学习Android"><span class="toc-number">1.1.</span> <span class="toc-text">tags:深入学习Android</span></a></li></ol></li></ol>
 		
 		</div>
 		
-		<p>title: 理解getWidth和getMeasuredWidth</p>
-<p>date: 2014-12-29 22:23:42</p>
+		<h1 id="理解getWidth和getMeasuredWidth">理解getWidth和getMeasuredWidth</h1>
 <h2 id="tags:深入学习Android">tags:深入学习Android</h2>
 <p>一、也许很多童鞋对getWidth()和 getMeasuredWidth()的用法有很多的不解，这两者之间有什麼样的不同呢，网上也有各种不同的版本，但大多数都大同小异，从这个地方 Ctrl+C,到另一个地方Ctrl+V,没有把问题说透，也有一部分文章误导了大家对这两个方法的认识，我也是深受其害。这裡先纠正下面的一个版本的说 法，Baidu上一搜一大堆的，可惜这种说法是错的，所以希望大家就不要再盲目的转载到你的空间裡：<br>&gt;<br>                     getWidth得到是某个view的实际尺寸.<br>                     getMeasuredWidth是得到某view想要在parent view里面占的大小.</p>
 <p>想必你也见过这样的解释，听起来这样的解释也似云里雾里，没有把问题点透。</p>
@@ -233,7 +228,7 @@ tags:深入学习Android
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#tags:深入学习Android"><span class="toc-number">1.</span> <span class="toc-text">tags:深入学习Android</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#理解getWidth和getMeasuredWidth"><span class="toc-number">1.</span> <span class="toc-text">理解getWidth和getMeasuredWidth</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#tags:深入学习Android"><span class="toc-number">1.1.</span> <span class="toc-text">tags:深入学习Android</span></a></li></ol></li></ol>
  
   </div>
 
