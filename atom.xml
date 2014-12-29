@@ -4,7 +4,7 @@
   <subtitle><![CDATA[生命太短暂，不要去做一些根本没有人想要的东西。]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.lixumin.com/"/>
-  <updated>2014-12-29T15:12:52.626Z</updated>
+  <updated>2014-12-29T15:17:59.027Z</updated>
   <id>http://www.lixumin.com/</id>
   
   <author>
@@ -15,13 +15,12 @@
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
   
   <entry>
-    <title><![CDATA[]]></title>
+    <title><![CDATA[理解getWidth和getMeasuredWidth]]></title>
     <link href="http://www.lixumin.com/2014/12/29/%E7%90%86%E8%A7%A3getWidth%E5%92%8CgetMeasuredWidth/"/>
     <id>http://www.lixumin.com/2014/12/29/理解getWidth和getMeasuredWidth/</id>
     <published>2014-12-28T16:00:00.000Z</published>
-    <updated>2014-12-29T15:12:04.000Z</updated>
-    <content type="html"><![CDATA[<h3 id="理解getWidth和getMeasuredWidth">理解getWidth和getMeasuredWidth</h3>
-<p>一、也许很多童鞋对getWidth()和 getMeasuredWidth()的用法有很多的不解，这两者之间有什麼样的不同呢，网上也有各种不同的版本，但大多数都大同小异，从这个地方 Ctrl+C,到另一个地方Ctrl+V,没有把问题说透，也有一部分文章误导了大家对这两个方法的认识，我也是深受其害。这裡先纠正下面的一个版本的说 法，Baidu上一搜一大堆的，可惜这种说法是错的，所以希望大家就不要再盲目的转载到你的空间裡：<br>&gt;<br>                     getWidth得到是某个view的实际尺寸.<br>                     getMeasuredWidth是得到某view想要在parent view里面占的大小.</p>
+    <updated>2014-12-29T15:17:35.000Z</updated>
+    <content type="html"><![CDATA[<p>一、也许很多童鞋对getWidth()和 getMeasuredWidth()的用法有很多的不解，这两者之间有什麼样的不同呢，网上也有各种不同的版本，但大多数都大同小异，从这个地方 Ctrl+C,到另一个地方Ctrl+V,没有把问题说透，也有一部分文章误导了大家对这两个方法的认识，我也是深受其害。这裡先纠正下面的一个版本的说 法，Baidu上一搜一大堆的，可惜这种说法是错的，所以希望大家就不要再盲目的转载到你的空间裡：<br>&gt;<br>                     getWidth得到是某个view的实际尺寸.<br>                     getMeasuredWidth是得到某view想要在parent view里面占的大小.</p>
 <p>想必你也见过这样的解释，听起来这样的解释也似云里雾里，没有把问题点透。</p>
 <p>二、好了，错误的版本就不过多说了，下面对这两个方法做一下正解，首先大家应先知道以下几点：</p>
 <ol>
@@ -62,7 +61,7 @@
 <p>The width of this view as measured in the most recent call to measure(). This should be used during measurement and layout calculations only.</p>
 <p>得到的是在最近一次调用measure()方法测量后得到的view的宽度，它仅仅用在测量和layout的计算中。<br>所以此方法得到的是view的内容佔据的实际宽度。</p>
 <p>你如果想从一个最简单的例子中的到它们的不同，下面将对上面的例子做一下修改</p>
-<pre><code><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>{
+<pre><code><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>{
  <span class="keyword">private</span> TextViewTest mTextViewTest;
 
  <span class="javadoc">/** Called when the activity is first created. */</span>
@@ -98,9 +97,10 @@
 <p><img src="http://7teb8h.com1.z0.glb.clouddn.com/test.jpeg" alt="图片"></p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<h3 id="理解getWidth和getMeasuredWidth">理解getWidth和getMeasuredWidth</h3>
-<p>一、也许很多童鞋对getWidth()和 getMeasuredWidth()的用法有很多的不解，这两者之间有什麼样的不同呢，网上也有]]>
+    <![CDATA[<p>一、也许很多童鞋对getWidth()和 getMeasuredWidth()的用法有很多的不解，这两者之间有什麼样的不同呢，网上也有各种不同的版本，但大多数都大同小异，从这个地方 Ctrl+C,到另一个地方Ctrl+V,没有把问题说透，也有一部分文章误导了大家对这两个方法]]>
     </summary>
+    
+      <category term="深入学习Android" scheme="http://www.lixumin.com/categories/%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0Android/"/>
     
   </entry>
   
