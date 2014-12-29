@@ -4,7 +4,7 @@
   <subtitle><![CDATA[生命太短暂，不要去做一些根本没有人想要的东西。]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.lixumin.com/"/>
-  <updated>2014-12-29T14:51:11.550Z</updated>
+  <updated>2014-12-29T15:10:02.216Z</updated>
   <id>http://www.lixumin.com/</id>
   
   <author>
@@ -19,49 +19,90 @@
     <link href="http://www.lixumin.com/2014/12/29/%E7%90%86%E8%A7%A3getWidth%E5%92%8CgetMeasuredWidth/"/>
     <id>http://www.lixumin.com/2014/12/29/理解getWidth和getMeasuredWidth/</id>
     <published>2014-12-28T16:00:00.000Z</published>
-    <updated>2014-12-29T14:50:58.000Z</updated>
-    <content type="html"><![CDATA[<p>title: 理解getWidth和getMeasuredWidth<br>date: 2014-12-29 22:23:42</p>
+    <updated>2014-12-29T15:09:52.000Z</updated>
+    <content type="html"><![CDATA[<p>title: 理解getWidth和getMeasuredWidth</p>
+<p>date: 2014-12-29 22:23:42</p>
 <h2 id="tags:深入学习Android">tags:深入学习Android</h2>
 <p>一、也许很多童鞋对getWidth()和 getMeasuredWidth()的用法有很多的不解，这两者之间有什麼样的不同呢，网上也有各种不同的版本，但大多数都大同小异，从这个地方 Ctrl+C,到另一个地方Ctrl+V,没有把问题说透，也有一部分文章误导了大家对这两个方法的认识，我也是深受其害。这裡先纠正下面的一个版本的说 法，Baidu上一搜一大堆的，可惜这种说法是错的，所以希望大家就不要再盲目的转载到你的空间裡：<br>&gt;<br>                     getWidth得到是某个view的实际尺寸.<br>                     getMeasuredWidth是得到某view想要在parent view里面占的大小.</p>
 <p>想必你也见过这样的解释，听起来这样的解释也似云里雾里，没有把问题点透。</p>
 <p>二、好了，错误的版本就不过多说了，下面对这两个方法做一下正解，首先大家应先知道以下几点：</p>
 <ol>
 <li>在一个类初始化时，即在构造函数当中我们是得不到View的实际大小的。感兴趣的朋友可以试一下，getWidth()和getMeasuredWidth()得到的结果都是0.但是我们可以从onDraw()方法裡面得到控件的大小。</li>
-<li>这两个方法所得到的结果的单位是像素即pixel.对两个方法做介绍：<br>getWidth(): 得到的是view在父Layout中布局好后的宽度值，如果没有父布局，那麼默认的父布局是整个屏幕。也许不好理解。通过一个例子来说明一下。</li>
+<li><p>这两个方法所得到的结果的单位是像素即pixel.对两个方法做介绍：<br>getWidth(): 得到的是view在父Layout中布局好后的宽度值，如果没有父布局，那麼默认的父布局是整个屏幕。也许不好理解。通过一个例子来说明一下。</p>
+<p> public class TestActivity extends Activity {</p>
+<pre><code> <span class="keyword">private</span> TextViewTest mTextViewTest;
+
+ <span class="annotation">@Override</span>
+ <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span>(Bundle savedInstanceState) {
+     <span class="keyword">super</span>.onCreate(savedInstanceState);
+     mTextViewTest = <span class="keyword">new</span> TextViewTest(<span class="keyword">this</span>);
+     setContentView(mTextViewTest);
+ }
+
+ <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TextViewTest</span> <span class="keyword">extends</span> <span class="title">TextView</span> </span>{
+     <span class="keyword">public</span> <span class="title">TextViewTest</span>(Context context) {
+         <span class="keyword">super</span>(context);
+         setText(<span class="string">"test test "</span>);
+     }
+
+     <span class="annotation">@Override</span>
+     <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span>(Canvas canvas) {
+         <span class="keyword">super</span>.onDraw(canvas);
+         measure(<span class="number">0</span>, <span class="number">0</span>);
+         Log.i(<span class="string">"Tag"</span>, <span class="string">"width: "</span> + getWidth() + <span class="string">",height: "</span> + getHeight());
+         Log.i(<span class="string">"Tag"</span>, <span class="string">"MeasuredWidth: "</span> + getMeasuredWidth()
+                 + <span class="string">",MeasuredHeight: "</span> + getMeasuredHeight());
+     }
+ }
+
+ }
+</code></pre></li>
 </ol>
-<p>`public class Test extends Activity {<br> private LinearLayout mBackgroundLayout;<br> private TextViewTest mTextViewTest;</p>
-<p> /<em>* Called when the activity is first created. </em>/<br> @Override<br> public void onCreate(Bundle savedInstanceState) {<br>  super.onCreate(savedInstanceState);</p>
-<p>  mBackgroundLayout = new MyLayout(this);<br>  mBackgroundLayout.setLayoutParams(new LinearLayout.LayoutParams(<br>    LinearLayout.LayoutParams.FILL_PARENT,<br>    LinearLayout.LayoutParams.FILL_PARENT));</p>
-<p>  mTextViewTest = new TextViewTest(this);</p>
-<p>  mBackgroundLayout.addView(mTextViewTest);<br>  setContentView(mBackgroundLayout);<br> }<br> public class MyLayout extends LinearLayout{</p>
-<p>  public MyLayout(Context context) {<br>   super(context);<br>   // TODO Auto-generated constructor stub<br>  }</p>
-<p>  @Override<br>  protected void onLayout(boolean changed, int l, int t, int r, int b) {<br>   // TODO Auto-generated method stub<br>   super.onLayout(changed, l, t, r, b);<br>   Log.i(“Tag”, “———————“);<br>   View mView=getChildAt(0);<br>   mView.measure(0, 0);<br>  }</p>
-<p> }<br> public class TextViewTest extends TextView {<br>  public TextViewTest(Context context) {<br>   super(context);<br>   // TODO Auto-generated constructor stub<br>   setText(“test test “);<br>  }</p>
-<p>  @Override<br>   protected void onDraw(Canvas canvas) {<br>   // TODO Auto-generated method stub<br>   super.onDraw(canvas);<br>   // measure(0, 0);<br>   Log.i(“Tag”, “width: “ + getWidth() + “,height: “ + getHeight());<br>   Log.i(“Tag”, “MeasuredWidth: “ + getMeasuredWidth()</p>
-<pre><code> + <span class="string">",MeasuredHeight: "</span> + getMeasuredHeight());
-</code></pre><p>   }</p>
-<p> }<br>}`</p>
 <p>这里是在LinearLayout裡添加一个TextView控件，如果此时要得到对TextView获取getWidth()，那么是在TextView添加到Layout后再去获取值，并不单单的是对TextView本身宽度的获取。</p>
 <p>getMeasuredWidth()：先看一下API里面怎么说的</p>
 <p>The width of this view as measured in the most recent call to measure(). This should be used during measurement and layout calculations only.</p>
 <p>得到的是在最近一次调用measure()方法测量后得到的view的宽度，它仅仅用在测量和layout的计算中。<br>所以此方法得到的是view的内容佔据的实际宽度。</p>
 <p>你如果想从一个最简单的例子中的到它们的不同，下面将对上面的例子做一下修改</p>
-<p>`public class Test extends Activity {<br> private TextViewTest mTextViewTest;</p>
-<p> /<em>* Called when the activity is first created. </em>/<br> @Override<br> public void onCreate(Bundle savedInstanceState) {<br>  super.onCreate(savedInstanceState);<br>  mTextViewTest = new TextViewTest(this);<br>  setContentView(mTextViewTest);<br> }</p>
-<p> public class TextViewTest extends TextView {<br>  public TextViewTest(Context context) {<br>   super(context);<br>   // TODO Auto-generated constructor stub<br>   setText(“test test “);<br>  }</p>
-<p>  @Override<br>  protected void onDraw(Canvas canvas) {<br>   // TODO Auto-generated method stub<br>   super.onDraw(canvas);<br>   measure(0, 0);<br>   Log.i(“Tag”, “width: “ + getWidth() + “,height: “ + getHeight());<br>   Log.i(“Tag”, “MeasuredWidth: “ + getMeasuredWidth()</p>
-<pre><code> + <span class="string">",MeasuredHeight: "</span> + getMeasuredHeight());
-</code></pre><p>  }<br> }<br>}`</p>
-<p> <strong>总结（正解）：</strong></p>
+<pre><code><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>{
+ <span class="keyword">private</span> TextViewTest mTextViewTest;
+
+ <span class="javadoc">/** Called when the activity is first created. */</span>
+ <span class="annotation">@Override</span>
+ <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span>(Bundle savedInstanceState) {
+  <span class="keyword">super</span>.onCreate(savedInstanceState);
+  mTextViewTest = <span class="keyword">new</span> TextViewTest(<span class="keyword">this</span>);
+  setContentView(mTextViewTest);
+ }
+
+ <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TextViewTest</span> <span class="keyword">extends</span> <span class="title">TextView</span> </span>{
+  <span class="keyword">public</span> <span class="title">TextViewTest</span>(Context context) {
+   <span class="keyword">super</span>(context);
+   <span class="comment">// TODO Auto-generated constructor stub</span>
+   setText(<span class="string">"test test "</span>);
+  }
+
+  <span class="annotation">@Override</span>
+  <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span>(Canvas canvas) {
+   <span class="comment">// TODO Auto-generated method stub</span>
+   <span class="keyword">super</span>.onDraw(canvas);
+   measure(<span class="number">0</span>, <span class="number">0</span>);
+   Log.i(<span class="string">"Tag"</span>, <span class="string">"width: "</span> + getWidth() + <span class="string">",height: "</span> + getHeight());
+   Log.i(<span class="string">"Tag"</span>, <span class="string">"MeasuredWidth: "</span> + getMeasuredWidth()
+     + <span class="string">",MeasuredHeight: "</span> + getMeasuredHeight());
+  }
+ }
+}
+</code></pre><p> <strong>总结（正解）：</strong></p>
 <p> <strong>getWidth(): View在设定好布局后整个View的宽度。</strong></p>
 <p> <strong>getMeasuredWidth(): 对View上的内容进行测量后得到的View内容佔据的宽度，前提是你必须在父布局的onLayout()方法或者此View的onDraw()方法裡调 用measure(0,0);(measure 参数的值你可以自己定义)，否则你得到的结果和getWidth()得到的结果一样。</strong></p>
 <p>最后附上一张图：</p>
 <p><img src="http://7teb8h.com1.z0.glb.clouddn.com/test.jpeg" alt="图片"></p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>title: 理解getWidth和getMeasuredWidth<br>date: 2014-12-29 22:23:42</p>
+    <![CDATA[<p>title: 理解getWidth和getMeasuredWidth</p>
+<p>date: 2014-12-29 22:23:42</p>
 <h2 id="tags:深入学习Android">tags:深入学习Android</h2>
-<p>一、也许很多童鞋对getWidth(]]>
+<p>一、也许很多童鞋对getWi]]>
     </summary>
     
   </entry>
