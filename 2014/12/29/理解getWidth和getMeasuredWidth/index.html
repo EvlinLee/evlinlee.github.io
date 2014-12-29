@@ -4,27 +4,32 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>AsyncTask相关总结 | 夜半微凉</title>
+    <title>夜半微凉</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="EvlinLee">
     
-    <meta name="description" content="AsyncTask介绍
-Android的AsyncTask比Handler更轻量级一些，适用于简单的异步处理。首先明确Android之所以有Handler和AsyncTask，都是为了不阻塞主线程（UI线程），且UI的更新只能在主线程中完成，因此异步处理是不可避免的。">
+    <meta name="description" content="title: 理解getWidth和getMeasuredWidthdate: 2014-12-29 22:23:42
+tags:深入学习Android
+一、也许很多童鞋对getWidth()和 getMeasuredWidth()的用法有很多的不解，这两者之间有什麼样的不同呢，网上也有各种不同的版">
     
     
-    <meta name="description" content="AsyncTask介绍
-Android的AsyncTask比Handler更轻量级一些，适用于简单的异步处理。首先明确Android之所以有Handler和AsyncTask，都是为了不阻塞主线程（UI线程），且UI的更新只能在主线程中完成，因此异步处理是不可避免的。">
+    <meta name="description" content="title: 理解getWidth和getMeasuredWidthdate: 2014-12-29 22:23:42
+tags:深入学习Android
+一、也许很多童鞋对getWidth()和 getMeasuredWidth()的用法有很多的不解，这两者之间有什麼样的不同呢，网上也有各种不同的版本，但大多数都大同小异，从这个地方 Ctrl+C,到另一个地方Ctrl+V,没有把问题说透，也有一部">
 <meta property="og:type" content="article">
-<meta property="og:title" content="AsyncTask相关总结">
-<meta property="og:url" content="http://www.lixumin.com/2014/11/05/android-asyntask-summary/">
+<meta property="og:title" content="夜半微凉">
+<meta property="og:url" content="http://www.lixumin.com/2014/12/29/理解getWidth和getMeasuredWidth/">
 <meta property="og:site_name" content="夜半微凉">
-<meta property="og:description" content="AsyncTask介绍
-Android的AsyncTask比Handler更轻量级一些，适用于简单的异步处理。首先明确Android之所以有Handler和AsyncTask，都是为了不阻塞主线程（UI线程），且UI的更新只能在主线程中完成，因此异步处理是不可避免的。">
+<meta property="og:description" content="title: 理解getWidth和getMeasuredWidthdate: 2014-12-29 22:23:42
+tags:深入学习Android
+一、也许很多童鞋对getWidth()和 getMeasuredWidth()的用法有很多的不解，这两者之间有什麼样的不同呢，网上也有各种不同的版本，但大多数都大同小异，从这个地方 Ctrl+C,到另一个地方Ctrl+V,没有把问题说透，也有一部">
+<meta property="og:image" content="http://7teb8h.com1.z0.glb.clouddn.com/test.jpeg">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="AsyncTask相关总结">
-<meta name="twitter:description" content="AsyncTask介绍
-Android的AsyncTask比Handler更轻量级一些，适用于简单的异步处理。首先明确Android之所以有Handler和AsyncTask，都是为了不阻塞主线程（UI线程），且UI的更新只能在主线程中完成，因此异步处理是不可避免的。">
+<meta name="twitter:title" content="夜半微凉">
+<meta name="twitter:description" content="title: 理解getWidth和getMeasuredWidthdate: 2014-12-29 22:23:42
+tags:深入学习Android
+一、也许很多童鞋对getWidth()和 getMeasuredWidth()的用法有很多的不解，这两者之间有什麼样的不同呢，网上也有各种不同的版本，但大多数都大同小异，从这个地方 Ctrl+C,到另一个地方Ctrl+V,没有把问题说透，也有一部">
 
 
     
@@ -79,14 +84,14 @@ Android的AsyncTask比Handler更轻量级一些，适用于简单的异步处理
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/11/05/android-asyntask-summary/" title="AsyncTask相关总结" itemprop="url">AsyncTask相关总结</a>
+      <a href="/2014/12/29/理解getWidth和getMeasuredWidth/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://www.lixumin.com/about" title="EvlinLee" target="_blank" itemprop="author">EvlinLee</a>
 		
   <p class="article-time">
-    <time datetime="2014-11-04T17:17:51.000Z" itemprop="datePublished"> Published Nov 5 2014</time>
+    <time datetime="2014-12-28T16:00:00.000Z" itemprop="datePublished"> Published Dec 29 2014</time>
     
   </p>
 </header>
@@ -95,68 +100,51 @@ Android的AsyncTask比Handler更轻量级一些，适用于简单的异步处理
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#AsyncTask介绍"><span class="toc-number">1.</span> <span class="toc-text">AsyncTask介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#异步任务AsyncTask在不同Android版本的差异"><span class="toc-number">2.</span> <span class="toc-text">异步任务AsyncTask在不同Android版本的差异</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#AsyncTask和Thread的使用场景的区别"><span class="toc-number">3.</span> <span class="toc-text">AsyncTask和Thread的使用场景的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Asynctask和handler的优缺点"><span class="toc-number">4.</span> <span class="toc-text">Asynctask和handler的优缺点</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#AsyncTask实现的原理,和适用的优缺点"><span class="toc-number">4.1.</span> <span class="toc-text">AsyncTask实现的原理,和适用的优缺点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Handler异步实现的原理和适用的优缺点"><span class="toc-number">4.2.</span> <span class="toc-text">Handler异步实现的原理和适用的优缺点</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#tags:深入学习Android"><span class="toc-number">1.</span> <span class="toc-text">tags:深入学习Android</span></a></li></ol>
 		
 		</div>
 		
-		<h4 id="AsyncTask介绍">AsyncTask介绍</h4>
-<p>Android的AsyncTask比Handler更轻量级一些，适用于简单的异步处理。<br>首先明确Android之所以有Handler和AsyncTask，都是为了不阻塞主线程（UI线程），且UI的更新只能在主线程中完成，因此异步处理是不可避免的。</p>
-<a id="more"></a>
-
-<p>Android为了降低这个开发难度，提供了AsyncTask。AsyncTask就是一个封装过的后台任务类，顾名思义就是异步任务。<br>AsyncTask直接继承于Object类，位置为android.os.AsyncTask。要使用AsyncTask工作我们要提供三个泛型参数，并重载几个方法(至少重载一个)。</p>
-<p>AsyncTask定义了三种泛型类型 Params，Progress和Result。</p>
-<p>Params 启动任务执行的输入参数，比如HTTP请求的URL。</p>
-<p>Progress 后台任务执行的百分比。</p>
-<p>Result 后台执行任务最终返回的结果，比如String。</p>
-<p>使用过AsyncTask 的同学都知道一个异步加载数据最少要重写以下这两个方法：</p>
-<p>doInBackground(Params…) 后台执行，比较耗时的操作都可以放在这里。注意这里不能直接操作UI。此方法在后台线程执行，完成任务的主要工作，通常需要较长的时间。在执行过程中可以调用publicProgress(Progress…)来更新任务的进度。</p>
-<p>onPostExecute(Result)    相当于Handler 处理UI的方式，在这里面可以使用在doInBackground 得到的结果处理操作UI。 此方法在主线程执行，任务执行的结果作为此方法的参数返回<br>有必要的话你还得重写以下这三个方法，但不是必须的。</p>
-<p>onProgressUpdate(Progress…)    可以使用进度条增加用户体验度。 此方法在主线程执行，用于显示任务执行的进度。</p>
-<p>onPreExecute()    这里是最终用户调用Excute时的接口，当任务执行之前开始调用此方法，可以在这里显示进度对话框。<br>onCancelled()    用户调用取消时，要做的操作</p>
-<p>使用AsyncTask类，以下是几条必须遵守的准则：</p>
-<p>Task的实例必须在UI thread中创建；</p>
-<p>execute方法必须在UI thread中调用；</p>
-<p>不要手动的调用onPreExecute(), onPostExecute(Result)，doInBackground(Params…), onProgressUpdate(Progress…)这几个方法；</p>
-<p>该task只能被执行一次，否则多次调用时将会出现异常；</p>
-<h4 id="异步任务AsyncTask在不同Android版本的差异">异步任务AsyncTask在不同Android版本的差异</h4>
-<p>该差异主要是Android2.3和Android3.0及其之后的差异,差异内容如下：<br>在Android2.3中AsyncTask的调用可以并发执行.</p>
-<p>因为它在一个线程池中被调用.该线程池有5个核心线程,且最大线程数为128个. </p>
-<p>比如:同时启动10个任务,有5个任务能够立刻执行,另外5个任务则需等待;当有一个任务执行完毕后,第6个任务才会启动,以此类推. </p>
-<p>因为线程池中最大能存放的线程数是128个,当我们尝试去添加第129个任务时,程序会崩溃.</p>
-<p>在Android3.0及其以后AsyncTask的调用在默认情况同时只能有1个任务在执行. </p>
-<p>在AsyncTask中采用了SerialExecutor,它很类似于SingleThreadExecutor,即线程池中只有一个线程的线程池. </p>
-<p>所以在2.3之后调用asyncTask.execute(params)方法,同时只能有1个任务在执行.待该任务执行完成后再执行下一个任务. </p>
-<p>那么可以修改该默认设置么？当然是可以的. </p>
-<p>可以调用方法asyncTask.executeOnExecutor(executor, params); </p>
-<p>第一个参数executor就设置为一个自己配置的线城池。</p>
-<h4 id="AsyncTask和Thread的使用场景的区别">AsyncTask和Thread的使用场景的区别</h4>
-<p>AsyncTask简单灵活,不用考虑UI更新.但是要注意AsyncTask版本差异带来的问题,请参考上面的总结.<br> 当有大量的瞬时任务出现时应该考虑使用线程池,可以节省线程的创建和销毁的消耗。</p>
-<h4 id="Asynctask和handler的优缺点">Asynctask和handler的优缺点</h4>
-<ul>
-<li><h5 id="AsyncTask实现的原理,和适用的优缺点">AsyncTask实现的原理,和适用的优缺点</h5>
-<blockquote>
-<p>AsyncTask,是android提供的轻量级的异步类,可以直接继承AsyncTask,在类中实现异步操作,并提供接口反馈当前异步执行的程度(可以通过接口实现UI进度更新),最后反馈执行的结果给UI主线程.</p>
-<p>使用的优点:简单,快捷、过程可控</p>
-<p>使用的缺点:在使用多个异步操作和并需要进行Ui变更时,就变得复杂起来。最大并发数不超过5。</p>
-</blockquote>
-</li>
-<li><h5 id="Handler异步实现的原理和适用的优缺点">Handler异步实现的原理和适用的优缺点</h5>
-<blockquote>
-<p>在Handler 异步实现时,涉及到 Handler, Looper, Message,Thread四个对象，实现异步的流程是主线程启动Thread（子线程）àthread(子线程)运行并生成Message-àLooper获取Message并传递给HandleràHandler逐个获取Looper中的Message，并进行UI变更。</p>
-<p>使用的优点：结构清晰，功能定义明确；对于多个后台任务时，简单，清晰。   </p>
-<p>使用的缺点： 在单个后台异步处理时，显得代码过多，结构过于复杂（相对性）</p>
-</blockquote>
-</li>
-</ul>
+		<p>title: 理解getWidth和getMeasuredWidth<br>date: 2014-12-29 22:23:42</p>
+<h2 id="tags:深入学习Android">tags:深入学习Android</h2>
+<p>一、也许很多童鞋对getWidth()和 getMeasuredWidth()的用法有很多的不解，这两者之间有什麼样的不同呢，网上也有各种不同的版本，但大多数都大同小异，从这个地方 Ctrl+C,到另一个地方Ctrl+V,没有把问题说透，也有一部分文章误导了大家对这两个方法的认识，我也是深受其害。这裡先纠正下面的一个版本的说 法，Baidu上一搜一大堆的，可惜这种说法是错的，所以希望大家就不要再盲目的转载到你的空间裡：<br>&gt;<br>                     getWidth得到是某个view的实际尺寸.<br>                     getMeasuredWidth是得到某view想要在parent view里面占的大小.</p>
+<p>想必你也见过这样的解释，听起来这样的解释也似云里雾里，没有把问题点透。</p>
+<p>二、好了，错误的版本就不过多说了，下面对这两个方法做一下正解，首先大家应先知道以下几点：</p>
+<ol>
+<li>在一个类初始化时，即在构造函数当中我们是得不到View的实际大小的。感兴趣的朋友可以试一下，getWidth()和getMeasuredWidth()得到的结果都是0.但是我们可以从onDraw()方法裡面得到控件的大小。</li>
+<li>这两个方法所得到的结果的单位是像素即pixel.对两个方法做介绍：<br>getWidth(): 得到的是view在父Layout中布局好后的宽度值，如果没有父布局，那麼默认的父布局是整个屏幕。也许不好理解。通过一个例子来说明一下。</li>
+</ol>
+<p>`public class Test extends Activity {<br> private LinearLayout mBackgroundLayout;<br> private TextViewTest mTextViewTest;</p>
+<p> /<em>* Called when the activity is first created. </em>/<br> @Override<br> public void onCreate(Bundle savedInstanceState) {<br>  super.onCreate(savedInstanceState);</p>
+<p>  mBackgroundLayout = new MyLayout(this);<br>  mBackgroundLayout.setLayoutParams(new LinearLayout.LayoutParams(<br>    LinearLayout.LayoutParams.FILL_PARENT,<br>    LinearLayout.LayoutParams.FILL_PARENT));</p>
+<p>  mTextViewTest = new TextViewTest(this);</p>
+<p>  mBackgroundLayout.addView(mTextViewTest);<br>  setContentView(mBackgroundLayout);<br> }<br> public class MyLayout extends LinearLayout{</p>
+<p>  public MyLayout(Context context) {<br>   super(context);<br>   // TODO Auto-generated constructor stub<br>  }</p>
+<p>  @Override<br>  protected void onLayout(boolean changed, int l, int t, int r, int b) {<br>   // TODO Auto-generated method stub<br>   super.onLayout(changed, l, t, r, b);<br>   Log.i(“Tag”, “———————“);<br>   View mView=getChildAt(0);<br>   mView.measure(0, 0);<br>  }</p>
+<p> }<br> public class TextViewTest extends TextView {<br>  public TextViewTest(Context context) {<br>   super(context);<br>   // TODO Auto-generated constructor stub<br>   setText(“test test “);<br>  }</p>
+<p>  @Override<br>   protected void onDraw(Canvas canvas) {<br>   // TODO Auto-generated method stub<br>   super.onDraw(canvas);<br>   // measure(0, 0);<br>   Log.i(“Tag”, “width: “ + getWidth() + “,height: “ + getHeight());<br>   Log.i(“Tag”, “MeasuredWidth: “ + getMeasuredWidth()</p>
+<pre><code> + <span class="string">",MeasuredHeight: "</span> + getMeasuredHeight());
+</code></pre><p>   }</p>
+<p> }<br>}`</p>
+<p>这里是在LinearLayout裡添加一个TextView控件，如果此时要得到对TextView获取getWidth()，那么是在TextView添加到Layout后再去获取值，并不单单的是对TextView本身宽度的获取。</p>
+<p>getMeasuredWidth()：先看一下API里面怎么说的</p>
+<p>The width of this view as measured in the most recent call to measure(). This should be used during measurement and layout calculations only.</p>
+<p>得到的是在最近一次调用measure()方法测量后得到的view的宽度，它仅仅用在测量和layout的计算中。<br>所以此方法得到的是view的内容佔据的实际宽度。</p>
+<p>你如果想从一个最简单的例子中的到它们的不同，下面将对上面的例子做一下修改</p>
+<p>`public class Test extends Activity {<br> private TextViewTest mTextViewTest;</p>
+<p> /<em>* Called when the activity is first created. </em>/<br> @Override<br> public void onCreate(Bundle savedInstanceState) {<br>  super.onCreate(savedInstanceState);<br>  mTextViewTest = new TextViewTest(this);<br>  setContentView(mTextViewTest);<br> }</p>
+<p> public class TextViewTest extends TextView {<br>  public TextViewTest(Context context) {<br>   super(context);<br>   // TODO Auto-generated constructor stub<br>   setText(“test test “);<br>  }</p>
+<p>  @Override<br>  protected void onDraw(Canvas canvas) {<br>   // TODO Auto-generated method stub<br>   super.onDraw(canvas);<br>   measure(0, 0);<br>   Log.i(“Tag”, “width: “ + getWidth() + “,height: “ + getHeight());<br>   Log.i(“Tag”, “MeasuredWidth: “ + getMeasuredWidth()</p>
+<pre><code> + <span class="string">",MeasuredHeight: "</span> + getMeasuredHeight());
+</code></pre><p>  }<br> }<br>}`</p>
+<p> <strong>总结（正解）：</strong></p>
+<p> <strong>getWidth(): View在设定好布局后整个View的宽度。</strong></p>
+<p> <strong>getMeasuredWidth(): 对View上的内容进行测量后得到的View内容佔据的宽度，前提是你必须在父布局的onLayout()方法或者此View的onDraw()方法裡调 用measure(0,0);(measure 参数的值你可以自己定义)，否则你得到的结果和getWidth()得到的结果一样。</strong></p>
+<p>最后附上一张图：</p>
+<p><img src="http://7teb8h.com1.z0.glb.clouddn.com/test.jpeg" alt="图片"></p>
   
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Android-AsyncTask/">Android AsyncTask</a>
-</div>
 
 
 </div>
@@ -165,7 +153,7 @@ Android的AsyncTask比Handler更轻量级一些，适用于简单的异步处理
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://www.lixumin.com/2014/11/05/android-asyntask-summary/" data-title="AsyncTask相关总结 | 夜半微凉" data-tsina="null" class="share clearfix">
+	  <div data-url="http://www.lixumin.com/2014/12/29/理解getWidth和getMeasuredWidth/" data-title="夜半微凉" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -178,19 +166,11 @@ Android的AsyncTask比Handler更轻量级一些，适用于简单的异步处理
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2014/12/29/理解getWidth和getMeasuredWidth/" title="">
-  <strong>上一篇：</strong><br/>
-  <span>
-  (no title)</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2014/09/08/androidstudio-keyboard-shortkey/"  title="Android Studio快捷键">
+<a href="/2014/11/05/android-asyntask-summary/"  title="AsyncTask相关总结">
  <strong>下一篇：</strong><br/> 
- <span>Android Studio快捷键
+ <span>AsyncTask相关总结
 </span>
 </a>
 </div>
@@ -199,7 +179,7 @@ Android的AsyncTask比Handler更轻量级一些，适用于简单的异步处理
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2014/11/05/android-asyntask-summary/" data-title="AsyncTask相关总结" data-url="http://www.lixumin.com/2014/11/05/android-asyntask-summary/"></div>
+	<div class="ds-thread" data-thread-key="2014/12/29/理解getWidth和getMeasuredWidth/" data-title="" data-url="http://www.lixumin.com/2014/12/29/理解getWidth和getMeasuredWidth/"></div>
 </section>
 
 
@@ -209,7 +189,7 @@ Android的AsyncTask比Handler更轻量级一些，适用于简单的异步处理
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
  
- <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#AsyncTask介绍"><span class="toc-number">1.</span> <span class="toc-text">AsyncTask介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#异步任务AsyncTask在不同Android版本的差异"><span class="toc-number">2.</span> <span class="toc-text">异步任务AsyncTask在不同Android版本的差异</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#AsyncTask和Thread的使用场景的区别"><span class="toc-number">3.</span> <span class="toc-text">AsyncTask和Thread的使用场景的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Asynctask和handler的优缺点"><span class="toc-number">4.</span> <span class="toc-text">Asynctask和handler的优缺点</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#AsyncTask实现的原理,和适用的优缺点"><span class="toc-number">4.1.</span> <span class="toc-text">AsyncTask实现的原理,和适用的优缺点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Handler异步实现的原理和适用的优缺点"><span class="toc-number">4.2.</span> <span class="toc-text">Handler异步实现的原理和适用的优缺点</span></a></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#tags:深入学习Android"><span class="toc-number">1.</span> <span class="toc-text">tags:深入学习Android</span></a></li></ol>
  
   </div>
 
