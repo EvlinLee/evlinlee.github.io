@@ -4,43 +4,52 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>夜半微凉</title>
+    <title>Android用Service实现Apk版本升级 | 夜半微凉</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="EvlinLee">
     
-    <meta name="description" content="title: “Android用Service实现Apk版本升级”
-categories:Android
-网上很多版本都是直接用alertdialog来显示下载进度，现在大多数应用都是直接用通知栏显示，让用户还可以操作APP，这样的用户体验比较好。公司的应用之前也是用前者的方式来更新APP的，这次就">
-    
-    
-    <meta name="description" content="title: “Android用Service实现Apk版本升级”
-categories:Android
-网上很多版本都是直接用alertdialog来显示下载进度，现在大多数应用都是直接用通知栏显示，让用户还可以操作APP，这样的用户体验比较好。公司的应用之前也是用前者的方式来更新APP的，这次就改成后者，把代码记录下。
+    <meta name="description" content="网上很多版本都是直接用alertdialog来显示下载进度，现在大多数应用都是直接用通知栏显示，让用户还可以操作APP，这样的用户体验比较好。公司的应用之前也是用前者的方式来更新APP的，这次就改成后者，把代码记录下。
 /**
  * 版本更新服务
  *
- * @author elvinlee">
+ * @author elvinlee
+ */">
+    
+    
+    <meta name="description" content="网上很多版本都是直接用alertdialog来显示下载进度，现在大多数应用都是直接用通知栏显示，让用户还可以操作APP，这样的用户体验比较好。公司的应用之前也是用前者的方式来更新APP的，这次就改成后者，把代码记录下。
+/**
+ * 版本更新服务
+ *
+ * @author elvinlee
+ */
+public class UpdateService extends Service {
+
+pri">
 <meta property="og:type" content="article">
-<meta property="og:title" content="夜半微凉">
+<meta property="og:title" content="Android用Service实现Apk版本升级">
 <meta property="og:url" content="http://www.lixumin.com/2015/02/13/Android用Service实现Apk版本升级/">
 <meta property="og:site_name" content="夜半微凉">
-<meta property="og:description" content="title: “Android用Service实现Apk版本升级”
-categories:Android
-网上很多版本都是直接用alertdialog来显示下载进度，现在大多数应用都是直接用通知栏显示，让用户还可以操作APP，这样的用户体验比较好。公司的应用之前也是用前者的方式来更新APP的，这次就改成后者，把代码记录下。
+<meta property="og:description" content="网上很多版本都是直接用alertdialog来显示下载进度，现在大多数应用都是直接用通知栏显示，让用户还可以操作APP，这样的用户体验比较好。公司的应用之前也是用前者的方式来更新APP的，这次就改成后者，把代码记录下。
 /**
  * 版本更新服务
  *
- * @author elvinlee">
+ * @author elvinlee
+ */
+public class UpdateService extends Service {
+
+pri">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="夜半微凉">
-<meta name="twitter:description" content="title: “Android用Service实现Apk版本升级”
-categories:Android
-网上很多版本都是直接用alertdialog来显示下载进度，现在大多数应用都是直接用通知栏显示，让用户还可以操作APP，这样的用户体验比较好。公司的应用之前也是用前者的方式来更新APP的，这次就改成后者，把代码记录下。
+<meta name="twitter:title" content="Android用Service实现Apk版本升级">
+<meta name="twitter:description" content="网上很多版本都是直接用alertdialog来显示下载进度，现在大多数应用都是直接用通知栏显示，让用户还可以操作APP，这样的用户体验比较好。公司的应用之前也是用前者的方式来更新APP的，这次就改成后者，把代码记录下。
 /**
  * 版本更新服务
  *
- * @author elvinlee">
+ * @author elvinlee
+ */
+public class UpdateService extends Service {
+
+pri">
 
 
     
@@ -95,7 +104,7 @@ categories:Android
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/02/13/Android用Service实现Apk版本升级/" title="" itemprop="url"></a>
+      <a href="/2015/02/13/Android用Service实现Apk版本升级/" title="Android用Service实现Apk版本升级" itemprop="url">Android用Service实现Apk版本升级</a>
   </h1>
   <p class="article-author">By
        
@@ -111,14 +120,11 @@ categories:Android
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#categories:Android"><span class="toc-number">1.</span> <span class="toc-text">categories:Android</span></a></li></ol>
+			
 		
 		</div>
 		
-		<hr>
-<p>title: “Android用Service实现Apk版本升级”</p>
-<h2 id="categories:Android">categories:Android</h2>
-<p>网上很多版本都是直接用alertdialog来显示下载进度，现在大多数应用都是直接用通知栏显示，让用户还可以操作APP，这样的用户体验比较好。公司的应用之前也是用前者的方式来更新APP的，这次就改成后者，把代码记录下。</p>
+		<p>网上很多版本都是直接用alertdialog来显示下载进度，现在大多数应用都是直接用通知栏显示，让用户还可以操作APP，这样的用户体验比较好。公司的应用之前也是用前者的方式来更新APP的，这次就改成后者，把代码记录下。</p>
 <pre><code><span class="javadoc">/**
  * 版本更新服务
  *
@@ -282,6 +288,11 @@ class UpdateRunnable implements Runnable {
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Android/">Android</a>
+</div>
+
 
 </div>
 
@@ -289,7 +300,7 @@ class UpdateRunnable implements Runnable {
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://www.lixumin.com/2015/02/13/Android用Service实现Apk版本升级/" data-title="夜半微凉" data-tsina="null" class="share clearfix">
+	  <div data-url="http://www.lixumin.com/2015/02/13/Android用Service实现Apk版本升级/" data-title="Android用Service实现Apk版本升级 | 夜半微凉" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -315,7 +326,7 @@ class UpdateRunnable implements Runnable {
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/02/13/Android用Service实现Apk版本升级/" data-title="" data-url="http://www.lixumin.com/2015/02/13/Android用Service实现Apk版本升级/"></div>
+	<div class="ds-thread" data-thread-key="2015/02/13/Android用Service实现Apk版本升级/" data-title="Android用Service实现Apk版本升级" data-url="http://www.lixumin.com/2015/02/13/Android用Service实现Apk版本升级/"></div>
 </section>
 
 
@@ -325,7 +336,7 @@ class UpdateRunnable implements Runnable {
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#categories:Android"><span class="toc-number">1.</span> <span class="toc-text">categories:Android</span></a></li></ol>
+ 
  
   </div>
 
@@ -337,6 +348,8 @@ class UpdateRunnable implements Runnable {
 <div class="categorieslist">
 	<p class="asidetitle">Categories</p>
 		<ul>
+		
+			<li><a href="/categories/Android/" title="Android">Android<sup>1</sup></a></li>
 		
 			<li><a href="/categories/Android-AsyncTask/" title="Android AsyncTask">Android AsyncTask<sup>1</sup></a></li>
 		
