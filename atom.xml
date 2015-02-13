@@ -4,7 +4,7 @@
   <subtitle><![CDATA[生命太短暂，不要去做一些根本没有人想要的东西。]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.lixumin.com/"/>
-  <updated>2014-12-30T01:25:52.580Z</updated>
+  <updated>2015-02-13T08:28:16.252Z</updated>
   <id>http://www.lixumin.com/</id>
   
   <author>
@@ -13,6 +13,182 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[]]></title>
+    <link href="http://www.lixumin.com/2015/02/13/Android%E7%94%A8Service%E5%AE%9E%E7%8E%B0Apk%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7/"/>
+    <id>http://www.lixumin.com/2015/02/13/Android用Service实现Apk版本升级/</id>
+    <published>2015-02-12T16:00:00.000Z</published>
+    <updated>2015-02-13T08:27:11.000Z</updated>
+    <content type="html"><![CDATA[<p>title: Android用Service实现Apk版本升级</p>
+<h2 id="categories:Android">categories:Android</h2>
+<p>网上很多版本都是直接用alertdialog来显示下载进度，现在大多数应用都是直接用通知栏显示，让用户还可以操作APP，这样的用户体验比较好。公司的应用之前也是用前者的方式来更新APP的，这次就改成后者，把代码记录下。</p>
+<pre><code><span class="javadoc">/**
+ * 版本更新服务
+ *
+ *<span class="javadoctag"> @author</span> elvinlee
+ */</span>
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UpdateService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>{
+
+<span class="keyword">private</span> NotificationManager notificationManager;
+<span class="keyword">private</span> NotificationCompat.Builder builder;
+<span class="keyword">private</span> File apkFile;
+<span class="keyword">private</span> String downloadUrl;<span class="comment">//下载地址</span>
+<span class="keyword">private</span> <span class="keyword">boolean</span> isForceUpdate;
+
+<span class="comment">//下载状态</span>
+<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> DOWNLOAD_COMPLETE = <span class="number">0</span>;
+<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> DOWNLOAD_FAIL = <span class="number">1</span>;
+
+<span class="annotation">@Override</span>
+<span class="keyword">public</span> <span class="keyword">int</span> <span class="title">onStartCommand</span>(Intent intent, <span class="keyword">int</span> flags, <span class="keyword">int</span> startId) {
+    downloadUrl = intent.getStringExtra(<span class="string">"url"</span>);
+    <span class="keyword">if</span> (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+        apkFile = <span class="keyword">new</span> File(BlueOceanApplication.getInstance().getCacheDirPath() + <span class="string">"/"</span> + <span class="string">"blueocean.apk"</span>);
+    }
+    notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+    builder = <span class="keyword">new</span> NotificationCompat.Builder(<span class="keyword">this</span>);
+    builder.setSmallIcon(R.drawable.ic_launcher);
+    builder.setTicker(<span class="string">"正在下载示例应用..."</span>);
+    builder.setContentTitle(<span class="string">"正在下载示例应用"</span>);
+    builder.setContentText(<span class="string">"0%"</span>);
+    notificationManager.notify(<span class="number">100</span>, builder.build());
+    <span class="comment">//开启一个新的线程下载，如果使用Service同步下载，会导致ANR问题</span>
+    <span class="keyword">new</span> Thread(<span class="keyword">new</span> UpdateRunnable()).start();
+    <span class="keyword">return</span> <span class="keyword">super</span>.onStartCommand(intent, flags, startId);
+}
+
+<span class="annotation">@Override</span>
+<span class="keyword">public</span> IBinder <span class="title">onBind</span>(Intent intent) {
+    <span class="keyword">return</span> <span class="keyword">new</span> UpdateBinder();
+}
+
+class UpdateRunnable implements Runnable {
+    Message message = updateHandler.obtainMessage();
+
+    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span>() {
+        message.what = DOWNLOAD_COMPLETE;
+        <span class="keyword">try</span> {
+            <span class="keyword">if</span> (!apkFile.exists()) {
+                apkFile.createNewFile();
+            }
+            <span class="comment">//下载</span>
+            <span class="keyword">long</span> downloadSize = downloadUpdateFile();
+            <span class="keyword">if</span> (downloadSize &gt; <span class="number">0</span>) {
+                <span class="comment">//下载成功</span>
+                updateHandler.sendMessage(message);
+            }
+        } <span class="keyword">catch</span> (Exception ex) {
+            ex.printStackTrace();
+            message.what = DOWNLOAD_FAIL;
+            <span class="comment">//下载失败</span>
+            updateHandler.sendMessage(message);
+        }
+    }
+}
+
+<span class="keyword">private</span> Handler updateHandler = <span class="keyword">new</span> Handler(<span class="keyword">new</span> Handler.Callback() {
+    <span class="annotation">@Override</span>
+    <span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">handleMessage</span>(Message msg) {
+        <span class="keyword">switch</span> (msg.what) {
+            <span class="keyword">case</span> DOWNLOAD_COMPLETE:
+                builder.setContentTitle(<span class="string">"实例应用"</span>);
+                builder.setContentText(<span class="string">"下载完成,点击安装"</span>);
+                builder.setProgress(<span class="number">100</span>, <span class="number">100</span>, <span class="keyword">false</span>);
+
+                Uri uri = Uri.fromFile(apkFile);
+                Intent installIntent = <span class="keyword">new</span> Intent(Intent.ACTION_VIEW);
+                installIntent.setDataAndType(uri, <span class="string">"application/vnd.android.package-archive"</span>);
+                installIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(installIntent);
+                PendingIntent pendingIntent = PendingIntent.getActivity(UpdateService.<span class="keyword">this</span>, <span class="number">0</span> ,installIntent, <span class="number">0</span>);
+                Notification notification = builder.build();
+                notification.contentIntent = pendingIntent;
+                notificationManager.notify(<span class="number">100</span>, notification);
+                <span class="comment">//停止服务</span>
+                stopSelf();                    
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> DOWNLOAD_FAIL:
+                <span class="comment">//下载失败</span>
+                ToastUtil.show(<span class="string">"下载失败"</span>);
+                notificationManager.cancel(<span class="number">100</span>);
+                <span class="keyword">break</span>;
+            <span class="keyword">default</span>:
+                stopSelf();
+        }
+        <span class="keyword">return</span> <span class="keyword">false</span>;
+    }
+});
+
+<span class="javadoc">/**
+ * 下载文件
+ *
+ *<span class="javadoctag"> @return</span>
+ *<span class="javadoctag"> @throws</span> Exception
+ */</span>
+<span class="keyword">public</span> <span class="keyword">long</span> <span class="title">downloadUpdateFile</span>() <span class="keyword">throws</span> Exception {
+    <span class="keyword">long</span> totalSize = <span class="number">0</span>;
+    <span class="keyword">int</span> updateTotalSize = <span class="number">0</span>;
+
+    HttpURLConnection httpConnection = <span class="keyword">null</span>;
+    InputStream is = <span class="keyword">null</span>;
+    FileOutputStream fos = <span class="keyword">null</span>;
+
+    <span class="keyword">try</span> {
+        URL url = <span class="keyword">new</span> URL(downloadUrl);
+        httpConnection = (HttpURLConnection) url.openConnection();
+        httpConnection.setConnectTimeout(<span class="number">10000</span>);
+        httpConnection.setReadTimeout(<span class="number">20000</span>);
+        updateTotalSize = httpConnection.getContentLength();
+        <span class="keyword">if</span> (httpConnection.getResponseCode() != <span class="number">200</span>) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"fail!"</span>);
+        }
+        is = httpConnection.getInputStream();
+        fos = <span class="keyword">new</span> FileOutputStream(apkFile, <span class="keyword">false</span>);
+        <span class="keyword">byte</span> buffer[] = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">4096</span>];
+        <span class="keyword">int</span> readsize = <span class="number">0</span>;
+        <span class="keyword">int</span> progress;
+        <span class="keyword">while</span> ((readsize = is.read(buffer)) &gt; <span class="number">0</span>) {
+            fos.write(buffer, <span class="number">0</span>, readsize);
+            totalSize += readsize;
+            progress = (<span class="keyword">int</span>) (((<span class="keyword">float</span>) totalSize / updateTotalSize) * <span class="number">100</span>);
+            <span class="comment">//为了防止频繁的通知导致应用吃紧，百分比增加10才通知一次</span>
+            builder.setProgress(<span class="number">100</span>, progress, <span class="keyword">false</span>);
+            builder.setContentText(progress + <span class="string">"%"</span>);
+            notificationManager.notify(<span class="number">100</span>, builder.build());
+            Intent intent = <span class="keyword">new</span> Intent(<span class="string">"com.lixumin.app"</span>);
+            intent.putExtra(<span class="string">"progress"</span>, progress);
+            sendBroadcast(intent);
+        }
+    } <span class="keyword">finally</span> {
+        <span class="keyword">if</span> (httpConnection != <span class="keyword">null</span>) {
+            httpConnection.disconnect();
+        }
+        <span class="keyword">if</span> (is != <span class="keyword">null</span>) {
+            is.close();
+        }
+        <span class="keyword">if</span> (fos != <span class="keyword">null</span>) {
+            fos.close();
+        }
+    }
+    <span class="keyword">return</span> totalSize;
+}
+
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UpdateBinder</span> <span class="keyword">extends</span> <span class="title">Binder</span> </span>{
+    <span class="keyword">public</span> UpdateService <span class="title">getService</span>() {
+        <span class="keyword">return</span> UpdateService.<span class="keyword">this</span>;
+    }
+}
+
+}
+</code></pre>]]></content>
+    <summary type="html">
+    <![CDATA[<p>title: Android用Service实现Apk版本升级</p>
+<h2 id="categories:Android">categories:Android</h2>
+<p>网上很多版本都是直接用alertdialog来显示下载进度，现在大多数应用都是直接用通知栏显]]>
+    </summary>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[理解getWidth和getMeasuredWidth]]></title>
