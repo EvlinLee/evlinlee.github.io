@@ -4,7 +4,7 @@
   <subtitle><![CDATA[当你的才华还撑不起你的野心时，你就应该静下心来学习。]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.lixumin.com/"/>
-  <updated>2015-02-14T06:24:51.133Z</updated>
+  <updated>2015-04-18T08:13:34.195Z</updated>
   <id>http://www.lixumin.com/</id>
   
   <author>
@@ -13,6 +13,77 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[几种常用的android动画(xml格式)]]></title>
+    <link href="http://www.lixumin.com/2015/04/18/some-simple-and-userful-android-animation/"/>
+    <id>http://www.lixumin.com/2015/04/18/some-simple-and-userful-android-animation/</id>
+    <published>2015-04-17T16:00:00.000Z</published>
+    <updated>2015-04-18T08:13:08.000Z</updated>
+    <content type="html"><![CDATA[<h3 id="push_left_in">push left in</h3>
+<pre><code><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="tag">&lt;<span class="title">set</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">translate</span> <span class="attribute">android:fromXDelta</span>=<span class="value">"100%p"</span> <span class="attribute">android:toXDelta</span>=<span class="value">"0"</span> <span class="attribute">android:duration</span>=<span class="value">"300"</span>/&gt;</span>
+    <span class="tag">&lt;<span class="title">alpha</span> <span class="attribute">android:fromAlpha</span>=<span class="value">"0.0"</span> <span class="attribute">android:toAlpha</span>=<span class="value">"1.0"</span> <span class="attribute">android:duration</span>=<span class="value">"300"</span> /&gt;</span>
+<span class="tag">&lt;/<span class="title">set</span>&gt;</span>
+</code></pre><h3 id="push_left_out">push left out</h3>
+<pre><code><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="tag">&lt;<span class="title">set</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">translate</span> <span class="attribute">android:fromXDelta</span>=<span class="value">"0"</span> <span class="attribute">android:toXDelta</span>=<span class="value">"-100%p"</span> <span class="attribute">android:duration</span>=<span class="value">"300"</span>/&gt;</span>
+    <span class="tag">&lt;<span class="title">alpha</span> <span class="attribute">android:fromAlpha</span>=<span class="value">"1.0"</span> <span class="attribute">android:toAlpha</span>=<span class="value">"0.0"</span> <span class="attribute">android:duration</span>=<span class="value">"300"</span> /&gt;</span>
+<span class="tag">&lt;/<span class="title">set</span>&gt;</span>
+</code></pre><h3 id="push_right_in">push right in</h3>
+<pre><code><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="tag">&lt;<span class="title">set</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">translate</span> <span class="attribute">android:fromXDelta</span>=<span class="value">"-100%p"</span> <span class="attribute">android:toXDelta</span>=<span class="value">"0"</span> <span class="attribute">android:duration</span>=<span class="value">"300"</span>/&gt;</span>
+    <span class="tag">&lt;<span class="title">alpha</span> <span class="attribute">android:fromAlpha</span>=<span class="value">"0.0"</span> <span class="attribute">android:toAlpha</span>=<span class="value">"1.0"</span> <span class="attribute">android:duration</span>=<span class="value">"300"</span> /&gt;</span>
+<span class="tag">&lt;/<span class="title">set</span>&gt;</span>
+</code></pre><h3 id="push_right_out">push right out</h3>
+<pre><code><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="tag">&lt;<span class="title">set</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">translate</span> <span class="attribute">android:fromXDelta</span>=<span class="value">"0"</span> <span class="attribute">android:toXDelta</span>=<span class="value">"100%p"</span> <span class="attribute">android:duration</span>=<span class="value">"300"</span>/&gt;</span>
+    <span class="tag">&lt;<span class="title">alpha</span> <span class="attribute">android:fromAlpha</span>=<span class="value">"1.0"</span> <span class="attribute">android:toAlpha</span>=<span class="value">"0.0"</span> <span class="attribute">android:duration</span>=<span class="value">"300"</span> /&gt;</span>
+<span class="tag">&lt;/<span class="title">set</span>&gt;</span>
+</code></pre><h3 id="fade_in">fade in</h3>
+<pre><code><span class="pi">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="tag">&lt;<span class="title">set</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">alpha
+</span>        <span class="attribute">android:fromAlpha</span>=<span class="value">"0.0"</span>
+        <span class="attribute">android:toAlpha</span>=<span class="value">"1.0"</span>
+        <span class="attribute">android:interpolator</span>=<span class="value">"@android:anim/accelerate_interpolator"</span> 
+        <span class="attribute">android:duration</span>=<span class="value">"800"</span>
+        <span class="attribute">android:repeatCount</span>=<span class="value">"0"</span> /&gt;</span>
+<span class="tag">&lt;/<span class="title">set</span>&gt;</span>
+</code></pre><h3 id="fade_out">fade out</h3>
+<pre><code><span class="pi">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="tag">&lt;<span class="title">set</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">alpha
+</span>        <span class="attribute">android:fromAlpha</span>=<span class="value">"1.0"</span>
+        <span class="attribute">android:toAlpha</span>=<span class="value">"0.0"</span>
+        <span class="attribute">android:interpolator</span>=<span class="value">"@android:anim/accelerate_interpolator"</span> 
+        <span class="attribute">android:duration</span>=<span class="value">"800"</span>
+        <span class="attribute">android:repeatCount</span>=<span class="value">"0"</span> /&gt;</span>
+<span class="tag">&lt;/<span class="title">set</span>&gt;</span>
+</code></pre><h3 id="rotation">rotation</h3>
+<pre><code><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="tag">&lt;<span class="title">rotate
+</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span>
+    <span class="attribute">android:fromDegrees</span>=<span class="value">"0"</span>
+    <span class="attribute">android:toDegrees</span>=<span class="value">"-90"</span>
+    <span class="attribute">android:pivotX</span>=<span class="value">"50%"</span>
+    <span class="attribute">android:pivotY</span>=<span class="value">"50%"</span>
+    <span class="attribute">android:duration</span>=<span class="value">"0"</span> <span class="attribute">android:fillAfter</span>=<span class="value">"true"</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">rotate</span>&gt;</span>
+</code></pre>]]></content>
+    <summary type="html">
+    <![CDATA[<h3 id="push_left_in">push left in</h3>
+<pre><code><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="tag">&l]]>
+    </summary>
+    
+      <category term="android动画" scheme="http://www.lixumin.com/tags/android%E5%8A%A8%E7%94%BB/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Service+Notification实现Apk版本升级]]></title>
