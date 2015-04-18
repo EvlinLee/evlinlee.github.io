@@ -4,7 +4,7 @@
   <subtitle><![CDATA[当你的才华还撑不起你的野心时，你就应该静下心来学习。]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.lixumin.com/"/>
-  <updated>2015-04-18T08:13:34.195Z</updated>
+  <updated>2015-04-18T08:16:33.614Z</updated>
   <id>http://www.lixumin.com/</id>
   
   <author>
@@ -19,8 +19,9 @@
     <link href="http://www.lixumin.com/2015/04/18/some-simple-and-userful-android-animation/"/>
     <id>http://www.lixumin.com/2015/04/18/some-simple-and-userful-android-animation/</id>
     <published>2015-04-17T16:00:00.000Z</published>
-    <updated>2015-04-18T08:13:08.000Z</updated>
-    <content type="html"><![CDATA[<h3 id="push_left_in">push left in</h3>
+    <updated>2015-04-18T08:16:24.000Z</updated>
+    <content type="html"><![CDATA[<p>记录一下activity之间跳转的几种常用动画。<br><a id="more"></a></p>
+<h3 id="push_left_in">push left in</h3>
 <pre><code><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
 <span class="tag">&lt;<span class="title">set</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span>&gt;</span>
     <span class="tag">&lt;<span class="title">translate</span> <span class="attribute">android:fromXDelta</span>=<span class="value">"100%p"</span> <span class="attribute">android:toXDelta</span>=<span class="value">"0"</span> <span class="attribute">android:duration</span>=<span class="value">"300"</span>/&gt;</span>
@@ -76,9 +77,8 @@
 <span class="tag">&lt;/<span class="title">rotate</span>&gt;</span>
 </code></pre>]]></content>
     <summary type="html">
-    <![CDATA[<h3 id="push_left_in">push left in</h3>
-<pre><code><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
-<span class="tag">&l]]>
+    <![CDATA[<p>记录一下activity之间跳转的几种常用动画。<br>]]>
+    
     </summary>
     
       <category term="android动画" scheme="http://www.lixumin.com/tags/android%E5%8A%A8%E7%94%BB/"/>
